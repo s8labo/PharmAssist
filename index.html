@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,40 +16,51 @@
         }
 
         #webchat {
-            height: 80vh;
+            height: 80vh; /* Adjust the percentage as needed */
             width: 100%;
+            /* display: flex;
+            justify-content: center;
+            align-items: center; */
         }
 
-        .typing-animation {
-            display: none; /* Initially hide the typing animation */
-            text-align: center;
-            padding: 10px;
-        }
+        /* .typing-animation {
+            font-size: 24px; /* Adjust the font size as needed */
+            /* animation: typingAnimation 10000s infinite; Adjust the animation duration as needed */
+        /* }
 
-        .typing-animation img {
-            height: 20px;
-            width: 64px;
-        }
+        @keyframes typingAnimation {
+            0% {
+                content: ".";
+            }
+            33% {
+                content: "..";
+            }
+            66% {
+                content: "...";
+            }
+            100% {
+                content: "";
+            } */
+        } */
     </style>
-    <script src="https://cdn.botframework.com/botframework-webchat/4.16.0/webchat.js"></script>
+    <script src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
 </head>
-
 <body>
     <div>
         <h3>Dein PharmAssistant: ChatBot für Medikationsanalysen</h3>
     </div>
     <div id="webchat" role="main">
-        <div class="typing-animation">
-            <img src="https://media.tenor.com/hlKEXPvlX48AAAAC/loading-loader.gif" alt="Typing Animation">
-        </div>
+        <div class="typing-animation"></div>
     </div>
     <script>
-        const typingAnimationElement = document.querySelector('.typing-animation');
-
         const styleSet = window.WebChat.createStyleSet({
             rootHeight: '100%',
             rootWidth: '100%',
             backgroundColor: 'paleturquoise',
+            typingAnimationBackgroundImage: null,
+            typingAnimationDuration: 5000, // Adjust the duration as needed
+            typingAnimationHeight: 20,
+            typingAnimationWidth: 64
         });
 
         const avatarOptions = {
@@ -58,26 +68,16 @@
             userAvatarInitials: 'U'
         };
 
-        const directLine = window.WebChat.createDirectLine({
-            token: 'AavR0Oh2MoQ.k8agJWGKvkYtM92I0013G-A3eObi4iVxVVGEcZFYLY4'
-        });
-
-        const webChatOptions = {
+        window.WebChat.renderWebChat({
+            directLine: window.WebChat.createDirectLine({
+                token: 'AavR0Oh2MoQ.k8agJWGKvkYtM92I0013G-A3eObi4iVxVVGEcZFYLY4'
+            }),
             styleSet,
             styleOptions: avatarOptions
-        };
-
-        window.WebChat.renderWebChat(webChatOptions, document.getElementById('webchat'));
-
-        // Simulate a delay and show the typing indicator
-        setTimeout(() => {
-            typingAnimationElement.style.display = 'block';
-        }, 2000); // Adjust the delay time as needed
+        }, document.getElementById('webchat'));
     </script>
 </body>
-
 </html>
-
 
 
 
