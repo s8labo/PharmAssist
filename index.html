@@ -1,4 +1,26 @@
 <!DOCTYPE html>
+<head>
+    <script src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
+</head>
+<body>
+  <div style="height: 60%; width: 40%; margin-top:5%; margin-left:10%" id="webchat" role="main"></div>
+  <script>
+     // Set  the CSS rules.
+     const styleSet = window.WebChat.createStyleSet({
+         rootHeight: '100%',
+         rootWidth: '50%',
+         backgroundColor: 'paleturquoise'
+      });
+
+    window.WebChat.renderWebChat({
+      directLine: window.WebChat.createDirectLine({
+          token: 'AavR0Oh2MoQ.k8agJWGKvkYtM92I0013G-A3eObi4iVxVVGEcZFYLY4'}),
+      styleSet
+    }, document.getElementById('webchat'));
+    
+  </script>
+</body>
+<!-- <!DOCTYPE html>
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,4 +30,4 @@
 <!-- <p>I'm hosted with GitHub Pages.</p> -->
 <iframe src='https://webchat.botframework.com/embed/PharmAssistPublish?s=H2Ay8Zv1XgM.rshHQKc5y65ijq6pp-hrMcKKKU9BBTtiolXbhvVjVj0'  style='min-width: 400px; width: 100%; height: 100%; min-height:500px;'></iframe>
 </body>
-</html>
+</html> -->
