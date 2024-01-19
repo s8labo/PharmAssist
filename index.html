@@ -23,21 +23,23 @@
             align-items: center;
         }
 
-        .typing-animation img {
-            width: 30px; /* Adjust the width as needed */
-            height: 30px; /* Adjust the height as needed */
+        .typing-animation {
+            font-size: 24px; /* Adjust the font size as needed */
             animation: typingAnimation 1s infinite; /* Adjust the animation duration as needed */
         }
 
         @keyframes typingAnimation {
             0% {
-                opacity: 0.3;
+                content: ".";
             }
-            50% {
-                opacity: 1;
+            33% {
+                content: "..";
+            }
+            66% {
+                content: "...";
             }
             100% {
-                opacity: 0.3;
+                content: "";
             }
         }
     </style>
@@ -48,9 +50,7 @@
         <h1>Dein PharmAssistant: ChatBot für Medikationsanalysen</h1>
     </div>
     <div id="webchat" role="main">
-        <div class="typing-animation">
-            <img src="https://media.tenor.com/hlKEXPvlX48AAAAC/loading-loader.gif" alt="Typing Animation">
-        </div>
+        <div class="typing-animation"></div>
     </div>
     <script>
         const styleSet = window.WebChat.createStyleSet({
@@ -74,6 +74,7 @@
     </script>
 </body>
 </html>
+
 
 
 
