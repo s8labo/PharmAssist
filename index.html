@@ -53,18 +53,7 @@
         <div class="typing-animation"></div>
     </div>
     <script>
-        this.onMessage(async (context, next) => {
-            if (context.activity.text === 'wait') {
-                await context.sendActivities([
-                    { type: ActivityTypes.Typing },
-                    { type: 'delay', value: 3000 },
-                    { type: ActivityTypes.Message, text: 'Finished typing' }
-                ]);
-            } else {
-                await context.sendActivity(`You said '${ context.activity.text }'. Say "wait" to watch me type.`);
-            }
-            await next();
-        });
+
         const styleSet = window.WebChat.createStyleSet({
             rootHeight: '100%',
             rootWidth: '100%',
@@ -88,6 +77,18 @@
             styleSet,
             styleOptions: avatarOptions
         }, document.getElementById('webchat'));
+        this.onMessage(async (context, next) => {
+            if (context.activity.text === 'wait') {
+                await context.sendActivities([
+                    { type: ActivityTypes.Typing },
+                    { type: 'delay', value: 3000 },
+                    { type: ActivityTypes.Message, text: 'Finished typing' }
+                ]);
+            } else {
+                await context.sendActivity(`You said '${ context.activity.text }'. Say "wait" to watch me type.`);
+            }
+            await next();
+        });
     </script>
 </body>
 </html>
