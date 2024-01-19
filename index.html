@@ -41,7 +41,7 @@
             100% {
                 content: "";
             } */
-        } */
+        /* } */ */
     </style>
     <script src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
 </head>
@@ -53,6 +53,18 @@
         <div class="typing-animation"></div>
     </div>
     <script>
+        this.onMessage(async (context, next) => {
+            if (context.activity.text === 'wait') {
+                await context.sendActivities([
+                    { type: ActivityTypes.Typing },
+                    { type: 'delay', value: 3000 },
+                    { type: ActivityTypes.Message, text: 'Finished typing' }
+                ]);
+            } else {
+                await context.sendActivity(`You said '${ context.activity.text }'. Say "wait" to watch me type.`);
+            }
+            await next();
+        });
         const styleSet = window.WebChat.createStyleSet({
             rootHeight: '100%',
             rootWidth: '100%',
@@ -72,7 +84,7 @@
             directLine: window.WebChat.createDirectLine({
                 token: 'AavR0Oh2MoQ.k8agJWGKvkYtM92I0013G-A3eObi4iVxVVGEcZFYLY4'
             }),
-            sendTypingIndicator: true,
+            // sendTypingIndicator: true,
             styleSet,
             styleOptions: avatarOptions
         }, document.getElementById('webchat'));
