@@ -1,25 +1,49 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #webchat {
+            height: 100%;
+            width: 100%;
+            margin-top: 5%;
+            margin-left: 10%;
+            background-color: paleturquoise;
+        }
+
+        @media (max-width: 768px) {
+            #webchat {
+                margin-left: 5%;
+            }
+        }
+    </style>
     <script src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
 </head>
 <body>
-  <div style="height: 100%; width:100%; margin-top:5%; margin-left:10%" id="webchat" role="main"></div>
-  <script>
-     // Set  the CSS rules.
-     const styleSet = window.WebChat.createStyleSet({
-         rootHeight: '100%',
-         rootWidth: '100%',
-         backgroundColor: 'paleturquoise'
-      });
+    <div id="webchat" role="main"></div>
+    <script>
+        const styleSet = window.WebChat.createStyleSet({
+            rootHeight: '100%',
+            rootWidth: '100%',
+            backgroundColor: 'paleturquoise'
+        });
 
-    window.WebChat.renderWebChat({
-      directLine: window.WebChat.createDirectLine({
-          token: 'AavR0Oh2MoQ.k8agJWGKvkYtM92I0013G-A3eObi4iVxVVGEcZFYLY4'}),
-      styleSet
-    }, document.getElementById('webchat'));
-    
-  </script>
+        window.WebChat.renderWebChat({
+            directLine: window.WebChat.createDirectLine({
+                token: 'AavR0Oh2MoQ.k8agJWGKvkYtM92I0013G-A3eObi4iVxVVGEcZFYLY4'
+            }),
+            styleSet
+        }, document.getElementById('webchat'));
+    </script>
 </body>
+</html>
+
 <!-- <!DOCTYPE html>
 <html>
 <head>
