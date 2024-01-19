@@ -8,43 +8,59 @@
             margin: 0;
             padding: 0;
         }
+
         h1 {
             text-align: center;
             padding: 20px;
-            background-color: #f0f0f0; /* Optional: Add a background color for better contrast */
+            background-color: #f0f0f0;
         }
+
         #webchat {
-            height: 80vh;
+            height: 80vh; /* Adjust the percentage as needed */
             width: 100%;
         }
 
-        @media (max-width: 768px) {
-            /* #webchat {
-                margin-left: 5%;
-            } */
+        .typing-animation {
+            background-image: url("https://media.tenor.com/hlKEXPvlX48AAAAC/loading-loader.gif");
+            background-size: cover;
+            width: 30px; /* Adjust the width as needed */
+            height: 30px; /* Adjust the height as needed */
+            animation: typingAnimation 1s infinite; /* Adjust the animation duration as needed */
+        }
+
+        @keyframes typingAnimation {
+            0% {
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0.3;
+            }
         }
     </style>
     <script src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
 </head>
 <body>
     <div>
-        <h3>Dein PharmAssistant: ChatBot für Medikationsanalysen</h3>
+        <h1>Dein PharmAssistant: ChatBot für Medikationsanalysen</h1>
     </div>
-    <div id="webchat" role="main"></div>
+    <div id="webchat" role="main">
+        <div class="typing-animation"></div>
+    </div>
     <script>
         const styleSet = window.WebChat.createStyleSet({
             rootHeight: '100%',
             rootWidth: '100%',
             backgroundColor: 'paleturquoise',
-            typingAnimationDuration: 5000000, 
-            typingAnimationHeight: 2000,
-            typingAnimationWidth: 2000,
-            typingAnimationBackgroundImage: `url('https://media.tenor.com/hlKEXPvlX48AAAAC/loading-loader.gif')` 
         });
+
         const avatarOptions = {
-         botAvatarInitials: 'PA',
-         userAvatarInitials: 'U'
-         };
+            botAvatarInitials: 'PA',
+            userAvatarInitials: 'U'
+        };
+
         window.WebChat.renderWebChat({
             directLine: window.WebChat.createDirectLine({
                 token: 'AavR0Oh2MoQ.k8agJWGKvkYtM92I0013G-A3eObi4iVxVVGEcZFYLY4'
@@ -55,6 +71,7 @@
     </script>
 </body>
 </html>
+
 
 <!-- <!DOCTYPE html>
 <html>
