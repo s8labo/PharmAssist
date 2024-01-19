@@ -10,10 +10,8 @@
         }
 
         #webchat {
-            height: 95%;
+            height: 100%;
             width: 100%;
-            margin-top: 5%;
-            margin-left: 5%;
         }
 
         @media (max-width: 768px) {
@@ -32,14 +30,13 @@
     <script>
         const styleSet = window.WebChat.createStyleSet({
             bubbleBackground: 'rgba(0, 0, 255, .1)',
-            bubbleFromUserBackground: 'rgba(0, 255, 0, .1)',
             rootHeight: '100%',
-            rootWidth: '95%',
+            rootWidth: '100%',
             backgroundColor: 'paleturquoise'
         });
         const avatarOptions = {
          botAvatarInitials: 'PA',
-         userAvatarInitials: 'YOU'
+         userAvatarInitials: 'U'
          };
         window.WebChat.renderWebChat({
             directLine: window.WebChat.createDirectLine({
