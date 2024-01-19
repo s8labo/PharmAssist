@@ -29,7 +29,6 @@
     <div id="webchat" role="main"></div>
     <script>
         const styleSet = window.WebChat.createStyleSet({
-            bubbleBackground: 'rgba(0, 0, 255, .1)',
             rootHeight: '100%',
             rootWidth: '100%',
             backgroundColor: 'paleturquoise'
@@ -42,7 +41,8 @@
             directLine: window.WebChat.createDirectLine({
                 token: 'AavR0Oh2MoQ.k8agJWGKvkYtM92I0013G-A3eObi4iVxVVGEcZFYLY4'
             }),
-            styleSet
+            styleSet,
+            styleOptions: avatarOptions
         }, document.getElementById('webchat'));
     </script>
 </body>
