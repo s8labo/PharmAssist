@@ -12,8 +12,8 @@
         #webchat {
             height: 100%;
             width: 100%;
-            /* margin-top: 5%;
-            margin-left: 10%; */
+            margin-top: 5%;
+            margin-left: 5%;
         }
 
         @media (max-width: 768px) {
@@ -25,15 +25,20 @@
     <script src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
 </head>
 <body>
+    <div>
+        <h1>Dein PharmAssistant: ChatBot für Medikationsanalysen</h1>
+    </div>
     <div id="webchat" role="main"></div>
-    <h1>Dein PharmAssistant: ChatBot für Medikationsanalysen</h1>
     <script>
         const styleSet = window.WebChat.createStyleSet({
-            rootHeight: '95%',
+            rootHeight: '100%',
             rootWidth: '95%',
             backgroundColor: 'paleturquoise'
         });
-
+        const avatarOptions = {
+         botAvatarInitials: 'PA',
+         userAvatarInitials: 'YOU'
+         };
         window.WebChat.renderWebChat({
             directLine: window.WebChat.createDirectLine({
                 token: 'AavR0Oh2MoQ.k8agJWGKvkYtM92I0013G-A3eObi4iVxVVGEcZFYLY4'
