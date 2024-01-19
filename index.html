@@ -18,15 +18,15 @@
         #webchat {
             height: 80vh; /* Adjust the percentage as needed */
             width: 100%;
-            display: flex;
+            /* display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: center; */
         }
 
-        .typing-animation {
+        /* .typing-animation {
             font-size: 24px; /* Adjust the font size as needed */
-            animation: typingAnimation 10000s infinite; /* Adjust the animation duration as needed */
-        }
+            /* animation: typingAnimation 10000s infinite; Adjust the animation duration as needed */
+        /* }
 
         @keyframes typingAnimation {
             0% {
@@ -40,8 +40,8 @@
             }
             100% {
                 content: "";
-            }
-        }
+            } */
+        } */
     </style>
     <script src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
 </head>
@@ -57,6 +57,10 @@
             rootHeight: '100%',
             rootWidth: '100%',
             backgroundColor: 'paleturquoise',
+            typingAnimationBackgroundImage: 'url(https://media.tenor.com/hlKEXPvlX48AAAAC/loading-loader.gif)',
+            typingAnimationDuration: 5000, // Adjust the duration as needed
+            typingAnimationHeight: 20,
+            typingAnimationWidth: 64
         });
 
         const avatarOptions = {
