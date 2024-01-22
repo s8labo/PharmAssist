@@ -45,10 +45,10 @@
         const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
         const sendMessageWithDelay = async (message) => {
-            // Introduce a delay of 3 seconds before sending the message
-            await delay(30000);
-            directLine.postActivity({ type: 'message', text: message, from: { id: 'user' } });
-        };
+        // Introduce a delay of 3 seconds before sending the message
+        await delay(8000);
+        directLine.postActivity({ type: 'message', text: message });
+    };
 
         window.WebChat.renderWebChat({
             directLine: window.WebChat.createDirectLine({
@@ -56,12 +56,8 @@
             }),
             styleSet,
             styleOptions: avatarOptions,
-            user: { id: 'user' },
-            userID: 'user',
-            username: 'User',
-            locale: 'en-US',
+            user: {},
             bot: { id: 'bot' },
-            botID: 'bot',
             botName: 'PharmAssistant',
             showUploadButton: false,
             selectVoice: undefined,
