@@ -46,7 +46,7 @@
 
         const sendMessageWithDelay = async (message) => {
             // Introduce a delay of 3 seconds before sending the message
-            await delay(3000);
+            await delay(30000);
             directLine.postActivity({ type: 'message', text: message, from: { id: 'user' } });
         };
 
