@@ -18,36 +18,13 @@
         #webchat {
             height: 80vh; /* Adjust the percentage as needed */
             width: 100%;
-            /* display: flex;
-            justify-content: center;
-            align-items: center; */
         }
-
-        /* .typing-animation {
-            font-size: 24px; /* Adjust the font size as needed */
-            /* animation: typingAnimation 10000s infinite; Adjust the animation duration as needed */
-        /* }
-
-        @keyframes typingAnimation {
-            0% {
-                content: ".";
-            }
-            33% {
-                content: "..";
-            }
-            66% {
-                content: "...";
-            }
-            100% {
-                content: "";
-            } */
-        /* } */ */
     </style>
     <script src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
 </head>
 <body>
     <div>
-        <h3>Dein PharmAssistant: ChatBot für Medikationsanalysen</h3>
+        <h3>PharmAssistant: ChatBot für Medikationsanalysen</h3>
     </div>
     <div id="webchat" role="main">
         <div class="typing-animation"></div>
@@ -58,7 +35,7 @@
             rootHeight: '100%',
             rootWidth: '100%',
             backgroundColor: 'paleturquoise',
-            // typingAnimationBackgroundImage: null,
+            typingAnimationBackgroundImage: null,
             typingAnimationDuration: 5000, // Adjust the duration as needed
             typingAnimationHeight: 20,
             typingAnimationWidth: 64
@@ -73,22 +50,10 @@
             directLine: window.WebChat.createDirectLine({
                 token: 'AavR0Oh2MoQ.k8agJWGKvkYtM92I0013G-A3eObi4iVxVVGEcZFYLY4'
             }),
-            // sendTypingIndicator: true,
+            sendTypingIndicator: true,
             styleSet,
             styleOptions: avatarOptions
         }, document.getElementById('webchat'));
-        this.onMessage(async (context, next) => {
-            if (context.activity.text === 'wait') {
-                await context.sendActivities([
-                    { type: ActivityTypes.Typing },
-                    { type: 'delay', value: 3000 },
-                    { type: ActivityTypes.Message, text: 'Finished typing' }
-                ]);
-            } else {
-                await context.sendActivity(`You said '${ context.activity.text }'. Say "wait" to watch me type.`);
-            }
-            await next();
-        });
     </script>
 </body>
 </html>
