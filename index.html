@@ -34,11 +34,7 @@
         const styleSet = window.WebChat.createStyleSet({
             rootHeight: '100%',
             rootWidth: '100%',
-            backgroundColor: 'paleturquoise',
-            typingAnimationBackgroundImage: null,
-            typingAnimationDuration: 50000, // Adjust the duration as needed
-            typingAnimationHeight: 20,
-            typingAnimationWidth: 64
+            backgroundColor: 'paleturquoise'
         });
 
         const avatarOptions = {
@@ -46,12 +42,30 @@
             userAvatarInitials: 'U'
         };
 
+        const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+        const sendMessageWithDelay = async (message) => {
+            // Introduce a delay of 3 seconds before sending the message
+            await delay(3000);
+            directLine.postActivity({ type: 'message', text: message, from: { id: 'user' } });
+        };
+
         window.WebChat.renderWebChat({
             directLine: window.WebChat.createDirectLine({
                 token: 'AavR0Oh2MoQ.k8agJWGKvkYtM92I0013G-A3eObi4iVxVVGEcZFYLY4'
             }),
             styleSet,
-            styleOptions: avatarOptions
+            styleOptions: avatarOptions,
+            user: { id: 'user' },
+            userID: 'user',
+            username: 'User',
+            locale: 'en-US',
+            bot: { id: 'bot' },
+            botID: 'bot',
+            botName: 'PharmAssistant',
+            showUploadButton: false,
+            selectVoice: undefined,
+            sendMessage: sendMessageWithDelay
         }, document.getElementById('webchat'));
     </script>
 </body>
