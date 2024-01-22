@@ -42,13 +42,25 @@
             userAvatarInitials: 'U'
         };
 
+        // Function to simulate delay
         const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
         const sendMessageWithDelay = async (message) => {
-        // Introduce a delay of 3 seconds before sending the message
-        await delay(8000);
-        directLine.postActivity({ type: 'message', text: message });
-    };
+            directLine.postActivity({ type: 'message', text: message });
+
+            // Introduce a delay of 3 seconds before displaying the bot's response
+            await delay(3000);
+
+            // Fetch the activities from the conversation and display them
+            const activities = await directLine.getActivity();
+            activities.forEach(activity => displayActivity(activity));
+        };
+
+        const displayActivity = (activity) => {
+            // Code to display the activity in your web chat interface
+            // This may involve updating the DOM or using WebChat's APIs
+        };
+
 
         window.WebChat.renderWebChat({
             directLine: window.WebChat.createDirectLine({
