@@ -42,6 +42,26 @@
             userAvatarInitials: 'U'
         };
 
+        // Function to simulate delay
+        const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+        const sendMessageWithDelay = async (message) => {
+            directLine.postActivity({ type: 'message', text: message });
+
+            // Introduce a delay of 3 seconds before displaying the bot's response
+            await delay(5000);
+
+            // Fetch the activities from the conversation and display them
+            const activities = await directLine.getActivity();
+            activities.forEach(activity => displayActivity(activity));
+        };
+
+        const displayActivity = (activity) => {
+            // Code to display the activity in your web chat interface
+            // This may involve updating the DOM or using WebChat's APIs
+        };
+
+
         window.WebChat.renderWebChat({
             directLine: window.WebChat.createDirectLine({
                 token: 'AavR0Oh2MoQ.k8agJWGKvkYtM92I0013G-A3eObi4iVxVVGEcZFYLY4'
@@ -52,7 +72,8 @@
             bot: { id: 'bot' },
             botName: 'PharmAssistant',
             showUploadButton: false,
-            selectVoice: undefined
+            selectVoice: undefined,
+            sendMessage: sendMessageWithDelay
         }, document.getElementById('webchat'));
     </script>
 </body>
