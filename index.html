@@ -25,22 +25,11 @@
     <div id="webchat" role="main"></div>
     <script>
       (async function() {
-        const fetchCredentials = async () => {
-          const res = await fetch('https://pharmassistpublish.azurewebsites.net/speechservices/token', {
-            method: 'POST'
-          });
-
-          if (!res.ok) {
-            throw new Error('Failed to fetch authorization token and region.');
-          }
-
-          const { region, token: authorizationToken } = await res.json();
-
-          return { authorizationToken, region };
-        };
-
         const adapters = await window.WebChat.createDirectLineSpeechAdapters({
-          fetchCredentials
+            fetchCredentials: {
+                region: 'germanywestcentral',
+                subscriptionKey: '724b12cefed2442c9df696992b249f89'
+            }
         });
 
         window.WebChat.renderWebChat(
