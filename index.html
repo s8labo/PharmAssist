@@ -43,29 +43,36 @@
         };
 
         // Function to simulate delay
-        const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+        // const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-        const sendMessageWithDelay = async (message) => {
-            directLine.postActivity({ type: 'message', text: message });
+        // const sendMessageWithDelay = async (message) => {
+        //     directLine.postActivity({ type: 'message', text: message });
 
-            // Introduce a delay of 3 seconds before displaying the bot's response
-            await delay(5000);
+        //     // Introduce a delay of 3 seconds before displaying the bot's response
+        //     // await delay(5000);
 
-            // Fetch the activities from the conversation and display them
-            const activities = await directLine.getActivity();
-            activities.forEach(activity => displayActivity(activity));
-        };
+        //     // Fetch the activities from the conversation and display them
+        //     const activities = await directLine.getActivity();
+        //     activities.forEach(activity => displayActivity(activity));
+        // };
 
-        const displayActivity = (activity) => {
-            // Code to display the activity in your web chat interface
-            // This may involve updating the DOM or using WebChat's APIs
-        };
+        // const displayActivity = (activity) => {
+        //     // Code to display the activity in your web chat interface
+        //     // This may involve updating the DOM or using WebChat's APIs
+        // };
 
+        const adapters = await window.WebChat.createDirectLineSpeechAdapters({
+            fetchCredentials: {
+                region: 'germanywestcentral',
+                subscriptionKey: '724b12cefed2442c9df696992b249f89'
+            }
+        });
 
         window.WebChat.renderWebChat({
-            directLine: window.WebChat.createDirectLine({
-                token: 'AavR0Oh2MoQ.k8agJWGKvkYtM92I0013G-A3eObi4iVxVVGEcZFYLY4'
-            }),
+            // directLine: window.WebChat.createDirectLine({
+            //     token: 'AavR0Oh2MoQ.k8agJWGKvkYtM92I0013G-A3eObi4iVxVVGEcZFYLY4'
+            // }),
+            ...adapters,
             styleSet,
             styleOptions: avatarOptions,
             user: {},
