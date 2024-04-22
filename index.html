@@ -121,10 +121,9 @@
         });
 
         window.WebChat.renderWebChat({
-            // directLine: window.WebChat.createDirectLine({
-            //     token: 'AavR0Oh2MoQ.k8agJWGKvkYtM92I0013G-A3eObi4iVxVVGEcZFYLY4'
-            // }),
-            ...adapters,
+            directLine: window.WebChat.createDirectLine({
+                token: 'AavR0Oh2MoQ.k8agJWGKvkYtM92I0013G-A3eObi4iVxVVGEcZFYLY4'
+            }),
             styleSet,
             styleOptions: avatarOptions,
             user: {},
