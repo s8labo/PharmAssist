@@ -32,9 +32,15 @@
             }
         });
 
+        const avatarOptions = {
+            botAvatarInitials: 'PA',
+            userAvatarInitials: 'U'
+        };
+
         window.WebChat.renderWebChat(
           {
-            ...adapters
+            ...adapters,
+            avatarOptions
           },
           document.getElementById('webchat')
         );
