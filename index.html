@@ -113,17 +113,18 @@
             // This may involve updating the DOM or using WebChat's APIs
         };
 
-        // const adapters = await window.WebChat.createDirectLineSpeechAdapters({
-        //     fetchCredentials: {
-        //         region: 'germanywestcentral',
-        //         subscriptionKey: '724b12cefed2442c9df696992b249f89'
-        //     }
-        // });
+        const webSpeechPonyfillFactory = await window.WebChat.createCognitiveServicesSpeechServicesPonyfillFactory( {
+            credentials: {
+                region: 'germanywestcentral',
+                subscriptionKey: '724b12cefed2442c9df696992b249f89'
+            }
+        });
 
         window.WebChat.renderWebChat({
             directLine: window.WebChat.createDirectLine({
                 token: 'AavR0Oh2MoQ.k8agJWGKvkYtM92I0013G-A3eObi4iVxVVGEcZFYLY4'
             }),
+            webSpeechPonyfillFactory,
             styleSet,
             styleOptions: avatarOptions,
             user: {},
