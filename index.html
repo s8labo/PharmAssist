@@ -82,13 +82,14 @@
         <div class="typing-animation"></div>
     </div>
     <script>
+      (async function() {
         const webSpeechPonyfillFactory = await window.WebChat.createCognitiveServicesSpeechServicesPonyfillFactory( {
             credentials: {
                 region: 'germanywestcentral',
                 subscriptionKey: '724b12cefed2442c9df696992b249f89'
             }
         });
-        
+
         const styleSet = window.WebChat.createStyleSet({
             rootHeight: '100%',
             rootWidth: '100%',
@@ -133,6 +134,7 @@
             selectVoice: undefined,
             sendMessage: sendMessageWithDelay
         }, document.getElementById('webchat'));
+      })().catch(err => console.error(err));
     </script>
 </body>
 </html>
