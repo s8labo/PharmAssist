@@ -82,7 +82,13 @@
         <div class="typing-animation"></div>
     </div>
     <script>
-
+        const webSpeechPonyfillFactory = await window.WebChat.createCognitiveServicesSpeechServicesPonyfillFactory( {
+            credentials: {
+                region: 'germanywestcentral',
+                subscriptionKey: '724b12cefed2442c9df696992b249f89'
+            }
+        });
+        
         const styleSet = window.WebChat.createStyleSet({
             rootHeight: '100%',
             rootWidth: '100%',
@@ -112,13 +118,6 @@
             // Code to display the activity in your web chat interface
             // This may involve updating the DOM or using WebChat's APIs
         };
-
-        const webSpeechPonyfillFactory = await window.WebChat.createCognitiveServicesSpeechServicesPonyfillFactory( {
-            credentials: {
-                region: 'germanywestcentral',
-                subscriptionKey: '724b12cefed2442c9df696992b249f89'
-            }
-        });
 
         window.WebChat.renderWebChat({
             directLine: window.WebChat.createDirectLine({
