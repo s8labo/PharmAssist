@@ -113,36 +113,27 @@
             // This may involve updating the DOM or using WebChat's APIs
         };
 
-        const { createCognitiveServicesSpeechServicesPonyfillFactory, createDirectLine, renderWebChat } = window.WebChat;
-
-        renderWebChat(
-          {
-            directLine: createDirectLine({
-              secret: 'AavR0Oh2MoQ.k8agJWGKvkYtM92I0013G-A3eObi4iVxVVGEcZFYLY4'
-            }),
-            locale: 'de-DE',
-            webSpeechPonyfillFactory: await createCognitiveServicesSpeechServicesPonyfillFactory({
-              credentials: {
+        const adapters = await window.WebChat.createDirectLineSpeechAdapters({
+            fetchCredentials: {
                 region: 'germanywestcentral',
                 subscriptionKey: '724b12cefed2442c9df696992b249f89'
-              }
-            })
-          },
-          document.getElementById('webchat')
-        );
-        // window.WebChat.renderWebChat({
-        //     directLine: window.WebChat.createDirectLine({
-        //         token: 'AavR0Oh2MoQ.k8agJWGKvkYtM92I0013G-A3eObi4iVxVVGEcZFYLY4'
-        //     }),
-        //     styleSet,
-        //     styleOptions: avatarOptions,
-        //     user: {},
-        //     bot: { id: 'bot' },
-        //     botName: 'PharmAssistant',
-        //     showUploadButton: false,
-        //     selectVoice: undefined,
-        //     sendMessage: sendMessageWithDelay
-        // }, document.getElementById('webchat'));
+            }
+        });
+
+        window.WebChat.renderWebChat({
+            directLine: window.WebChat.createDirectLine({
+                token: 'AavR0Oh2MoQ.k8agJWGKvkYtM92I0013G-A3eObi4iVxVVGEcZFYLY4'
+            }),
+            adapters,
+            styleSet,
+            styleOptions: avatarOptions,
+            user: {},
+            bot: { id: 'bot' },
+            botName: 'PharmAssistant',
+            showUploadButton: false,
+            selectVoice: undefined,
+            sendMessage: sendMessageWithDelay
+        }, document.getElementById('webchat'));
     </script>
 </body>
 </html>
