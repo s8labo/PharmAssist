@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en-US">
   <head>
     <title>Web Chat: Using Direct Line Speech</title>
@@ -49,8 +49,8 @@
       })().catch(err => console.error(err));
     </script>
   </body>
-</html>
-<!-- <!DOCTYPE html>
+</html> -->
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -76,7 +76,7 @@
 </head>
 <body>
     <div>
-        <h3>PharmAssistant: ChatBot für Medikationsanalysen</h3>
+        <h3>PharmAssistant für Medikationsanalysen</h3>
     </div>
     <div id="webchat" role="main">
         <div class="typing-animation"></div>
@@ -113,23 +113,39 @@
             // This may involve updating the DOM or using WebChat's APIs
         };
 
+        const { createCognitiveServicesSpeechServicesPonyfillFactory, createDirectLine, renderWebChat } = window.WebChat;
 
-        window.WebChat.renderWebChat({
-            directLine: window.WebChat.createDirectLine({
-                token: 'AavR0Oh2MoQ.k8agJWGKvkYtM92I0013G-A3eObi4iVxVVGEcZFYLY4'
+        renderWebChat(
+          {
+            directLine: createDirectLine({
+              secret: 'AavR0Oh2MoQ.k8agJWGKvkYtM92I0013G-A3eObi4iVxVVGEcZFYLY4'
             }),
-            styleSet,
-            styleOptions: avatarOptions,
-            user: {},
-            bot: { id: 'bot' },
-            botName: 'PharmAssistant',
-            showUploadButton: false,
-            selectVoice: undefined,
-            sendMessage: sendMessageWithDelay
-        }, document.getElementById('webchat'));
+            locale: 'de-DE',
+            webSpeechPonyfillFactory: await createCognitiveServicesSpeechServicesPonyfillFactory({
+              credentials: {
+                region: 'germanywestcentral',
+                subscriptionKey: '724b12cefed2442c9df696992b249f89'
+              }
+            })
+          },
+          document.getElementById('webchat')
+        );
+        // window.WebChat.renderWebChat({
+        //     directLine: window.WebChat.createDirectLine({
+        //         token: 'AavR0Oh2MoQ.k8agJWGKvkYtM92I0013G-A3eObi4iVxVVGEcZFYLY4'
+        //     }),
+        //     styleSet,
+        //     styleOptions: avatarOptions,
+        //     user: {},
+        //     bot: { id: 'bot' },
+        //     botName: 'PharmAssistant',
+        //     showUploadButton: false,
+        //     selectVoice: undefined,
+        //     sendMessage: sendMessageWithDelay
+        // }, document.getElementById('webchat'));
     </script>
 </body>
-</html> -->
+</html>
 
 
 
