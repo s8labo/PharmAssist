@@ -125,13 +125,10 @@
                 token: 'AavR0Oh2MoQ.k8agJWGKvkYtM92I0013G-A3eObi4iVxVVGEcZFYLY4'
             }),
             webSpeechPonyfillFactory,
+            enableTelemetry: false,
             styleSet,
             styleOptions: avatarOptions,
-            user: {},
-            bot: { id: 'bot' },
             botName: 'PharmAssistant',
-            showUploadButton: false,
-            selectVoice: undefined,
             sendMessage: sendMessageWithDelay
         }, document.getElementById('webchat'));
       })().catch(err => console.error(err));
