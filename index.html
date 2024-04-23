@@ -106,14 +106,25 @@
             userAvatarInitials: 'U'
         };
 
-        return options => {
-          const speechServicesPonyfill = speechServicesPonyfillFactory(options);
-          
-          return {
-             SpeechGrammarList: speechServicesPonyfill.SpeechGrammarList,
-             SpeechRecognition: speechServicesPonyfill.SpeechRecognition
-           };
-         };
+        async function createSpeechRecognitionOnlyPonyfillFactory() {
+          const speechServicesPonyfillFactory = await window.WebChat.createCognitiveServicesSpeechServicesPonyfillFactory(
+            {
+              credentials: {
+                region: 'germanywestcentral',
+                subscriptionKey: '724b12cefed2442c9df696992b249f89'
+            }
+            }
+          );
+
+          return options => {
+            const speechServicesPonyfill = speechServicesPonyfillFactory(options);
+
+            return {
+              SpeechGrammarList: speechServicesPonyfill.SpeechGrammarList,
+              SpeechRecognition: speechServicesPonyfill.SpeechRecognition
+            };
+          };
+        }
 
         // Function to simulate delay
         const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
