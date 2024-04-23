@@ -107,25 +107,25 @@
             userAvatarInitials: 'U'
         };
 
-        async function createSpeechRecognitionOnlyPonyfillFactory() {
-          const speechServicesPonyfillFactory = await window.WebChat.createCognitiveServicesSpeechServicesPonyfillFactory(
-            {
-              credentials: {
-                region: 'germanywestcentral',
-                subscriptionKey: '724b12cefed2442c9df696992b249f89'
-            }
-            }
-          );
+        // async function createSpeechRecognitionOnlyPonyfillFactory() {
+        //   const speechServicesPonyfillFactory = await window.WebChat.createCognitiveServicesSpeechServicesPonyfillFactory(
+        //     {
+        //       credentials: {
+        //         region: 'germanywestcentral',
+        //         subscriptionKey: '724b12cefed2442c9df696992b249f89'
+        //     }
+        //     }
+        //   );
 
-          return options => {
-            const speechServicesPonyfill = speechServicesPonyfillFactory(options);
+        //   return options => {
+        //     const speechServicesPonyfill = speechServicesPonyfillFactory(options);
 
-            return {
-              SpeechGrammarList: speechServicesPonyfill.SpeechGrammarList,
-              SpeechRecognition: speechServicesPonyfill.SpeechRecognition
-            };
-          };
-        }
+        //     return {
+        //       SpeechGrammarList: speechServicesPonyfill.SpeechGrammarList,
+        //       SpeechRecognition: speechServicesPonyfill.SpeechRecognition
+        //     };
+        //   };
+        // }
 
         // Function to simulate delay
         const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -150,7 +150,7 @@
             directLine: window.WebChat.createDirectLine({
                 token: 'AavR0Oh2MoQ.k8agJWGKvkYtM92I0013G-A3eObi4iVxVVGEcZFYLY4'
             }),
-            webSpeechPonyfillFactory: await createSpeechRecognitionOnlyPonyfillFactory(),
+            // webSpeechPonyfillFactory: await createSpeechRecognitionOnlyPonyfillFactory(),
             enableTelemetry: false,
             styleSet,
             styleOptions: avatarOptions,
