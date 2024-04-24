@@ -107,16 +107,14 @@
             userAvatarInitials: 'U'
         };
 
-        async function createSpeechRecognitionOnlyPonyfillFactory() {
+        async function createSpeechRecognitionOnlyPonyfillFactory({ authorizationToken, region }) {
           const speechServicesPonyfillFactory = await window.WebChat.createCognitiveServicesSpeechServicesPonyfillFactory(
             {
-              credentials: {
-                region: 'germanywestcentral',
-                subscriptionKey: '724b12cefed2442c9df696992b249f89'
-            }
+              authorizationToken: '724b12cefed2442c9df696992b249f89',
+              region: 'germanywestcentral'
             }
           );
-
+          const webSpeechPonyfillFactory = await window.WebChat.createBrowserWebSpeechPonyfillFactory();
           return options => {
             const speechServicesPonyfill = speechServicesPonyfillFactory(options);
             const webSpeechPonyfill = webSpeechPonyfillFactory(options);
@@ -154,7 +152,7 @@
                 token: 'AavR0Oh2MoQ.k8agJWGKvkYtM92I0013G-A3eObi4iVxVVGEcZFYLY4'
             }),
             // webSpeechPonyfillFactory,
-            webSpeechPonyfillFactory: await createSpeechRecognitionOnlyPonyfillFactory(),
+            webSpeechPonyfillFactory: await createSpeechRecognitionOnlyPonyfillFactory({ authorizationToken, region }),
             enableTelemetry: false,
             styleSet,
             styleOptions: avatarOptions,
