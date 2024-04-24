@@ -89,12 +89,12 @@
     </div>
     <script>
       (async function() {
-        // const webSpeechPonyfillFactory = await window.WebChat.createCognitiveServicesSpeechServicesPonyfillFactory( {
-        //     credentials: {
-        //         region: 'germanywestcentral',
-        //         subscriptionKey: '724b12cefed2442c9df696992b249f89'
-        //     }
-        // });
+        const webSpeechPonyfillFactory = await window.WebChat.createCognitiveServicesSpeechServicesPonyfillFactory( {
+            fetchCredentials: {
+                region: 'germanywestcentral',
+                subscriptionKey: '724b12cefed2442c9df696992b249f89'
+            }
+        });
 
         const styleSet = window.WebChat.createStyleSet({
             rootHeight: '100%',
@@ -107,11 +107,11 @@
             userAvatarInitials: 'U'
         };
 
-        const fetchCredentials =  { credentials: {
-                region: 'germanywestcentral',
-                subscriptionKey: '724b12cefed2442c9df696992b249f89'
-            }
-          }
+        // const fetchCredentials =  { credentials: {
+        //         region: 'germanywestcentral',
+        //         subscriptionKey: '724b12cefed2442c9df696992b249f89'
+        //     }
+        //   }
 
         async function createHybridPonyfillFactory({ credentials }) {
           const speechServicesPonyfillFactory = await window.WebChat.createCognitiveServicesSpeechServicesPonyfillFactory(
