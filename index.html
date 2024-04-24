@@ -107,11 +107,13 @@
             userAvatarInitials: 'U'
         };
 
-        async function createHybridPonyfillFactory({ subscriptionKey, region }) {
+        async function createHybridPonyfillFactory({ credentials }) {
           const speechServicesPonyfillFactory = await window.WebChat.createCognitiveServicesSpeechServicesPonyfillFactory(
             {
-              subscriptionKey: '724b12cefed2442c9df696992b249f89',
-              region: 'germanywestcentral'
+              credentials: {
+                region: 'germanywestcentral',
+                subscriptionKey: '724b12cefed2442c9df696992b249f89'
+            }
             }
           );
 
@@ -155,7 +157,7 @@
                 token: 'AavR0Oh2MoQ.k8agJWGKvkYtM92I0013G-A3eObi4iVxVVGEcZFYLY4'
             }),
             // webSpeechPonyfillFactory,
-            webSpeechPonyfillFactory: await createHybridPonyfillFactory({ subscriptionKey: '724b12cefed2442c9df696992b249f89', region: 'germanywestcentral' }),
+            webSpeechPonyfillFactory: await createHybridPonyfillFactory({ credentials }),
             enableTelemetry: false,
             styleSet,
             styleOptions: avatarOptions,
