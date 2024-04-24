@@ -107,36 +107,28 @@
             userAvatarInitials: 'U'
         };
 
-        // const fetchCredentials =  { credentials: {
+        // async function createSpeechRecognitionOnlyPonyfillFactory() {
+        //   const speechServicesPonyfillFactory = await window.WebChat.createCognitiveServicesSpeechServicesPonyfillFactory(
+        //     {
+        //       credentials: {
         //         region: 'germanywestcentral',
         //         subscriptionKey: '724b12cefed2442c9df696992b249f89'
         //     }
-        //   }
-        const fetchKey = '724b12cefed2442c9df696992b249f89'
-        const fetchRegion = 'germanywestcentral'
+        //     }
+        //   );
 
-        async function createHybridPonyfillFactory({ subscriptionKey, region }) {
-          const speechServicesPonyfillFactory = await window.WebChat.createCognitiveServicesSpeechServicesPonyfillFactory(
-            {
-              subscriptionKey, region
-            }
-          );
+        //   return options => {
+        //     const speechServicesPonyfill = speechServicesPonyfillFactory(options);
+        //     const webSpeechPonyfill = webSpeechPonyfillFactory(options);
 
-          const webSpeechPonyfillFactory = await window.WebChat.createBrowserWebSpeechPonyfillFactory();
-
-          return options => {
-            const speechServicesPonyfill = speechServicesPonyfillFactory(options);
-            const webSpeechPonyfill = webSpeechPonyfillFactory(options);
-
-            return {
-              SpeechGrammarList: speechServicesPonyfill.SpeechGrammarList,
-              SpeechRecognition: speechServicesPonyfill.SpeechRecognition,
-
-              speechSynthesis: null,
-              SpeechSynthesisUtterance: null
-            };
-          };
-        }
+        //     return {
+        //       SpeechGrammarList: speechServicesPonyfill.SpeechGrammarList,
+        //       SpeechRecognition: speechServicesPonyfill.SpeechRecognition,
+        //       speechSynthesis: null,
+        //       SpeechSynthesisUtterance: null
+        //     };
+        //   };
+        // }
 
         // Function to simulate delay
         const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -162,7 +154,7 @@
                 token: 'AavR0Oh2MoQ.k8agJWGKvkYtM92I0013G-A3eObi4iVxVVGEcZFYLY4'
             }),
             // webSpeechPonyfillFactory,
-            webSpeechPonyfillFactory: await createHybridPonyfillFactory({subscriptionKey: fetchKey, region: fetchRegion}),
+            webSpeechPonyfillFactory: await createSpeechRecognitionOnlyPonyfillFactory(),
             enableTelemetry: false,
             styleSet,
             styleOptions: avatarOptions,
