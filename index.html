@@ -61,6 +61,16 @@
   </style>
   <!-- Azure Speech SDK for Browser -->
   <script src="https://cdn.jsdelivr.net/npm/microsoft-cognitiveservices-speech-sdk@1.15.0/distrib/browser/microsoft.cognitiveservices.speech.sdk.bundle-min.js"></script>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.module.js/+esm",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.161.0/examples/jsm/",
+      "talkinghead": "https://cdn.jsdelivr.net/gh/met4citizen/TalkingHead@1.2/modules/talkinghead.mjs"
+    }
+  }
+  </script>
 </head>
 <body>
   <div id="avatar"></div>
@@ -71,18 +81,51 @@
   <div id="loading"></div>
 
   <script type="module">
+    import { TalkingHead } from "talkinghead";
+
     // Replace with your Azure Speech service credentials
     const AZURE_KEY = "724b12cefed2442c9df696992b249f89";  // Replace with your Azure Speech API key
-    const AZURE_REGION = "https://germanywestcentral.tts.speech.microsoft.com/cognitiveservices/v1";  // Replace with your Azure region
-
+    const AZURE_REGION = "https://germanywestcentral.tts.speech.microsoft.com/cognitiveservices/v1'";  // Replace with your Azure region
     let synthesizer;
+    let head;
 
     document.addEventListener('DOMContentLoaded', async function () {
+      // Initialize the avatar
+      const nodeAvatar = document.getElementById('avatar');
+      head = new TalkingHead(nodeAvatar, {
+        ttsEndpoint: "",
+        ttsApikey: "",
+        lipsyncModules: ["en"],
+        cameraView: "upper"
+      });
+
+      // Load and show the avatar
+      const nodeLoading = document.getElementById('loading');
+      try {
+        nodeLoading.textContent = "Loading...";
+        await head.showAvatar({
+          url: 'https://models.readyplayer.me/64bfa15f0e72c63d7c3934a6.glb?morphTargets=ARKit,Oculus+Visemes,mouthOpen,mouthSmile,eyesClosed,eyesLookUp,eyesLookDown&textureSizeLimit=1024&textureFormat=png',
+          body: 'F',
+          avatarMood: 'neutral',
+          lipsyncLang: 'en'
+        }, (ev) => {
+          if (ev.lengthComputable) {
+            let val = Math.min(100, Math.round(ev.loaded / ev.total * 100));
+            nodeLoading.textContent = "Loading " + val + "%";
+          }
+        });
+        nodeLoading.style.display = 'none';
+      } catch (error) {
+        console.log(error);
+        nodeLoading.textContent = error.toString();
+      }
+
+      // Initialize Azure Speech SDK
       const speechConfig = SpeechSDK.SpeechConfig.fromSubscription(AZURE_KEY, AZURE_REGION);
       const audioConfig = SpeechSDK.AudioConfig.fromDefaultSpeakerOutput();
-
       synthesizer = new SpeechSDK.SpeechSynthesizer(speechConfig, audioConfig);
 
+      // Speak when clicked
       const nodeSpeak = document.getElementById('speak');
       nodeSpeak.addEventListener('click', async function () {
         const text = document.getElementById('text').value;
@@ -105,7 +148,7 @@
         ssml,
         result => {
           console.log('Speech synthesized:', result);
-          // Add your lip-sync logic here based on viseme events
+          head.speakText(text);  // Trigger lip-sync animation based on the text
         },
         error => {
           console.error('Error synthesizing speech:', error);
