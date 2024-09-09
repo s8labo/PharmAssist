@@ -95,7 +95,7 @@
     }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/microsoft-cognitiveservices-speech-sdk@latest/distrib/browser/microsoft.cognitiveservices.speech.sdk.bundle-min.js">
-    </script>
+</script>
 
     <script type="module">
     import { TalkingHead } from "talkinghead";
@@ -143,39 +143,57 @@
 
       // Function to convert text to speech using Microsoft TTS
       async function speakText(text) {
-        const speechConfig = SpeechSDK.SpeechConfig.fromSubscription(apiKey, region);
-        speechConfig.speechSynthesisVoiceName = 'de-DE-KatjaNeural';  // Set to German voice
-        const audioConfig = SpeechSDK.AudioConfig.fromDefaultSpeakerOutput();
-        const synthesizer = new SpeechSDK.SpeechSynthesizer(speechConfig, audioConfig);
-
-        // Subscribe to viseme event
-        synthesizer.visemeReceived = (s, e) => {
-          console.log(`Viseme received: ID: ${e.visemeId}, Offset: ${e.audioOffset / 10000}ms`);
-          // Use viseme ID to trigger corresponding mouth shape on the avatar
-          head.triggerViseme(e.visemeId);  // Update the avatar's mouth movement with visemeId
-        };
-
-        // Handle audio synthesis
-        synthesizer.speakTextAsync(text, result => {
-          if (result.reason === SpeechSDK.ResultReason.SynthesizingAudioCompleted) {
-            console.log('Speech synthesis completed.');
-          } else {
-            console.error('Speech synthesis canceled: ' + result.errorDetails);
+        try {
+            // Create or resume AudioContext after user interaction
+          if (!window.audioContext || window.audioContext.state === 'closed') {
+            window.audioContext = new (window.AudioContext || window.webkitAudioContext)();
           }
-        }, error => {
-          console.error('Error during speech synthesis: ', error);
-        });
+          if (window.audioContext.state === 'suspended') {
+            await window.audioContext.resume();
+          }
+
+          // Make the request to the TTS API
+          const response = await fetch(ttsEndpoint, {
+            method: 'POST',
+            headers: {
+              'Ocp-Apim-Subscription-Key': apiKey,
+              'Content-Type': 'application/ssml+xml',
+              'X-Microsoft-OutputFormat': 'riff-16khz-16bit-mono-pcm' // Adjust format if needed
+            },
+            body: `
+              <speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xml:lang='en-US'>
+                <voice name='de-DE-KatjaNeural'>
+                  ${text}
+                </voice>
+              </speak>`
+          });
+
+        if (!response.ok) {
+            throw new Error(`TTS request failed: ${response.statusText}`);
+          }
+
+          const audioData = await response.arrayBuffer();
+          const buffer = await window.audioContext.decodeAudioData(audioData);
+          const source = window.audioContext.createBufferSource();
+          source.buffer = buffer;
+          source.connect(window.audioContext.destination);
+          source.start();
+        } catch (error) {
+          console.log(error);
+        }
       }
 
+    // Speak when clicked
       const nodeSpeak = document.getElementById('speak');
       nodeSpeak.addEventListener('click', function () {
         const text = document.getElementById('text').value;
         if (text) {
-          speakText(text);  // Use Microsoft TTS SDK
+          speakText(text);  // Call Microsoft TTS REST API
         }
       });
+
     });
-  </script>
+    </script>
 </head>
 <body>
     <div id="avatar"></div>
