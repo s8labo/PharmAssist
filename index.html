@@ -111,7 +111,7 @@
       head = new TalkingHead( nodeAvatar, {
         ttsEndpoint: ttsEndpoint,
         ttsApikey: apiKey, 
-        lipsyncModules: ["en", "fi"],
+        lipsyncModules: ["de"],
         cameraView: "upper"
       });
 
@@ -123,9 +123,9 @@
           url: 'https://models.readyplayer.me/64bfa15f0e72c63d7c3934a6.glb?morphTargets=ARKit,Oculus+Visemes,mouthOpen,mouthSmile,eyesClosed,eyesLookUp,eyesLookDown&textureSizeLimit=1024&textureFormat=png',
           body: 'F',
           avatarMood: 'neutral',
-          ttsLang: "en-US",
-          ttsVoice: "en-US-JessaNeural",
-          lipsyncLang: 'en'
+          ttsLang: "de-DE",
+          ttsVoice: "de-DE-KatjaNeural",
+          lipsyncLang: 'de'
         }, (ev) => {
           if ( ev.lengthComputable ) {
             let val = Math.min(100,Math.round(ev.loaded/ev.total * 100 ));
@@ -139,7 +139,7 @@
       }
 
       // Function to convert text to speech using Microsoft TTS
-      async function speakAudio(text) {
+      async function speakText(text) {
         try {
             // Create or resume AudioContext after user interaction
           if (!window.audioContext || window.audioContext.state === 'closed') {
@@ -159,7 +159,7 @@
             },
             body: `
               <speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xml:lang='en-US'>
-                <voice name='en-US-JessaNeural'>
+                <voice name='de-DE-KatjaNeural'>
                   ${text}
                 </voice>
               </speak>`
