@@ -79,8 +79,34 @@
         }
     </style>
     <script src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
+    <script type="importmap">
+    { "imports":
+      {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.module.js/+esm",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.161.0/examples/jsm/",
+        "talkinghead": "https://cdn.jsdelivr.net/gh/met4citizen/TalkingHead@1.2/modules/talkinghead.mjs"
+      }
+    }
+    </script>
+    <script type="module">
+    import { TalkingHead } from "talkinghead";
+
+    // Create the talking head avatar
+    const nodeAvatar = document.getElementById('avatar');
+    const head = new TalkingHead( nodeAvatar, {
+      ttsEndpoint: "/gtts/",
+      jwtGet: jwtGet,
+      lipsyncModules: ["en", "fi"]
+    });
+    </script>
 </head>
 <body>
+    <div id="avatar"></div>
+      <div id="controls">
+        <input id="text" type="text" value="Hi there. How are you? I'm fine.">
+        <input id="speak" type="button" value="Speak">
+      </div>
+      <div id="loading"></div>
     <div>
         <h3>PharmAssistant für Medikationsanalysen</h3>
     </div>
