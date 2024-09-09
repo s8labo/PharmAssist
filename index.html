@@ -47,21 +47,23 @@
 
     <script type="module">
     import { TalkingHead } from "talkinghead";
-
+    
     let head;
     const apiKey = '724b12cefed2442c9df696992b249f89'; // Replace with your Azure API key
     const ttsEndpoint = 'https://germanywestcentral.tts.speech.microsoft.com/cognitiveservices/v1'; // Replace with your Azure endpoint
 
     document.addEventListener('DOMContentLoaded', async function(e) {
 
+      // Instantiate the TalkingHead class
       const nodeAvatar = document.getElementById('avatar');
-      head = new TalkingHead( nodeAvatar, {
+      head = new TalkingHead(nodeAvatar, {
         ttsEndpoint: ttsEndpoint,
-        ttsApikey: apiKey, 
+        ttsApikey: apiKey,
         lipsyncModules: ["de"],
         cameraView: "upper"
       });
 
+      // Load and show the avatar
       const nodeLoading = document.getElementById('loading');
       try {
         nodeLoading.textContent = "Loading...";
@@ -73,8 +75,8 @@
           ttsVoice: "de-DE-KatjaNeural",
           lipsyncLang: 'de'
         }, (ev) => {
-          if ( ev.lengthComputable ) {
-            let val = Math.min(100,Math.round(ev.loaded/ev.total * 100 ));
+          if (ev.lengthComputable) {
+            let val = Math.min(100, Math.round(ev.loaded / ev.total * 100));
             nodeLoading.textContent = "Loading " + val + "%";
           }
         });
@@ -84,9 +86,10 @@
         nodeLoading.textContent = error.toString();
       }
 
-      // Convert text to speech using Microsoft TTS
+      // Function to convert text to speech using Microsoft TTS
       async function speakText(text) {
         try {
+          // Create or resume AudioContext after user interaction
           if (!window.audioContext || window.audioContext.state === 'closed') {
             window.audioContext = new (window.AudioContext || window.webkitAudioContext)();
           }
@@ -94,16 +97,18 @@
             await window.audioContext.resume();
           }
 
+          // Make the request to the TTS API
           const response = await fetch(ttsEndpoint, {
             method: 'POST',
             headers: {
               'Ocp-Apim-Subscription-Key': apiKey,
               'Content-Type': 'application/ssml+xml',
-              'X-Microsoft-OutputFormat': 'riff-16khz-16bit-mono-pcm'
+              'X-Microsoft-OutputFormat': 'riff-16khz-16bit-mono-pcm' // Adjust format if needed
             },
             body: `
               <speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xml:lang='de-DE'>
                 <voice name='de-DE-KatjaNeural'>
+                  <mstts:viseme type="FacialExpression"/>
                   ${text}
                 </voice>
               </speak>`
@@ -124,11 +129,12 @@
         }
       }
 
+      // Speak when clicked
       const nodeSpeak = document.getElementById('speak');
       nodeSpeak.addEventListener('click', function () {
         const text = document.getElementById('text').value;
         if (text) {
-          speakText(text);  
+          speakText(text);  // Call Microsoft TTS REST API
         }
       });
 
@@ -138,7 +144,7 @@
 <body>
     <div id="avatar"></div>
     <div id="controls">
-        <input id="text" type="text" value="Hallo, wie geht es dir?">
+        <input id="text" type="text" value="Hi there. How are you? I'm fine.">
         <input id="speak" type="button" value="Speak">
     </div>
     <div id="loading"></div>
