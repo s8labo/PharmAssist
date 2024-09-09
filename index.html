@@ -98,6 +98,9 @@
     import { TalkingHead } from "talkinghead";
 
     let head;
+    const apiKey = '724b12cefed2442c9df696992b249f89'; // Replace with your Azure API key
+    const ttsEndpoint = 'https://germanywestcentral.tts.speech.microsoft.com/cognitiveservices/v1'; // Replace with your Azure endpoint
+
 
     document.addEventListener('DOMContentLoaded', async function(e) {
 
@@ -106,8 +109,8 @@
       //       that you are the only one to have access to that code!
       const nodeAvatar = document.getElementById('avatar');
       head = new TalkingHead( nodeAvatar, {
-        ttsEndpoint: "https://germanywestcentral.tts.speech.microsoft.com/cognitiveservices/v1",
-        ttsApikey: "724b12cefed2442c9df696992b249f89", 
+        ttsEndpoint: ttsEndpoint,
+        ttsApikey: apiKey, 
         lipsyncModules: ["en", "fi"],
         cameraView: "upper"
       });
@@ -138,41 +141,51 @@
       // Function to convert text to speech using Microsoft TTS
       async function speakText(text) {
         try {
-          const response = await fetch('https://germanywestcentral.tts.speech.microsoft.com/cognitiveservices/v1', {
+            // Create or resume AudioContext after user interaction
+          if (!window.audioContext || window.audioContext.state === 'closed') {
+            window.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+          }
+          if (window.audioContext.state === 'suspended') {
+            await window.audioContext.resume();
+          }
+
+          // Make the request to the TTS API
+          const response = await fetch(ttsEndpoint, {
             method: 'POST',
             headers: {
-              'Ocp-Apim-Subscription-Key': '724b12cefed2442c9df696992b249f89',
+              'Ocp-Apim-Subscription-Key': apiKey,
               'Content-Type': 'application/ssml+xml',
-              'X-Microsoft-OutputFormat': 'riff-16khz-16bit-mono-pcm'
+              'X-Microsoft-OutputFormat': 'riff-16khz-16bit-mono-pcm' // Adjust format if needed
             },
             body: `
               <speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xml:lang='en-US'>
-                <voice name='en-US-JessaNeural'>${text}</voice>
+                <voice name='en-US-JessaNeural'>
+                  ${text}
+                </voice>
               </speak>`
           });
 
+        if (!response.ok) {
+            throw new Error(`TTS request failed: ${response.statusText}`);
+          }
+
           const audioData = await response.arrayBuffer();
-          const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-          const buffer = await audioContext.decodeAudioData(audioData);
-          const source = audioContext.createBufferSource();
+          const buffer = await window.audioContext.decodeAudioData(audioData);
+          const source = window.audioContext.createBufferSource();
           source.buffer = buffer;
-          source.connect(audioContext.destination);
+          source.connect(window.audioContext.destination);
           source.start();
         } catch (error) {
           console.log(error);
         }
       }
 
-      // Speak when clicked
+    // Speak when clicked
       const nodeSpeak = document.getElementById('speak');
       nodeSpeak.addEventListener('click', function () {
-        try {
-          const text = document.getElementById('text').value;
-          if ( text ) {
-            head.speakText( text );
-          }
-        } catch (error) {
-          console.log(error);
+        const text = document.getElementById('text').value;
+        if (text) {
+          speakText(text);  // Call Microsoft TTS REST API
         }
       });
 
