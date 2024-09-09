@@ -139,7 +139,7 @@
       }
 
       // Function to convert text to speech using Microsoft TTS
-      async function speakText(text) {
+      async function speakAudio(text) {
         try {
             // Create or resume AudioContext after user interaction
           if (!window.audioContext || window.audioContext.state === 'closed') {
