@@ -182,29 +182,30 @@
             directLine: window.WebChat.createDirectLine({
                 token: 'AavR0Oh2MoQ.k8agJWGKvkYtM92I0013G-A3eObi4iVxVVGEcZFYLY4'
             }),
-            // webSpeechPonyfillFactory,
-            webSpeechPonyfillFactory: await createHybridPonyfillFactory({ credentials: fetchSpeechServicesCredentials }),
+            sendTyping: true,
+            webSpeechPonyfillFactory,
+            // webSpeechPonyfillFactory: await createHybridPonyfillFactory({ credentials: fetchSpeechServicesCredentials }),
             enableTelemetry: false,
             styleSet,
             styleOptions: avatarOptions,
             botName: 'PharmAssistant',
             sendMessage: sendMessageWithDelay,
             // Listen for new activities/messages
-            directLine.activity$.subscribe(activity => {
-              // Check if the message is from the bot
-              if (activity.from && activity.from.role === 'bot' && activity.type === 'message') {
-                const botMessage = activity.text;  // Capture bot's message text
+            // directLine.activity$.subscribe(activity => {
+            //   // Check if the message is from the bot
+            //   if (activity.from && activity.from.role === 'bot' && activity.type === 'message') {
+            //     const botMessage = activity.text;  // Capture bot's message text
 
-                // Make the avatar speak the bot's message
-                if (botMessage) {
-                  if (typeof head !== 'undefined' && head.speakText) {
-                    head.speakText(botMessage);  // Avatar speaks the message
-                  } else {
-                    console.error('Avatar head is not initialized or speakText function is missing.');
-                  }
-                }
-              }
-            });
+            //     // Make the avatar speak the bot's message
+            //     if (botMessage) {
+            //       if (typeof head !== 'undefined' && head.speakText) {
+            //         head.speakText(botMessage);  // Avatar speaks the message
+            //       } else {
+            //         console.error('Avatar head is not initialized or speakText function is missing.');
+            //       }
+            //     }
+            //   }
+            // });
         }, document.getElementById('webchat'));
       })().catch(err => console.error(err));
     </script>
