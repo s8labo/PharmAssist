@@ -55,13 +55,10 @@
 
     document.addEventListener('DOMContentLoaded', async function(e) {
 
-      // Instantiate the class
-      // NOTE: Never put your API key in a client-side code unless you know
-      //       that you are the only one to have access to that code!
       const nodeAvatar = document.getElementById('avatar');
       head = new TalkingHead( nodeAvatar, {
         ttsEndpoint: "https://eu-texttospeech.googleapis.com/v1beta1/text:synthesize",
-        ttsApikey: "AIzaSyD2DvM6vDBZm1SluT6h5iCpJPpjwXzcv5M", // <- Change this
+        ttsApikey: "AIzaSyD2DvM6vDBZm1SluT6h5iCpJPpjwXzcv5M", 
         lipsyncModules: ["en", "fi"],
         cameraView: "upper"
       });
@@ -109,7 +106,10 @@
 
 <body>
 <div id="left-panel">
-    <div id="avatar"></div>
+    <div id="avatar"><div id="controls">
+        <!-- <input id="text" type="text" value="Hi there. How are you? I'm fine."> -->
+        <!-- <input id="speak" type="button" value="Speak"> -->
+    </div>
     <div id="loading">Loading...</div>
 </div>
 
@@ -120,12 +120,6 @@
 </div>
 <script>
       (async function() {
-        // const webSpeechPonyfillFactory = await window.WebChat.createCognitiveServicesSpeechServicesPonyfillFactory( {
-        //     credentials: {
-        //         region: 'germanywestcentral',
-        //         subscriptionKey: '724b12cefed2442c9df696992b249f89'
-        //     }
-        // });
         const fetchSpeechServicesCredentials = {
           credentials: {
                 region: 'germanywestcentral',
@@ -137,10 +131,6 @@
           const speechServicesPonyfillFactory = await window.WebChat.createCognitiveServicesSpeechServicesPonyfillFactory(
             {
               credentials
-            //   credentials: {
-            //     region: 'germanywestcentral',
-            //     subscriptionKey: '724b12cefed2442c9df696992b249f89'
-            // }
             }
           );
 
@@ -170,30 +160,6 @@
             botAvatarInitials: 'PA',
             userAvatarInitials: 'U'
         };
-
-        // async function createSpeechRecognitionOnlyPonyfillFactory() {
-        //   const speechServicesPonyfillFactory = await window.WebChat.createCognitiveServicesSpeechServicesPonyfillFactory(
-        //     {
-        //       credentials: {
-        //         region: 'germanywestcentral',
-        //         subscriptionKey: '724b12cefed2442c9df696992b249f89'
-        //     }
-        //     }
-        //   );
-
-        //   return options => {
-        //     const speechServicesPonyfill = speechServicesPonyfillFactory(options);
-        //     const webSpeechPonyfill = webSpeechPonyfillFactory(options);
-
-        //     return {
-        //       SpeechGrammarList: speechServicesPonyfill.SpeechGrammarList,
-        //       SpeechRecognition: speechServicesPonyfill.SpeechRecognition,
-        //       speechSynthesis: null,
-        //       SpeechSynthesisUtterance: null
-        //     };
-        //   };
-        // }
-
         // Function to simulate delay
         const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -208,11 +174,6 @@
             activities.forEach(activity => displayActivity(activity));
         };
 
-        const displayActivity = (activity) => {
-            // Code to display the activity in your web chat interface
-            // This may involve updating the DOM or using WebChat's APIs
-        };
-
         window.WebChat.renderWebChat({
             directLine: window.WebChat.createDirectLine({
                 token: 'AavR0Oh2MoQ.k8agJWGKvkYtM92I0013G-A3eObi4iVxVVGEcZFYLY4'
@@ -223,26 +184,19 @@
             styleSet,
             styleOptions: avatarOptions,
             botName: 'PharmAssistant',
-            sendMessage: sendMessageWithDelay
+            sendMessage: sendMessageWithDelay,
+            // Middleware to intercept bot messages
+            activityMiddleware: () => next => card => {
+              if (card.activity.from.role === 'bot') {
+                const botMessage = card.activity.text;
+                // Make the avatar speak the bot's message
+                head.speakText(botMessage);
+            }
+            return next(card);
+          }
         }, document.getElementById('webchat'));
       })().catch(err => console.error(err));
     </script>
-    <!-- <div id="left"> -->
-<!--       <div/>
-          <h3>PharmAssistant für Medikationsanalysen</h3>
-      </div>
-      <div id="webchat" role="main">
-          <div class="typing-animation"></div>
-      </div>
-    </div> -->
-    <!-- <div id="right"> -->
-      <!-- <div id="avatar"></div> -->
-      <!-- <div id="controls">
-        <input id="text" type="text" value="Hi there. How are you? I'm fine.">
-        <input id="speak" type="button" value="Speak">
-      </div> -->
-      <!-- <div id="loading"></div> --> -->
-  <!-- </div> -->
   
 </body>
 </html>
