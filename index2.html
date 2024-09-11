@@ -183,23 +183,14 @@
         }
       }
 
-    // // Speak when clicked
-    //   const nodeSpeak = document.getElementById('speak');
-    //   nodeSpeak.addEventListener('click', function () {
-    //     const text = document.getElementById('text').value;
-    //     if (text) {
-    //       speakText(text);  // Call Microsoft TTS REST API
-    //     }
-    //   });
-
-      // // Speak when clicked
-      // const nodeSpeak = document.getElementByClass('speak');
-      // nodeSpeak.addEventListener('click', function () {
-      //   const text = document.getElementById('text').value;
-      //   if (text) {
-      //     speakText(text);  // Call Microsoft TTS REST API
-      //   }
-      // });
+    // Speak when clicked
+      const nodeSpeak = document.getElementById('speak');
+      nodeSpeak.addEventListener('click', function () {
+        const text = document.getElementById('text').value;
+        if (text) {
+          speakText(text);  // Call Microsoft TTS REST API
+        }
+      });
 
     });
     </script>
@@ -322,25 +313,8 @@
             styleSet,
             styleOptions: avatarOptions,
             botName: 'PharmAssistant',
-            sendMessage: sendMessageWithDelay,
-
-            // Listen for new activities/messages
-            directLine.activity$.subscribe(activity => {
-              // Check if the message is from the bot
-              if (activity.from && activity.from.role === 'bot' && activity.type === 'message') {
-                const botMessage = activity.text;  // Capture bot's message text
-
-                // Make the avatar speak the bot's message
-                if (botMessage) {
-                  if (typeof head !== 'undefined' && head.speakText) {
-                    head.speakText(botMessage);  // Avatar speaks the message
-                  } else {
-                    console.error('Avatar head is not initialized or speakText function is missing.');
-                  }
-                }
-              }
-            });
-                  }, document.getElementById('webchat'));
+            sendMessage: sendMessageWithDelay
+        }, document.getElementById('webchat'));
       })().catch(err => console.error(err));
     </script>
 </body>

@@ -86,18 +86,18 @@
         nodeLoading.textContent = error.toString();
       }
 
-      // Speak when clicked
-      const nodeSpeak = document.getElementById('speak');
-      nodeSpeak.addEventListener('click', function () {
-        try {
-          const text = document.getElementById('text').value;
-          if ( text ) {
-            head.speakText( text );
-          }
-        } catch (error) {
-          console.log(error);
-        }
-      });
+      // // Speak when clicked
+      // const nodeSpeak = document.getElementById('speak');
+      // nodeSpeak.addEventListener('click', function () {
+      //   try {
+      //     const text = document.getElementById('text').value;
+      //     if ( text ) {
+      //       head.speakText( text );
+      //     }
+      //   } catch (error) {
+      //     console.log(error);
+      //   }
+      // });
 
     await initializeHead();
 
