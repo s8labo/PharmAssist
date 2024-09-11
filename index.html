@@ -56,7 +56,7 @@
     document.addEventListener('DOMContentLoaded', async function(e) {
 
       const nodeAvatar = document.getElementById('avatar');
-      const head = new TalkingHead( nodeAvatar, {
+      head = new TalkingHead( nodeAvatar, {
         ttsEndpoint: "https://eu-texttospeech.googleapis.com/v1beta1/text:synthesize",
         ttsApikey: "AIzaSyD2DvM6vDBZm1SluT6h5iCpJPpjwXzcv5M", 
         lipsyncModules: ["en", "fi"],
@@ -94,7 +94,7 @@
         try {
           const text = document.getElementById('text').value;
           if ( text ) {
-            head.speakText( text );
+            head.speakText( "test" );
           }
         } catch (error) {
           console.log(error);
