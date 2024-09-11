@@ -133,14 +133,14 @@ body, html {
     cursor: pointer;
 }*/
 
-/*#loading {
+#loading {
     font-family: Arial;
     font-size: 20px;
     text-align: center;
     margin-top: 20px;
     color: grey;
 }
-*/
+
 
 
 @media (max-width: 768px) {
