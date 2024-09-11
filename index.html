@@ -187,15 +187,20 @@
             styleOptions: avatarOptions,
             botName: 'PharmAssistant',
             sendMessage: sendMessageWithDelay,
-            // Middleware to intercept bot messages
+            /// Middleware to intercept bot messages
             activityMiddleware: () => next => card => {
               if (card.activity.from.role === 'bot') {
                 const botMessage = card.activity.text;
-                // Make the avatar speak the bot's message
-                head.speakText(botMessage);
+                // Check if `head` is initialized before speaking
+                if (typeof head !== 'undefined') {
+                  head.speakText(botMessage);
+                } else {
+                  console.error('Avatar head is not initialized.');
+                }
               }
               return next(card);
             }
+
         }, document.getElementById('webchat'));
       })().catch(err => console.error(err));
     </script>
