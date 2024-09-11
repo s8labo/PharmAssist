@@ -186,7 +186,16 @@
             styleSet,
             styleOptions: avatarOptions,
             botName: 'PharmAssistant',
-            sendMessage: sendMessageWithDelay
+            sendMessage: sendMessageWithDelay,
+            // Middleware to intercept bot messages
+            activityMiddleware: () => next => card => {
+              if (card.activity.from.role === 'bot') {
+                const botMessage = card.activity.text;
+                // Make the avatar speak the bot's message
+                head.speakText(botMessage);
+              }
+              return next(card);
+            }
         }, document.getElementById('webchat'));
       })().catch(err => console.error(err));
     </script>
