@@ -105,27 +105,7 @@
 
     });
 
-  </script>
-</head>
-
-<body>
-<div id="left-panel">
-    <div id="avatar">
-      <div id="controls">
-        <input id="text" type="text" value="Hi there. How are you? I'm fine.">
-        <input id="speak" type="button" value="Speak">
-      </div>
-    </div>
-    <div id="loading">Loading...</div>
-</div>
-
-<div id="right-panel">
-    <div id="webchat" role="main">
-      <div class="typing-animation"></div>
-    </div>
-</div>
-<script>
-      (async function() {
+    (async function() {
         const fetchSpeechServicesCredentials = {
           credentials: {
                 region: 'germanywestcentral',
@@ -248,6 +228,28 @@
         // Focus on Web Chat for better user experience
         document.querySelector('#webchat > *').focus();
       })().catch(err => console.error(err));
+
+  </script>
+</head>
+
+<body>
+<div id="left-panel">
+    <div id="avatar">
+      <div id="controls">
+        <input id="text" type="text" value="Hi there. How are you? I'm fine.">
+        <input id="speak" type="button" value="Speak">
+      </div>
+    </div>
+    <div id="loading">Loading...</div>
+</div>
+
+<div id="right-panel">
+    <div id="webchat" role="main">
+      <div class="typing-animation"></div>
+    </div>
+</div>
+<script>
+      
     </script>
   
 </body>
