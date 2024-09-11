@@ -9,7 +9,7 @@ body, html {
     overflow: hidden; /* Prevent scrolling */
 }
 
-#splash-screen {
+/*#splash-screen {
     position: fixed;
     top: 0;
     left: 0;
@@ -24,20 +24,20 @@ body, html {
     z-index: 1000; /* Ensure it is on top of everything else */
 }
 
-#splash-title {
+/*#splash-title {
     font-size: 48px;
     color: black;
     margin-bottom: 20px;
     font-weight: bold;
-}
+}*/
 
-#splash-subtitle {
+/*#splash-subtitle {
     font-size: 16px;
     color: grey;
     letter-spacing: 2px;
     margin-bottom: 40px;
-}
-
+}*/
+/*
 #start-button {
     font-size: 24px;
     padding: 15px 30px;
@@ -47,12 +47,12 @@ body, html {
     border-radius: 10px;
     cursor: pointer;
     transition: background-color 0.3s;
-}
+}*/
 
-#start-button:hover {
+/*#start-button:hover {
     background-color: #FFB400;
-}
-
+}*/
+*/
 #left-panel {
     width: 50%;
     display: flex;
@@ -79,7 +79,7 @@ body, html {
     margin-left: auto; /* Ensure it is on the right side */
 }
 
-#chat {
+/*#chat {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -88,30 +88,30 @@ body, html {
     height: 500px; /* Ensure the chat area has enough height */
 }
 
-.chat-message {
+/*.chat-message {
     margin-bottom: 10px;
     padding: 10px;
     border-radius: 10px;
     max-width: 70%;
-}
+}*/*/
 
-.user-message {
+/*.user-message {
     background-color: #FFF3C5;
     align-self: flex-end;
-}
+}*/
 
-.bot-message {
+/*.bot-message {
     background-color: #f1f1f1;
     align-self: flex-start;
-}
+}*/
 
-#controls {
+/*#controls {
     display: flex;
     width: 100%;
     margin-bottom: 10px;
-}
+}*/
 
-#text {
+/*#text {
     flex: 1;
     font-family: Arial;
     font-size: 20px;
@@ -119,9 +119,9 @@ body, html {
     border: 1px solid #ccc;
     border-radius: 10px;
     box-sizing: border-box;
-}
+}*/
 
-#speak {
+/*#speak {
     width: 100px;
     font-family: Arial;
     font-size: 20px;
@@ -131,39 +131,17 @@ body, html {
     border-radius: 10px;
     margin-left: 10px;
     cursor: pointer;
-}
+}*/
 
-#loading {
+/*#loading {
     font-family: Arial;
     font-size: 20px;
     text-align: center;
     margin-top: 20px;
     color: grey;
 }
+*/
 
-#social-links {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 10px;
-}
-
-#social-links a {
-    text-decoration: none;
-    font-family: Arial;
-    font-size: 15px;
-    color: #555;
-    background-color: #f1f1f1;
-    padding: 10px 15px;
-    border-radius: 10px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s, color 0.3s;
-}
-
-#social-links a:hover {
-    background-color: #FFD51E;
-    color: white;
-}
 
 @media (max-width: 768px) {
 
