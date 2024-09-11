@@ -169,18 +169,18 @@
     enableTelemetry: false,
     styleSet,
     styleOptions: avatarOptions,
-    botName: 'PharmAssistant',
-    sendMessage: sendMessageWithDelay,
+    botName: 'PharmAssistant'
+    // sendMessage: sendMessageWithDelay,
 
-    // Middleware to intercept bot messages
-    activityMiddleware: () => next => card => {
-      if (card.activity.from.role === 'bot') {
-        const botMessage = card.activity.text;
-        // Make the avatar speak the bot's message
-        head.speakText(botMessage);
-      }
-      return next(card);
-    }
+    // // Middleware to intercept bot messages
+    // activityMiddleware: () => next => card => {
+    //   if (card.activity.from.role === 'bot') {
+    //     const botMessage = card.activity.text;
+    //     // Make the avatar speak the bot's message
+    //     head.speakText(botMessage);
+    //   }
+    //   return next(card);
+    // }
 
   }, document.getElementById('webchat'));
 })();
