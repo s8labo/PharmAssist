@@ -119,84 +119,73 @@
     </div>
 </div>
 <script>
-      (async function() {
-        const fetchSpeechServicesCredentials = {
-          credentials: {
-                region: 'germanywestcentral',
-                subscriptionKey: '724b12cefed2442c9df696992b249f89'
-            }
-        }
+(async function() {
+  const fetchSpeechServicesCredentials = {
+    credentials: {
+      region: 'germanywestcentral',
+      subscriptionKey: 'replace'
+    }
+  };
 
-        async function createHybridPonyfillFactory({ credentials }) {
-          const speechServicesPonyfillFactory = await window.WebChat.createCognitiveServicesSpeechServicesPonyfillFactory(
-            {
-              credentials
-            }
-          );
+  async function createHybridPonyfillFactory({ credentials }) {
+    const speechServicesPonyfillFactory = await window.WebChat.createCognitiveServicesSpeechServicesPonyfillFactory({
+      credentials
+    });
 
-          const webSpeechPonyfillFactory = await window.WebChat.createBrowserWebSpeechPonyfillFactory();
+    const webSpeechPonyfillFactory = await window.WebChat.createBrowserWebSpeechPonyfillFactory();
 
-          return options => {
-            const speechServicesPonyfill = speechServicesPonyfillFactory(options);
-            const webSpeechPonyfill = webSpeechPonyfillFactory(options);
+    return options => {
+      const speechServicesPonyfill = speechServicesPonyfillFactory(options);
+      const webSpeechPonyfill = webSpeechPonyfillFactory(options);
 
-            return {
-              SpeechGrammarList: webSpeechPonyfill.SpeechGrammarList,
-              SpeechRecognition: webSpeechPonyfill.SpeechRecognition,
+      return {
+        SpeechGrammarList: webSpeechPonyfill.SpeechGrammarList,
+        SpeechRecognition: webSpeechPonyfill.SpeechRecognition,
 
-              speechSynthesis: speechServicesPonyfill.speechSynthesis,
-              SpeechSynthesisUtterance: speechServicesPonyfill.SpeechSynthesisUtterance
-            };
-          };
-        }
+        speechSynthesis: speechServicesPonyfill.speechSynthesis,
+        SpeechSynthesisUtterance: speechServicesPonyfill.SpeechSynthesisUtterance
+      };
+    };
+  }
 
-        const styleSet = window.WebChat.createStyleSet({
-            rootHeight: '100%',
-            rootWidth: '100%',
-            backgroundColor: '#AEC6CF'
-        });
+  const styleSet = window.WebChat.createStyleSet({
+    rootHeight: '100%',
+    rootWidth: '100%',
+    backgroundColor: '#AEC6CF'
+  });
 
-        const avatarOptions = {
-            botAvatarInitials: 'PA',
-            userAvatarInitials: 'U'
-        };
-        // Function to simulate delay
-        const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+  const avatarOptions = {
+    botAvatarInitials: 'PA',
+    userAvatarInitials: 'U'
+  };
 
-        const sendMessageWithDelay = async (message) => {
-            directLine.postActivity({ type: 'message', text: message });
+  const directLine = window.WebChat.createDirectLine({
+    token: 'replace'
+  });
 
-            // Introduce a delay of 3 seconds before displaying the bot's response
-            await delay(5000);
+  window.WebChat.renderWebChat({
+    directLine,
+    webSpeechPonyfillFactory: await createHybridPonyfillFactory({ credentials: fetchSpeechServicesCredentials }),
+    enableTelemetry: false,
+    styleSet,
+    styleOptions: avatarOptions,
+    botName: 'PharmAssistant',
+    sendMessage: sendMessageWithDelay,
 
-            // Fetch the activities from the conversation and display them
-            const activities = await directLine.getActivity();
-            activities.forEach(activity => displayActivity(activity));
-        };
+    // Middleware to intercept bot messages
+    activityMiddleware: () => next => card => {
+      if (card.activity.from.role === 'bot') {
+        const botMessage = card.activity.text;
+        // Make the avatar speak the bot's message
+        head.speakText(botMessage);
+      }
+      return next(card);
+    }
 
-        window.WebChat.renderWebChat({
-            directLine: window.WebChat.createDirectLine({
-                token: 'AavR0Oh2MoQ.k8agJWGKvkYtM92I0013G-A3eObi4iVxVVGEcZFYLY4'
-            }),
-            // webSpeechPonyfillFactory,
-            webSpeechPonyfillFactory: await createHybridPonyfillFactory({ credentials: fetchSpeechServicesCredentials }),
-            enableTelemetry: false,
-            styleSet,
-            styleOptions: avatarOptions,
-            botName: 'PharmAssistant',
-            sendMessage: sendMessageWithDelay,
-            // Middleware to intercept bot messages
-            activityMiddleware: () => next => card => {
-              if (card.activity.from.role === 'bot') {
-                const botMessage = card.activity.text;
-                // Make the avatar speak the bot's message
-                head.speakText(botMessage);
-            }
-            return next(card);
-          }
-        }, document.getElementById('webchat'));
-      })().catch(err => console.error(err));
-    </script>
+  }, document.getElementById('webchat'));
+})();
+</script>
+
   
 </body>
 </html>
