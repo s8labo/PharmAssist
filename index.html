@@ -99,7 +99,7 @@
       //   }
       // });
 
-    await initializeHead();
+    // await initializeHead();
 
     });
 
@@ -183,8 +183,8 @@
                 token: 'AavR0Oh2MoQ.k8agJWGKvkYtM92I0013G-A3eObi4iVxVVGEcZFYLY4'
             }),
             sendTyping: true,
-            webSpeechPonyfillFactory,
-            // webSpeechPonyfillFactory: await createHybridPonyfillFactory({ credentials: fetchSpeechServicesCredentials }),
+            // webSpeechPonyfillFactory,
+            webSpeechPonyfillFactory: await createHybridPonyfillFactory({ credentials: fetchSpeechServicesCredentials }),
             enableTelemetry: false,
             styleSet,
             styleOptions: avatarOptions,
