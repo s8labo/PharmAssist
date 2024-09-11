@@ -4,7 +4,7 @@
   <title>PharmAssistant</title>
 
   <style>
-    body {
+    /*body {
         margin: 0;
         padding: 0;
         font-family: Arial, Helvetica, sans-serif;
@@ -13,7 +13,17 @@
     .outer-container {
       display: flex;
       flex-direction: row;
-    }
+    }*/
+
+     body {
+    width: 100%; height: 100%; min-height: 100vh;
+    min-height: -webkit-fill-available; margin: 0; padding: 0;
+    background-color: var(--colorBackground); color: var(--colorBody);
+    overflow: hidden; text-align: left; touch-action: manipulation;
+    font-family: "SansRegular", sans-serif; font-size: 1.4rem;
+    line-height: 1.4rem; scrollbar-color: var(--colorToolbarPassive) transparent;
+    scrollbar-width: 20px; scrollbar-height: 20px;
+  }
 
     h1 {
         text-align: center;
@@ -30,12 +40,41 @@
       font-size: 20px!important;
       line-height: 27px;
     }
-    body, html { width:100%; height:100%; max-width: 800px; margin: auto; position: relative; background-color: dimgray; color: white; }
+    /*body, html { width:100%; height:100%; max-width: 800px; margin: auto; position: relative; background-color: dimgray; color: white; }
     #avatar { display: block; width:40%; height:40%; }
     #controls { display: block; position: absolute; top: 10px; left: 10px; right: 10px; height: 50px; }
     #text { position: absolute; width: Calc( 100% - 110px ); height: 100%; top: 0; left: 0; bottom: 0; right: 110px; font-family: Arial; font-size: 20px; }
     #speak { block; position: absolute; top: 0; bottom: 0; right: 0; height: 100%; width: 100px; font-family: Arial; font-size: 20px; }
-    #loading { display: block; position: absolute; bottom: 10px; left: 10px; right: 10px; height: 50px; font-family: Arial; font-size: 20px; }
+    #loading { display: block; position: absolute; bottom: 10px; left: 10px; right: 10px; height: 50px; font-family: Arial; font-size: 20px; }*/
+
+    /* Main */
+  #main {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%,-50%); background-color: transparent;
+  }
+
+  /* Left panel */
+  #left {
+    position: absolute; margin: 4px; pointer-events: none;
+    background-color: var(--colorPanel);
+  }
+  #avatar, #view {
+    position: absolute; opacity: 0; top: 0; left: 0; right: 0;
+    bottom: 0; pointer-events: auto; overflow: hidden;
+    border-radius: inherit;
+  }
+
+  /* Right panel */
+  #right {
+    position: absolute; margin: 4px;
+    background-color: var(--colorPanel);
+  }
+  #right .border { border-color: var(--colorBorderPassive); }
+  .session { display: none; width: 100%; }
+  .session.selected { display: block; }
+  .message {
+    position: relative; display: block; width: 100%; min-height: 2rem;
+  }
   </style>
 <script src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
   <script type="importmap">
