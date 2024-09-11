@@ -86,20 +86,20 @@
         nodeLoading.textContent = error.toString();
       }
 
-      head.speakText("hallo");
+      // head.speakText("hallo");
 
-      // // Speak when clicked
-      // const nodeSpeak = document.getElementById('speak');
-      // nodeSpeak.addEventListener('click', function () {
-      //   try {
-      //     const text = document.getElementById('text').value;
-      //     if ( text ) {
-      //       head.speakText( text );
-      //     }
-      //   } catch (error) {
-      //     console.log(error);
-      //   }
-      // });
+      // Speak when clicked
+      const nodeSpeak = document.getElementById('speak');
+      nodeSpeak.addEventListener('click', function () {
+        try {
+          const text = document.getElementById('text').value;
+          if ( text ) {
+            head.speakText( text );
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      });
 
     // await initializeHead();
 
@@ -110,7 +110,12 @@
 
 <body>
 <div id="left-panel">
-    <div id="avatar"></div>
+    <div id="avatar">
+      <div id="controls">
+        <input id="text" type="text" value="Hi there. How are you? I'm fine.">
+        <input id="speak" type="button" value="Speak">
+      </div>
+    </div>
     <div id="loading">Loading...</div>
 </div>
 
