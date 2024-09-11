@@ -89,17 +89,17 @@
       // head.speakText("hallo");
 
       // Speak when clicked
-      const nodeSpeak = document.getElementById('speak');
-      nodeSpeak.addEventListener('click', function () {
-        try {
-          const text = document.getElementById('text').value;
-          if ( text ) {
-            head.speakText( "test" );
-          }
-        } catch (error) {
-          console.log(error);
-        }
-      });
+      // const nodeSpeak = document.getElementById('speak');
+      // nodeSpeak.addEventListener('click', function () {
+      //   try {
+      //     const text = document.getElementById('text').value;
+      //     if ( text ) {
+      //       head.speakText( "test" );
+      //     }
+      //   } catch (error) {
+      //     console.log(error);
+      //   }
+      // });
 
     // await initializeHead();
 
@@ -192,22 +192,7 @@
             styleOptions: avatarOptions,
             botName: 'PharmAssistant',
             sendMessage: sendMessageWithDelay,
-            // Listen for new activities/messages
-            // directLine.activity$.subscribe(activity => {
-            //   // Check if the message is from the bot
-            //   if (activity.from && activity.from.role === 'bot' && activity.type === 'message') {
-            //     const botMessage = activity.text;  // Capture bot's message text
 
-            //     // Make the avatar speak the bot's message
-            //     if (botMessage) {
-            //       if (typeof head !== 'undefined' && head.speakText) {
-            //         head.speakText(botMessage);  // Avatar speaks the message
-            //       } else {
-            //         console.error('Avatar head is not initialized or speakText function is missing.');
-            //       }
-            //     }
-            //   }
-            // });
         }, document.getElementById('webchat'));
 
         // Event listener for incoming bot activities
@@ -235,12 +220,11 @@
 <body>
 <div id="left-panel">
     <div id="avatar">
-      <div id="controls">
-        <input id="text" type="text" value="Hi there. How are you? I'm fine.">
-        <input id="speak" type="button" value="Speak">
-      </div>
+      <!-- <div id="controls"> -->
+<!--         <input id="text" type="text" value="Hi there. How are you? I'm fine.">
+        <input id="speak" type="button" value="Speak"> -->
+      <!-- </div> -->
     </div>
-    <div id="loading">Loading...</div>
 </div>
 
 <div id="right-panel">
@@ -248,9 +232,7 @@
       <div class="typing-animation"></div>
     </div>
 </div>
-<script>
-      
-    </script>
+<div id="loading">Loading...</div>
   
 </body>
 </html>
