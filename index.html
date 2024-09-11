@@ -4,7 +4,7 @@
   <title>PharmAssistant</title>
 
   <style>
-    /*body {
+    body {
         margin: 0;
         padding: 0;
         font-family: Arial, Helvetica, sans-serif;
@@ -13,17 +13,7 @@
     .outer-container {
       display: flex;
       flex-direction: row;
-    }*/
-
-     body {
-    width: 100%; height: 100%; min-height: 100vh;
-    min-height: -webkit-fill-available; margin: 0; padding: 0;
-    background-color: var(--colorBackground); color: var(--colorBody);
-    overflow: hidden; text-align: left; touch-action: manipulation;
-    font-family: "SansRegular", sans-serif; font-size: 1.4rem;
-    line-height: 1.4rem; scrollbar-color: var(--colorToolbarPassive) transparent;
-    scrollbar-width: 20px; scrollbar-height: 20px;
-  }
+    }
 
     h1 {
         text-align: center;
@@ -40,41 +30,12 @@
       font-size: 20px!important;
       line-height: 27px;
     }
-    /*body, html { width:100%; height:100%; max-width: 800px; margin: auto; position: relative; background-color: dimgray; color: white; }
+    body, html { width:100%; height:100%; max-width: 800px; margin: auto; position: relative; background-color: dimgray; color: white; }
     #avatar { display: block; width:40%; height:40%; }
     #controls { display: block; position: absolute; top: 10px; left: 10px; right: 10px; height: 50px; }
     #text { position: absolute; width: Calc( 100% - 110px ); height: 100%; top: 0; left: 0; bottom: 0; right: 110px; font-family: Arial; font-size: 20px; }
     #speak { block; position: absolute; top: 0; bottom: 0; right: 0; height: 100%; width: 100px; font-family: Arial; font-size: 20px; }
-    #loading { display: block; position: absolute; bottom: 10px; left: 10px; right: 10px; height: 50px; font-family: Arial; font-size: 20px; }*/
-
-    /* Main */
-  #main {
-    position: absolute; top: 50%; left: 50%;
-    transform: translate(-50%,-50%); background-color: transparent;
-  }
-
-  /* Left panel */
-  #left {
-    position: absolute; margin: 4px; pointer-events: none;
-    background-color: var(--colorPanel);
-  }
-  #avatar, #view {
-    position: absolute; opacity: 0; top: 0; left: 0; right: 0;
-    bottom: 0; pointer-events: auto; overflow: hidden;
-    border-radius: inherit;
-  }
-
-  /* Right panel */
-  #right {
-    position: absolute; margin: 4px;
-    background-color: var(--colorPanel);
-  }
-  #right .border { border-color: var(--colorBorderPassive); }
-  .session { display: none; width: 100%; }
-  .session.selected { display: block; }
-  .message {
-    position: relative; display: block; width: 100%; min-height: 2rem;
-  }
+    #loading { display: block; position: absolute; bottom: 10px; left: 10px; right: 10px; height: 50px; font-family: Arial; font-size: 20px; }
   </style>
 <script src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
   <script type="importmap">
@@ -144,134 +105,25 @@
     });
 
   </script>
-  <script>
-      (async function() {
-        // const webSpeechPonyfillFactory = await window.WebChat.createCognitiveServicesSpeechServicesPonyfillFactory( {
-        //     credentials: {
-        //         region: 'germanywestcentral',
-        //         subscriptionKey: '724b12cefed2442c9df696992b249f89'
-        //     }
-        // });
-        const fetchSpeechServicesCredentials = {
-          credentials: {
-                region: 'germanywestcentral',
-                subscriptionKey: '724b12cefed2442c9df696992b249f89'
-            }
-        }
-
-        async function createHybridPonyfillFactory({ credentials }) {
-          const speechServicesPonyfillFactory = await window.WebChat.createCognitiveServicesSpeechServicesPonyfillFactory(
-            {
-              credentials
-            //   credentials: {
-            //     region: 'germanywestcentral',
-            //     subscriptionKey: '724b12cefed2442c9df696992b249f89'
-            // }
-            }
-          );
-
-          const webSpeechPonyfillFactory = await window.WebChat.createBrowserWebSpeechPonyfillFactory();
-
-          return options => {
-            const speechServicesPonyfill = speechServicesPonyfillFactory(options);
-            const webSpeechPonyfill = webSpeechPonyfillFactory(options);
-
-            return {
-              SpeechGrammarList: webSpeechPonyfill.SpeechGrammarList,
-              SpeechRecognition: webSpeechPonyfill.SpeechRecognition,
-
-              speechSynthesis: speechServicesPonyfill.speechSynthesis,
-              SpeechSynthesisUtterance: speechServicesPonyfill.SpeechSynthesisUtterance
-            };
-          };
-        }
-
-        const styleSet = window.WebChat.createStyleSet({
-            rootHeight: '100%',
-            rootWidth: '100%',
-            backgroundColor: '#AEC6CF'
-        });
-
-        const avatarOptions = {
-            botAvatarInitials: 'PA',
-            userAvatarInitials: 'U'
-        };
-
-        // async function createSpeechRecognitionOnlyPonyfillFactory() {
-        //   const speechServicesPonyfillFactory = await window.WebChat.createCognitiveServicesSpeechServicesPonyfillFactory(
-        //     {
-        //       credentials: {
-        //         region: 'germanywestcentral',
-        //         subscriptionKey: '724b12cefed2442c9df696992b249f89'
-        //     }
-        //     }
-        //   );
-
-        //   return options => {
-        //     const speechServicesPonyfill = speechServicesPonyfillFactory(options);
-        //     const webSpeechPonyfill = webSpeechPonyfillFactory(options);
-
-        //     return {
-        //       SpeechGrammarList: speechServicesPonyfill.SpeechGrammarList,
-        //       SpeechRecognition: speechServicesPonyfill.SpeechRecognition,
-        //       speechSynthesis: null,
-        //       SpeechSynthesisUtterance: null
-        //     };
-        //   };
-        // }
-
-        // Function to simulate delay
-        const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-        const sendMessageWithDelay = async (message) => {
-            directLine.postActivity({ type: 'message', text: message });
-
-            // Introduce a delay of 3 seconds before displaying the bot's response
-            await delay(5000);
-
-            // Fetch the activities from the conversation and display them
-            const activities = await directLine.getActivity();
-            activities.forEach(activity => displayActivity(activity));
-        };
-
-        const displayActivity = (activity) => {
-            // Code to display the activity in your web chat interface
-            // This may involve updating the DOM or using WebChat's APIs
-        };
-
-        window.WebChat.renderWebChat({
-            directLine: window.WebChat.createDirectLine({
-                token: 'AavR0Oh2MoQ.k8agJWGKvkYtM92I0013G-A3eObi4iVxVVGEcZFYLY4'
-            }),
-            // webSpeechPonyfillFactory,
-            webSpeechPonyfillFactory: await createHybridPonyfillFactory({ credentials: fetchSpeechServicesCredentials }),
-            enableTelemetry: false,
-            styleSet,
-            styleOptions: avatarOptions,
-            botName: 'PharmAssistant',
-            sendMessage: sendMessageWithDelay
-        }, document.getElementById('webchat'));
-      })().catch(err => console.error(err));
-    </script>
 </head>
 
 <body>
-    <div id="left">
+    <!-- <div id="left"> -->
       <div/>
           <h3>PharmAssistant für Medikationsanalysen</h3>
       </div>
       <div id="webchat" role="main">
           <div class="typing-animation"></div>
       </div>
-    </div>
-    <div id="right">
+    <!-- </div> -->
+    <!-- <div id="right"> -->
       <div id="avatar"></div>
       <!-- <div id="controls">
         <input id="text" type="text" value="Hi there. How are you? I'm fine.">
         <input id="speak" type="button" value="Speak">
       </div> -->
       <div id="loading"></div>
-  </div>
+  <!-- </div> -->
   
 </body>
 </html>
