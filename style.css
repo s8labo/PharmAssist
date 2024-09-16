@@ -9,6 +9,12 @@ body, html {
     overflow: hidden; /* Prevent scrolling */
 }
 
+#webchat {
+    height: 80vh; /* Adjust the percentage as needed */
+    width: 100%;
+    font-size: 20px;
+}
+
 #splash-screen {
     position: fixed;
     top: 0;
