@@ -230,6 +230,62 @@
         }
       });
 
+      // Store the conversation log
+      const conversationLog = [];
+
+      // Event listener for incoming activities
+      window.addEventListener('webchatincomingactivity', ({ data }) => {
+        if (data.type === 'message') {
+          // Extract common fields
+          const role = data.from.role; // "user" or "bot"
+          const messageText = data.text || ''; // Message content (if any)
+          const timestamp = new Date(data.timestamp).toLocaleString(); // Format timestamp
+
+          // Extract custom data (if available)
+          const customData = data.value || {}; // `value` field contains structured data
+          const grund = customData.grund || '';
+          const geschlecht = customData.geschlecht || '';
+          const geburtsdatum = customData.geburtsdatum || '';
+          const kontakt = customData.kontakt || '';
+
+          // Save the conversation message and extracted data to the log
+          conversationLog.push({
+            role,
+            message: messageText,
+            timestamp,
+            grund,
+            geschlecht,
+            geburtsdatum,
+            kontakt,
+          });
+
+          // Update the table with the new data
+          updateConversationTable();
+        }
+      });
+
+      // Function to update the conversation table
+      function updateConversationTable() {
+        const tableBody = document.querySelector('#conversationTable tbody');
+        tableBody.innerHTML = ''; // Clear existing rows
+
+        // Populate table rows
+        conversationLog.forEach((entry) => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${entry.timestamp}</td>
+            <td>${entry.role === 'user' ? 'User' : 'Bot'}</td>
+            <td>${entry.message}</td>
+            <td>${entry.grund}</td>
+            <td>${entry.geschlecht}</td>
+            <td>${entry.geburtsdatum}</td>
+            <td>${entry.kontakt}</td>
+          `;
+          tableBody.appendChild(row);
+        });
+      }
+
+
   </script>
 </head>
 
@@ -242,6 +298,23 @@
       <!-- </div> -->
 <!--     </div>
     <div id="loading">Loading...</div> -->
+    <table id="conversationTable" border="1">
+  <thead>
+    <tr>
+      <th>Timestamp</th>
+      <th>Role</th>
+      <th>Message</th>
+      <th>Grund</th>
+      <th>Geschlecht</th>
+      <th>Geburtsdatum</th>
+      <th>Kontakt</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Rows will be dynamically populated here -->
+  </tbody>
+</table>
+
 </div>
 
 <div id="right-panel">
