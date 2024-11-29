@@ -200,8 +200,8 @@
           if (data.type === 'message' && data.from.role === 'bot') {
             const botMessage = data.text;
             const messageID = data;
-            console.log(`Bot says: ${messageID}`);
-
+            console.log(`Bot says: ${JSON.stringify(messageID, null, 2)}`);
+            
             // Make the avatar speak the bot message using TTS
             if (typeof head !== 'undefined' && head.speakText) {
               head.speakText(botMessage); // Avatar speaks the bot's message
