@@ -235,6 +235,8 @@
 
       // Event listener for incoming activities
       window.addEventListener('webchatincomingactivity', ({ data }) => {
+        console.log('Incoming data:', JSON.stringify(data, null, 2)); // Debug incoming data
+
         if (data.type === 'message') {
           // Extract common fields
           const role = data.from.role; // "user" or "bot"
@@ -248,6 +250,9 @@
           const geburtsdatum = customData.geburtsdatum || '';
           const kontakt = customData.kontakt || '';
 
+          // Debug extracted data
+          console.log('Extracted Data:', { role, messageText, timestamp, grund, geschlecht, geburtsdatum, kontakt });
+
           // Save the conversation message and extracted data to the log
           conversationLog.push({
             role,
@@ -258,6 +263,9 @@
             geburtsdatum,
             kontakt,
           });
+
+          // Debug the updated conversation log
+          console.log('Conversation Log:', conversationLog);
 
           // Update the table with the new data
           updateConversationTable();
@@ -275,15 +283,18 @@
           row.innerHTML = `
             <td>${entry.timestamp}</td>
             <td>${entry.role === 'user' ? 'User' : 'Bot'}</td>
-            <td>${entry.message}</td>
-            <td>${entry.grund}</td>
-            <td>${entry.geschlecht}</td>
-            <td>${entry.geburtsdatum}</td>
-            <td>${entry.kontakt}</td>
+            <td>${entry.message || 'N/A'}</td>
+            <td>${entry.grund || 'N/A'}</td>
+            <td>${entry.geschlecht || 'N/A'}</td>
+            <td>${entry.geburtsdatum || 'N/A'}</td>
+            <td>${entry.kontakt || 'N/A'}</td>
           `;
           tableBody.appendChild(row);
         });
+
+        console.log('Table updated successfully.');
       }
+
 
 
   </script>
@@ -299,21 +310,22 @@
 <!--     </div>
     <div id="loading">Loading...</div> -->
     <table id="conversationTable" border="1">
-  <thead>
-    <tr>
-      <th>Timestamp</th>
-      <th>Role</th>
-      <th>Message</th>
-      <th>Grund</th>
-      <th>Geschlecht</th>
-      <th>Geburtsdatum</th>
-      <th>Kontakt</th>
-    </tr>
-  </thead>
-  <tbody>
-    <!-- Rows will be dynamically populated here -->
-  </tbody>
-</table>
+      <thead>
+        <tr>
+          <th>Timestamp</th>
+          <th>Role</th>
+          <th>Message</th>
+          <th>Grund</th>
+          <th>Geschlecht</th>
+          <th>Geburtsdatum</th>
+          <th>Kontakt</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Rows will be dynamically populated -->
+      </tbody>
+    </table>
+
 
 </div>
 
