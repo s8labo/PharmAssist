@@ -199,7 +199,8 @@
         window.addEventListener('webchatincomingactivity', ({ data }) => {
           if (data.type === 'message' && data.from.role === 'bot') {
             const botMessage = data.text;
-            console.log(`Bot says: ${botMessage}`);
+            const messageID = data.id;
+            console.log(`Bot says: ${messageID}`);
 
             // Make the avatar speak the bot message using TTS
             if (typeof head !== 'undefined' && head.speakText) {
