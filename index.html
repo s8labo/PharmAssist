@@ -216,14 +216,22 @@
       })().catch(err => console.error(err));
 
       window.addEventListener('webchatincomingactivity', ({ data }) => {
+        // Define output containers
+        const userResponsesDiv = document.getElementById('userResponses');
+        const botResponsesDiv = document.getElementById('botResponses');
+
         // Check if the incoming activity is a user message
         if (data.type === 'message' && data.from.role === 'user') {
           const userResponse = data.text; // Extract the user's message text
-          const messageId = data;     // Get the message ID for tracking (optional)
-          const formData = data.value
-          console.log(`User says: ${JSON.stringify(messageId, null, 2)}`);
-        }
+          const formData = data.value || {}; // Get formData if available
+          const formattedFormData = JSON.stringify(formData, null, 2);
 
+          // Display user message and formData
+          userResponsesDiv.innerHTML += `
+            <p><strong>Message:</strong> ${userResponse}</p>
+            <pre><strong>Form Data:</strong> ${formattedFormData}</pre>
+          `;
+        }
         // Handle bot responses (optional, for context)
         if (data.type === 'message' && data.from.role === 'bot') {
           const botMessage = data.text;
@@ -322,6 +330,11 @@
       <tbody>
         <!-- Rows will be dynamically populated -->
       </tbody>
+      <h2>Webchat Interaction</h2>
+      <div id="userMessages">
+        <h3>User Messages:</h3>
+        <div id="userResponses"></div>
+      </div>
     </table>
 
 
