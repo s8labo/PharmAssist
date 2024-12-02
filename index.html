@@ -293,29 +293,25 @@
 
     // Listen for incoming activity from the webchat
     window.addEventListener('webchatincomingactivity', ({ data }) => {
-      // Define output containers
       const userResponsesDiv = document.getElementById('userResponses');
-      const botResponsesDiv = document.getElementById('botResponses');
 
-      // Check if the incoming activity is a user message
-      if (data.type === 'message' && data.from.role === 'user') {
-        const userResponse = data.text; // Extract the user's message text
-        const formData = data.value || {}; // Get formData if available
-        const formattedFormData = JSON.stringify(formData, null, 2);
+      // Check if the incoming activity is a user message and contains a value
+      if (data.type === 'message' && data.from.role === 'user' && data.value) {
+        const { grund, name, geschlecht, geburtsdatum, kontakt } = data.value;
 
-        // Display user message and formData
-        userResponsesDiv.innerHTML += `
-          <p><strong>Message:</strong> ${userResponse}</p>
-          <pre><strong>Form Data:</strong> ${formattedFormData}</pre>
-        `;
-      }
+        // Display only if all required fields are present
+        if (grund && name && geschlecht && geburtsdatum && kontakt) {
+          const formattedMessage = `
+            <p><strong>Grund:</strong> ${grund}</p>
+            <p><strong>Name:</strong> ${name}</p>
+            <p><strong>Geschlecht:</strong> ${geschlecht}</p>
+            <p><strong>Geburtsdatum:</strong> ${geburtsdatum}</p>
+            <p><strong>Kontakt:</strong> ${kontakt}</p>
+          `;
 
-      // Handle bot responses
-      if (data.type === 'message' && data.from.role === 'bot') {
-        const botMessage = data.text;
-
-        // Display bot message
-        botResponsesDiv.innerHTML += `<p>${botMessage}</p>`;
+          // Append the message to the userResponses div
+          userResponsesDiv.innerHTML += formattedMessage;
+        }
       }
     });
 
