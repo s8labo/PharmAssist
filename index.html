@@ -225,6 +225,7 @@
           const userResponse = data.text; // Extract the user's message text
           const formData = data.value || {}; // Get formData if available
           const formattedFormData = JSON.stringify(formData, null, 2);
+          console.log(`Bot says: ${formattedFormData}`);
 
           // Display user message and formData
           userResponsesDiv.innerHTML += `
