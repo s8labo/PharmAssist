@@ -49,9 +49,9 @@
   </script>
 
   <script type="module">
-    import { TalkingHead } from "talkinghead";
+    // import { TalkingHead } from "talkinghead";
 
-    let head;
+    // let head;
 
     document.addEventListener('DOMContentLoaded', async function(e) {
 
@@ -230,66 +230,66 @@
         }
       });
 
-      const conversationLog = []; // Global conversation log
+    // const conversationLog = []; // Global conversation log
 
-    window.addEventListener('webchatincomingactivity', ({ data }) => {
-      if (data.type === 'message') {
-        const role = data.from.role; // "user" or "bot"
-        const messageText = data.text || JSON.stringify(data.value) || ''; // Use text or value
-        const timestamp = new Date(data.timestamp).toLocaleString();
+    // window.addEventListener('webchatincomingactivity', ({ data }) => {
+    //   if (data.type === 'message') {
+    //     const role = data.from.role; // "user" or "bot"
+    //     const messageText = data.text || JSON.stringify(data.value) || ''; // Use text or value
+    //     const timestamp = new Date(data.timestamp).toLocaleString();
 
-        // Extract user-provided data (only available for user messages)
-        const customData = data.value || {};
-        const grund = customData.grund || '';
-        const geschlecht = customData.geschlecht || '';
-        const geburtsdatum = customData.geburtsdatum || '';
-        const kontakt = customData.kontakt || '';
+    //     // Extract user-provided data (only available for user messages)
+    //     const customData = data.value || {};
+    //     const grund = customData.grund || '';
+    //     const geschlecht = customData.geschlecht || '';
+    //     const geburtsdatum = customData.geburtsdatum || '';
+    //     const kontakt = customData.kontakt || '';
 
-        // Add to conversation log
-        conversationLog.push({
-          role,
-          message: messageText,
-          timestamp,
-          grund,
-          geschlecht,
-          geburtsdatum,
-          kontakt,
-        });
+    //     // Add to conversation log
+    //     conversationLog.push({
+    //       role,
+    //       message: messageText,
+    //       timestamp,
+    //       grund,
+    //       geschlecht,
+    //       geburtsdatum,
+    //       kontakt,
+    //     });
 
-        console.log('Conversation Log:', conversationLog);
+    //     console.log('Conversation Log:', conversationLog);
 
-        updateConversationTable(); // Update table UI
+    //     updateConversationTable(); // Update table UI
 
-        // Avatar speech for bot messages
-        if (role === 'bot' && typeof head !== 'undefined' && head.speakText) {
-          head.speakText(messageText);
-        } else if (role === 'bot') {
-          console.warn('Avatar head is not initialized.');
-        }
-      }
-    });
+    //     // Avatar speech for bot messages
+    //     if (role === 'bot' && typeof head !== 'undefined' && head.speakText) {
+    //       head.speakText(messageText);
+    //     } else if (role === 'bot') {
+    //       console.warn('Avatar head is not initialized.');
+    //     }
+    //   }
+    // });
 
-    // Function to update the conversation table
-    function updateConversationTable() {
-      const tableBody = document.querySelector('#conversationTable tbody');
-      tableBody.innerHTML = ''; // Clear existing rows
+    // // Function to update the conversation table
+    // function updateConversationTable() {
+    //   const tableBody = document.querySelector('#conversationTable tbody');
+    //   tableBody.innerHTML = ''; // Clear existing rows
 
-      conversationLog.forEach((entry) => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${entry.timestamp}</td>
-          <td>${entry.role === 'user' ? 'User' : 'Bot'}</td>
-          <td>${entry.message || 'N/A'}</td>
-          <td>${entry.grund || 'N/A'}</td>
-          <td>${entry.geschlecht || 'N/A'}</td>
-          <td>${entry.geburtsdatum || 'N/A'}</td>
-          <td>${entry.kontakt || 'N/A'}</td>
-        `;
-        tableBody.appendChild(row);
-      });
+    //   conversationLog.forEach((entry) => {
+    //     const row = document.createElement('tr');
+    //     row.innerHTML = `
+    //       <td>${entry.timestamp}</td>
+    //       <td>${entry.role === 'user' ? 'User' : 'Bot'}</td>
+    //       <td>${entry.message || 'N/A'}</td>
+    //       <td>${entry.grund || 'N/A'}</td>
+    //       <td>${entry.geschlecht || 'N/A'}</td>
+    //       <td>${entry.geburtsdatum || 'N/A'}</td>
+    //       <td>${entry.kontakt || 'N/A'}</td>
+    //     `;
+    //     tableBody.appendChild(row);
+    //   });
 
-      console.log('Table updated successfully.');
-    }
+    //   console.log('Table updated successfully.');
+    // }
 
 
 
