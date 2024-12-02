@@ -223,9 +223,9 @@
         // Check if the incoming activity is a user message
         if (data.type === 'message' && data.from.role === 'user') {
           const userResponse = data.text; // Extract the user's message text
-          const formData = data.value || {}; // Get formData if available
+          const formData = data.value.grund || {}; // Get formData if available
           const formattedFormData = JSON.stringify(formData, null, 2);
-          console.log(`Bot says: ${formattedFormData}`);
+          console.log(`Bot says: ${formData}`);
 
           // Display user message and formData
           userResponsesDiv.innerHTML += `
@@ -316,7 +316,7 @@
       <!-- </div> -->
 <!--     </div>
     <div id="loading">Loading...</div> -->
-    <table id="conversationTable" border="1">
+<!--     <table id="conversationTable" border="1">
       <thead>
         <tr>
           <th>Timestamp</th>
@@ -329,16 +329,15 @@
         </tr>
       </thead>
       <tbody>
-        <!-- Rows will be dynamically populated -->
       </tbody>
+
+    </table> -->
+
       <h2>Webchat Interaction</h2>
       <div id="userMessages">
         <h3>User Messages:</h3>
         <div id="userResponses"></div>
       </div>
-    </table>
-
-
 </div>
 
 <div id="right-panel">
