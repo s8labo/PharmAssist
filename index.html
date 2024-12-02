@@ -291,9 +291,8 @@
     //   console.log('Table updated successfully.');
     // }
 
-    // Listen for incoming activity from the webchat
     window.addEventListener('webchatincomingactivity', ({ data }) => {
-      const userResponsesDiv = document.getElementById('userResponses');
+      const tableBody = document.querySelector('#userMessages tbody');
 
       // Check if the incoming activity is a user message and contains a value
       if (data.type === 'message' && data.from.role === 'user' && data.value) {
@@ -301,20 +300,21 @@
 
         // Display only if all required fields are present
         if (grund && name && geschlecht && geburtsdatum && kontakt) {
-          const formattedMessage = `
-            <p><strong>Grund:</strong> ${grund}</p>
-            <p><strong>Name:</strong> ${name}</p>
-            <p><strong>Geschlecht:</strong> ${geschlecht}</p>
-            <p><strong>Geburtsdatum:</strong> ${geburtsdatum}</p>
-            <p><strong>Kontakt:</strong> ${kontakt}</p>
+          // Create a new table row
+          const newRow = document.createElement('tr');
+          newRow.innerHTML = `
+            <td>${grund}</td>
+            <td>${name}</td>
+            <td>${geschlecht}</td>
+            <td>${geburtsdatum}</td>
+            <td>${kontakt}</td>
           `;
 
-          // Append the message to the userResponses div
-          userResponsesDiv.innerHTML += formattedMessage;
+          // Append the new row to the table body
+          tableBody.appendChild(newRow);
         }
       }
     });
-
 
   </script>
 </head>
@@ -343,15 +343,21 @@
       <tbody>
       </tbody>
     </table> -->
-  <h2>Webchat Interaction</h2>
-  <div id="userMessages">
-    <h3>User Messages:</h3>
-    <div id="userResponses"></div>
-  </div>
-  <div id="botMessages">
-    <h3>Bot Responses:</h3>
-    <div id="botResponses"></div>
-  </div>
+  <h2>Filtered Webchat Messages</h2>
+  <table id="userMessages">
+    <thead>
+      <tr>
+        <th>Grund</th>
+        <th>Name</th>
+        <th>Geschlecht</th>
+        <th>Geburtsdatum</th>
+        <th>Kontakt</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Rows will be dynamically added here -->
+    </tbody>
+  </table>
 
 </div>
 
