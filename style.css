@@ -3,7 +3,7 @@ body, html {
     height: 100%;
     margin: 0;
     background-color: white;
-    color: white;
+    color: black;
     display: flex;
     justify-content: space-between; /* Align items to the left and right */
     overflow: hidden; /* Prevent scrolling */
