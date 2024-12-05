@@ -226,7 +226,7 @@
         // Handle bot responses (optional, for context)
         if (data.type === 'message' && data.from.role === 'bot') {
           const botMessage = data;
-          console.log(`Bot says: ${JSON.stringify(botMessage, null, 1)}`);
+          console.log(`Bot says: ${JSON.stringify(botMessage)}`);
         }
       });
 
