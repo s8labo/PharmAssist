@@ -220,7 +220,7 @@
         if (data.type === 'message' && data.from.role === 'user') {
           const userResponse = data.text; // Extract the user's message text
           const messageId = data;     // Get the message ID for tracking (optional)
-          console.log(`User says: ${JSON.stringify(messageId, null, 1)}`);
+          console.log(`User says: ${JSON.stringify(messageId)}`);
         }
 
         // Handle bot responses (optional, for context)
