@@ -8,7 +8,6 @@ const chatbox = document.querySelector(".chatbox");
 
 let userMessage;
 
-//OpenAI Free APIKey
 
 const createChatLi = (message, className) => {
     const chatLi = document.createElement("li");
