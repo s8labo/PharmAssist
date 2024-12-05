@@ -110,7 +110,7 @@
         // Initial bot message
         window.onload = () => {
             addMessage("Hi, I'm your assistant. Why do you want to chat?", 'bot-message');
-            showOptions(["Ask a question", "Get help", "Just chat"]);
+            showOptions(["Ask a question", "Get help", "Just chat", "Upload an image"]);
         };
 
         function sendMessage() {
@@ -160,6 +160,10 @@
                 setTimeout(() => addMessage("I'm here to help! Please describe your issue.", 'bot-message'), 500);
             } else if (option === "Just chat") {
                 setTimeout(() => addMessage("Alright, let's chat! What's on your mind?", 'bot-message'), 500);
+            } else if (option === "Upload an image") {
+                setTimeout(() => {
+                    addMessage("Please upload an image using the upload button below.", 'bot-message');
+                }, 500);
             }
         }
 
