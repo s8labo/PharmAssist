@@ -106,35 +106,35 @@
     });
 
     (async function() {
-        const fetchSpeechServicesCredentials = {
-          credentials: {
-                region: 'germanywestcentral',
-                subscriptionKey: '724b12cefed2442c9df696992b249f89'
-            }
-        }
+        // const fetchSpeechServicesCredentials = {
+        //   credentials: {
+        //         region: 'germanywestcentral',
+        //         subscriptionKey: '724b12cefed2442c9df696992b249f89'
+        //     }
+        // }
 
-        async function createHybridPonyfillFactory({ credentials }) {
-          const speechServicesPonyfillFactory = await window.WebChat.createCognitiveServicesSpeechServicesPonyfillFactory(
-            {
-              credentials
-            }
-          );
+        // async function createHybridPonyfillFactory({ credentials }) {
+        //   const speechServicesPonyfillFactory = await window.WebChat.createCognitiveServicesSpeechServicesPonyfillFactory(
+        //     {
+        //       credentials
+        //     }
+        //   );
 
-          const webSpeechPonyfillFactory = await window.WebChat.createBrowserWebSpeechPonyfillFactory();
+        //   const webSpeechPonyfillFactory = await window.WebChat.createBrowserWebSpeechPonyfillFactory();
 
-          return options => {
-            const speechServicesPonyfill = speechServicesPonyfillFactory(options);
-            const webSpeechPonyfill = webSpeechPonyfillFactory(options);
+        //   return options => {
+        //     const speechServicesPonyfill = speechServicesPonyfillFactory(options);
+        //     const webSpeechPonyfill = webSpeechPonyfillFactory(options);
 
-            return {
-              SpeechGrammarList: webSpeechPonyfill.SpeechGrammarList,
-              SpeechRecognition: webSpeechPonyfill.SpeechRecognition,
+        //     return {
+        //       SpeechGrammarList: webSpeechPonyfill.SpeechGrammarList,
+        //       SpeechRecognition: webSpeechPonyfill.SpeechRecognition,
 
-              speechSynthesis: speechServicesPonyfill.speechSynthesis,
-              SpeechSynthesisUtterance: speechServicesPonyfill.SpeechSynthesisUtterance
-            };
-          };
-        }
+        //       speechSynthesis: speechServicesPonyfill.speechSynthesis,
+        //       SpeechSynthesisUtterance: speechServicesPonyfill.SpeechSynthesisUtterance
+        //     };
+        //   };
+        // }
 
         const styleSet = window.WebChat.createStyleSet({
             rootHeight: '100%',
@@ -147,23 +147,18 @@
             userAvatarInitials: 'U'
         };
         // Function to simulate delay
-        const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+        // const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-        const sendMessageWithDelay = async (message) => {
-            directLine.postActivity({ type: 'message', text: message });
+        // const sendMessageWithDelay = async (message) => {
+        //     directLine.postActivity({ type: 'message', text: message });
 
-            // Introduce a delay of 3 seconds before displaying the bot's response
-            await delay(5000);
+        //     // Introduce a delay of 3 seconds before displaying the bot's response
+        //     await delay(5000);
 
-            // Fetch the activities from the conversation and display them
-            const activities = await directLine.getActivity();
-            activities.forEach(activity => displayActivity(activity));
-        };
-
-        const displayActivity = (activity) => {
-            // Code to display the activity in your web chat interface
-            // This may involve updating the DOM or using WebChat's APIs
-        };
+        //     // Fetch the activities from the conversation and display them
+        //     const activities = await directLine.getActivity();
+        //     activities.forEach(activity => displayActivity(activity));
+        // };
 
         // Create a Redux store with middleware to capture incoming activities
         const store = window.WebChat.createStore({}, ({ dispatch }) => next => action => {
@@ -186,7 +181,7 @@
             store,
             sendTyping: true,
             // webSpeechPonyfillFactory,
-            webSpeechPonyfillFactory: await createHybridPonyfillFactory({ credentials: fetchSpeechServicesCredentials }),
+            // webSpeechPonyfillFactory: await createHybridPonyfillFactory({ credentials: fetchSpeechServicesCredentials }),
             enableTelemetry: false,
             styleSet,
             styleOptions: avatarOptions,
