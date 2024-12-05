@@ -8,7 +8,6 @@ const chatbox = document.querySelector(".chatbox");
 
 let userMessage;
 
-
 const createChatLi = (message, className) => {
     const chatLi = document.createElement("li");
     chatLi.classList.add("chat", className);
