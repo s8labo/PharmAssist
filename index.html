@@ -217,17 +217,17 @@
 
       window.addEventListener('webchatincomingactivity', ({ data }) => {
         // Check if the incoming activity is a user message
-        if (data.type === 'message' && data.from.role === 'user') {
-          const userResponse = data.text; // Extract the user's message text
-          const messageId = data;     // Get the message ID for tracking (optional)
-          console.log(`User says: ${JSON.stringify(messageId)}`);
-        }
+        // if (data.type === 'message' && data.from.role === 'user') {
+        //   const userResponse = data.text; // Extract the user's message text
+        //   const messageId = data;     // Get the message ID for tracking (optional)
+        //   console.log(`User says: ${JSON.stringify(messageId)}`);
+        // }
 
-        // Handle bot responses (optional, for context)
-        if (data.type === 'message' && data.from.role === 'bot') {
-          const botMessage = data;
-          console.log(`Bot says: ${JSON.stringify(botMessage)}`);
-        }
+        // // Handle bot responses (optional, for context)
+        // if (data.type === 'message' && data.from.role === 'bot') {
+        //   const botMessage = data;
+        //   console.log(`Bot says: ${JSON.stringify(botMessage)}`);
+        // }
 
         console.log(`all data: ${JSON.stringify(data)}`);
       });
