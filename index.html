@@ -1,34 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" 
-          content="width=device-width, initial-scale=1.0">
-    <title>ChatBot</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .chat-container {
+            width: 400px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .chat-header {
+            background: #007bff;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .chat-messages {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+            background-color: #f9f9f9;
+        }
+        .message {
+            margin: 10px 0;
+        }
+        .user-message {
+            text-align: right;
+        }
+        .bot-message {
+            text-align: left;
+        }
+        .chat-input {
+            display: flex;
+            border-top: 1px solid #ddd;
+        }
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            outline: none;
+        }
+        .chat-input button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+        .chat-input button:hover {
+            background: #0056b3;
+        }
+    </style>
 </head>
-
 <body>
-    <div class="chatBot">
-        <header>
-            <h2>ChatBot</h2>
-            <span alt="Close" 
-                  id="cross" 
-                  onclick="cancel()">X</span>
-        </header>
-        <ul class="chatbox">
-            <li class="chat-incoming chat">
-                <p>Hey! How can I assist you today?</p>
-            </li>
-        </ul>
+    <div class="chat-container">
+        <div class="chat-header">Chatbot</div>
+        <div class="chat-messages" id="chat-messages"></div>
         <div class="chat-input">
-            <textarea rows="0" cols="17"
-                      placeholder="Enter a message..."></textarea>
-            <button id="sendBTN">Send</button>
+            <input type="text" id="user-input" placeholder="Type your message...">
+            <button onclick="sendMessage()">Send</button>
         </div>
     </div>
-    <script src="script.js" defer></script>
-</body>
 
+    <script>
+        const botReplies = {
+            "hello": "Hi there! How can I help you?",
+            "how are you": "I'm just a bot, but I'm functioning as expected!",
+            "bye": "Goodbye! Have a great day!",
+            "default": "I'm sorry, I didn't understand that."
+        };
+
+        function sendMessage() {
+            const userInput = document.getElementById('user-input').value.trim();
+            if (userInput === "") return;
+
+            addMessage(userInput, 'user-message');
+
+            const botReply = botReplies[userInput.toLowerCase()] || botReplies["default"];
+            setTimeout(() => addMessage(botReply, 'bot-message'), 500);
+
+            document.getElementById('user-input').value = "";
+        }
+
+        function addMessage(message, className) {
+            const messageContainer = document.createElement('div');
+            messageContainer.className = `message ${className}`;
+            messageContainer.textContent = message;
+            document.getElementById('chat-messages').appendChild(messageContainer);
+
+            const chatMessages = document.getElementById('chat-messages');
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+    </script>
+</body>
 </html>
