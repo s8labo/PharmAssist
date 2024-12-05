@@ -66,6 +66,22 @@
         .chat-input button:hover {
             background: #0056b3;
         }
+        .button-options {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .button-options button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .button-options button:hover {
+            background: #0056b3;
+        }
     </style>
 </head>
 <body>
@@ -84,6 +100,12 @@
             "how are you": "I'm just a bot, but I'm functioning as expected!",
             "bye": "Goodbye! Have a great day!",
             "default": "I'm sorry, I didn't understand that."
+        };
+
+        // Initial bot message
+        window.onload = () => {
+            addMessage("Hi, I'm your assistant. Why do you want to chat?", 'bot-message');
+            showOptions(["Ask a question", "Get help", "Just chat"]);
         };
 
         function sendMessage() {
@@ -106,6 +128,34 @@
 
             const chatMessages = document.getElementById('chat-messages');
             chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function showOptions(options) {
+            const chatMessages = document.getElementById('chat-messages');
+            const optionsContainer = document.createElement('div');
+            optionsContainer.className = 'button-options';
+
+            options.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.onclick = () => handleOptionClick(option);
+                optionsContainer.appendChild(button);
+            });
+
+            chatMessages.appendChild(optionsContainer);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function handleOptionClick(option) {
+            addMessage(option, 'user-message');
+
+            if (option === "Ask a question") {
+                setTimeout(() => addMessage("Sure! What is your question?", 'bot-message'), 500);
+            } else if (option === "Get help") {
+                setTimeout(() => addMessage("I'm here to help! Please describe your issue.", 'bot-message'), 500);
+            } else if (option === "Just chat") {
+                setTimeout(() => addMessage("Alright, let's chat! What's on your mind?", 'bot-message'), 500);
+            }
         }
     </script>
 </body>
