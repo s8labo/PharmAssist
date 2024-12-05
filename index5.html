@@ -37,8 +37,8 @@
     #speak { block; position: absolute; top: 0; bottom: 0; right: 0; height: 100%; width: 100px; font-family: Arial; font-size: 20px; }
     #loading { display: block; position: absolute; bottom: 10px; left: 10px; right: 10px; height: 50px; font-family: Arial; font-size: 20px; }
   </style> -->
-<script src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
-  <script type="importmap">
+  <script src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
+<!--   <script type="importmap">
   { "imports":
     {
       "three": "https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.module.js/+esm",
@@ -46,45 +46,45 @@
       "talkinghead": "https://cdn.jsdelivr.net/gh/met4citizen/TalkingHead@1.2/modules/talkinghead.mjs"
     }
   }
-  </script>
+  </script> -->
 
   <script type="module">
-    import { TalkingHead } from "talkinghead";
+    // import { TalkingHead } from "talkinghead";
 
-    let head;
+    // let head;
 
-    document.addEventListener('DOMContentLoaded', async function(e) {
+    // document.addEventListener('DOMContentLoaded', async function(e) {
 
-      const nodeAvatar = document.getElementById('avatar');
-      head = new TalkingHead( nodeAvatar, {
-        ttsEndpoint: "https://eu-texttospeech.googleapis.com/v1beta1/text:synthesize",
-        ttsApikey: "AIzaSyD2DvM6vDBZm1SluT6h5iCpJPpjwXzcv5M", 
-        lipsyncModules: ["en", "fi"],
-        cameraView: "upper"
-      });
+    //   const nodeAvatar = document.getElementById('avatar');
+    //   head = new TalkingHead( nodeAvatar, {
+    //     ttsEndpoint: "https://eu-texttospeech.googleapis.com/v1beta1/text:synthesize",
+    //     ttsApikey: "AIzaSyD2DvM6vDBZm1SluT6h5iCpJPpjwXzcv5M", 
+    //     lipsyncModules: ["en", "fi"],
+    //     cameraView: "upper"
+    //   });
 
-      // Load and show the avatar
-      const nodeLoading = document.getElementById('loading');
-      try {
-        nodeLoading.textContent = "Loading...";
-        await head.showAvatar( {
-          url: 'https://models.readyplayer.me/64bfa15f0e72c63d7c3934a6.glb?morphTargets=ARKit,Oculus+Visemes,mouthOpen,mouthSmile,eyesClosed,eyesLookUp,eyesLookDown&textureSizeLimit=1024&textureFormat=png',
-          body: 'F',
-          avatarMood: 'neutral',
-          ttsLang: "de-DE",
-          ttsVoice: "de-DE-Standard-A",
-          lipsyncLang: 'de'
-        }, (ev) => {
-          if ( ev.lengthComputable ) {
-            let val = Math.min(100,Math.round(ev.loaded/ev.total * 100 ));
-            nodeLoading.textContent = "Loading " + val + "%";
-          }
-        });
-        nodeLoading.style.display = 'none';
-      } catch (error) {
-        console.log(error);
-        nodeLoading.textContent = error.toString();
-      }
+    //   // Load and show the avatar
+    //   const nodeLoading = document.getElementById('loading');
+    //   try {
+    //     nodeLoading.textContent = "Loading...";
+    //     await head.showAvatar( {
+    //       url: 'https://models.readyplayer.me/64bfa15f0e72c63d7c3934a6.glb?morphTargets=ARKit,Oculus+Visemes,mouthOpen,mouthSmile,eyesClosed,eyesLookUp,eyesLookDown&textureSizeLimit=1024&textureFormat=png',
+    //       body: 'F',
+    //       avatarMood: 'neutral',
+    //       ttsLang: "de-DE",
+    //       ttsVoice: "de-DE-Standard-A",
+    //       lipsyncLang: 'de'
+    //     }, (ev) => {
+    //       if ( ev.lengthComputable ) {
+    //         let val = Math.min(100,Math.round(ev.loaded/ev.total * 100 ));
+    //         nodeLoading.textContent = "Loading " + val + "%";
+    //       }
+    //     });
+    //     nodeLoading.style.display = 'none';
+    //   } catch (error) {
+    //     console.log(error);
+    //     nodeLoading.textContent = error.toString();
+    //   }
 
       // head.speakText("hallo");
 
@@ -103,38 +103,38 @@
 
     // await initializeHead();
 
-    });
+    // });
 
     (async function() {
-        const fetchSpeechServicesCredentials = {
-          credentials: {
-                region: 'germanywestcentral',
-                subscriptionKey: '724b12cefed2442c9df696992b249f89'
-            }
-        }
+        // const fetchSpeechServicesCredentials = {
+        //   credentials: {
+        //         region: 'germanywestcentral',
+        //         subscriptionKey: '724b12cefed2442c9df696992b249f89'
+        //     }
+        // }
 
-        async function createHybridPonyfillFactory({ credentials }) {
-          const speechServicesPonyfillFactory = await window.WebChat.createCognitiveServicesSpeechServicesPonyfillFactory(
-            {
-              credentials
-            }
-          );
+        // async function createHybridPonyfillFactory({ credentials }) {
+        //   const speechServicesPonyfillFactory = await window.WebChat.createCognitiveServicesSpeechServicesPonyfillFactory(
+        //     {
+        //       credentials
+        //     }
+        //   );
 
-          const webSpeechPonyfillFactory = await window.WebChat.createBrowserWebSpeechPonyfillFactory();
+        //   const webSpeechPonyfillFactory = await window.WebChat.createBrowserWebSpeechPonyfillFactory();
 
-          return options => {
-            const speechServicesPonyfill = speechServicesPonyfillFactory(options);
-            const webSpeechPonyfill = webSpeechPonyfillFactory(options);
+        //   return options => {
+        //     const speechServicesPonyfill = speechServicesPonyfillFactory(options);
+        //     const webSpeechPonyfill = webSpeechPonyfillFactory(options);
 
-            return {
-              SpeechGrammarList: webSpeechPonyfill.SpeechGrammarList,
-              SpeechRecognition: webSpeechPonyfill.SpeechRecognition,
+        //     return {
+        //       SpeechGrammarList: webSpeechPonyfill.SpeechGrammarList,
+        //       SpeechRecognition: webSpeechPonyfill.SpeechRecognition,
 
-              speechSynthesis: speechServicesPonyfill.speechSynthesis,
-              SpeechSynthesisUtterance: speechServicesPonyfill.SpeechSynthesisUtterance
-            };
-          };
-        }
+        //       speechSynthesis: speechServicesPonyfill.speechSynthesis,
+        //       SpeechSynthesisUtterance: speechServicesPonyfill.SpeechSynthesisUtterance
+        //     };
+        //   };
+        // }
 
         const styleSet = window.WebChat.createStyleSet({
             rootHeight: '100%',
@@ -147,23 +147,18 @@
             userAvatarInitials: 'U'
         };
         // Function to simulate delay
-        const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+        // const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-        const sendMessageWithDelay = async (message) => {
-            directLine.postActivity({ type: 'message', text: message });
+        // const sendMessageWithDelay = async (message) => {
+        //     directLine.postActivity({ type: 'message', text: message });
 
-            // Introduce a delay of 3 seconds before displaying the bot's response
-            await delay(5000);
+        //     // Introduce a delay of 3 seconds before displaying the bot's response
+        //     await delay(5000);
 
-            // Fetch the activities from the conversation and display them
-            const activities = await directLine.getActivity();
-            activities.forEach(activity => displayActivity(activity));
-        };
-
-        const displayActivity = (activity) => {
-            // Code to display the activity in your web chat interface
-            // This may involve updating the DOM or using WebChat's APIs
-        };
+        //     // Fetch the activities from the conversation and display them
+        //     const activities = await directLine.getActivity();
+        //     activities.forEach(activity => displayActivity(activity));
+        // };
 
         // Create a Redux store with middleware to capture incoming activities
         const store = window.WebChat.createStore({}, ({ dispatch }) => next => action => {
@@ -181,17 +176,17 @@
 
         window.WebChat.renderWebChat({
             directLine: window.WebChat.createDirectLine({
-                token: 'AavR0Oh2MoQ.k8agJWGKvkYtM92I0013G-A3eObi4iVxVVGEcZFYLY4'
+                token: 'U_jtet5ueXc.8utoDstjawC5EFU5thuTHjG_jZY79zE_QOw4p4TfX3U'
             }),
             store,
             sendTyping: true,
             // webSpeechPonyfillFactory,
-            webSpeechPonyfillFactory: await createHybridPonyfillFactory({ credentials: fetchSpeechServicesCredentials }),
+            // webSpeechPonyfillFactory: await createHybridPonyfillFactory({ credentials: fetchSpeechServicesCredentials }),
             enableTelemetry: false,
             styleSet,
             styleOptions: avatarOptions,
             botName: 'PharmAssistant',
-            sendMessage: sendMessageWithDelay,
+            // sendMessage: sendMessageWithDelay,
 
         }, document.getElementById('webchat'));
 
@@ -367,7 +362,7 @@
 <!--     <div id="avatar"></div>
     <div id="loading">Loading...</div> -->
     <div id="webchat" role="main">
-      <div class="typing-animation"></div>
+      <!-- <div class="typing-animation"></div> -->
     </div>
 </div>
 <script>
