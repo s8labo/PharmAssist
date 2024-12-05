@@ -222,7 +222,7 @@
           const messageId = data;     // Get the message ID for tracking (optional)
           console.log(`User says: ${JSON.stringify(messageId, null, 2)}`);
         }
-
+        
         // Handle bot responses (optional, for context)
         if (data.type === 'message' && data.from.role === 'bot') {
           const botMessage = data;
