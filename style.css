@@ -188,10 +188,6 @@ th {
   background-color: #f4f4f4;
 }
 
-.webchat__stacked-layout__attachment-row .webchat__stacked-layout__attachment-row--first {
-    display: none!important;
-}
-
 @media (max-width: 768px) {
 
     body, html {
