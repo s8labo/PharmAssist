@@ -312,6 +312,8 @@
               // Extract the value from the "user_name" Input.Text field in the Adaptive Card
               const userNameValue = attachment.content.body[0].value;
 
+              console.log(userNameValue);
+
               // Assume that other fields are available in data.value, like grund, geschlecht, etc.
               const { grund, name, geschlecht, geburtsdatum, kontakt } = data.value;
 
