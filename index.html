@@ -219,6 +219,23 @@
         console.log(`all data: ${JSON.stringify(data)}`);
       });
 
+      // Function to handle incoming messages and print messages from users
+      function handleMessages(data) {
+          // Ensure that the data contains the correct structure and is from a user
+          if (data.type === 'message' && data.from.role === 'user') {
+              // Get the message text
+              const userMessage = data.text;
+              
+              // Print the message in the console
+              console.log('User Message:', userMessage);
+              
+              // Optionally, add the message to the page (e.g., to a div)
+              const messageDiv = document.createElement('div');
+              messageDiv.textContent = `User: ${userMessage}`;
+              document.body.appendChild(messageDiv); // Appends message to the body of the page
+          }
+      }
+
     //   const conversationLog = []; // Global conversation log
 
     // window.addEventListener('webchatincomingactivity', ({ data }) => {
@@ -304,36 +321,36 @@
       //   }
       // }
       // Check if the message is from the user and contains the expected input field
-      if (data.type === 'message' && data.from.role === 'user' && data.attachments && data.attachments.length > 0) {
-          const attachment = data.attachments[0];
+      // if (data.type === 'message' && data.from.role === 'user' && data.attachments && data.attachments.length > 0) {
+      //     const attachment = data.attachments[0];
 
-          // Ensure the content object exists and has the expected structure
-          if (attachment.content && attachment.content.body && Array.isArray(attachment.content.body) && attachment.content.body[0].id === "user_name") {
-              // Extract the value from the "user_name" Input.Text field in the Adaptive Card
-              const userNameValue = attachment.content.body[0].value;
+      //     // Ensure the content object exists and has the expected structure
+      //     if (attachment.content && attachment.content.body && Array.isArray(attachment.content.body) && attachment.content.body[0].id === "user_name") {
+      //         // Extract the value from the "user_name" Input.Text field in the Adaptive Card
+      //         const userNameValue = attachment.content.body[0].value;
 
-              console.log(userNameValue);
+      //         console.log(userNameValue);
 
-              // Assume that other fields are available in data.value, like grund, geschlecht, etc.
-              const { grund, name, geschlecht, geburtsdatum, kontakt } = data.value;
+      //         // Assume that other fields are available in data.value, like grund, geschlecht, etc.
+      //         const { grund, name, geschlecht, geburtsdatum, kontakt } = data.value;
 
-              // Display only if all required fields are present, including the extracted user_name
-              if (grund && name && geschlecht && geburtsdatum && kontakt && userNameValue) {
-                  // Create a new table row
-                  const newRow = document.createElement('tr');
-                  newRow.innerHTML = `
-                      <td>${grund}</td>
-                      <td>${userNameValue}</td> <!-- Using the extracted user_name value here -->
-                      <td>${geschlecht}</td>
-                      <td>${geburtsdatum}</td>
-                      <td>${kontakt}</td>
-                  `;
+      //         // Display only if all required fields are present, including the extracted user_name
+      //         if (grund && name && geschlecht && geburtsdatum && kontakt && userNameValue) {
+      //             // Create a new table row
+      //             const newRow = document.createElement('tr');
+      //             newRow.innerHTML = `
+      //                 <td>${grund}</td>
+      //                 <td>${userNameValue}</td> <!-- Using the extracted user_name value here -->
+      //                 <td>${geschlecht}</td>
+      //                 <td>${geburtsdatum}</td>
+      //                 <td>${kontakt}</td>
+      //             `;
 
-                  // Assuming `tableBody` is the <tbody> element of your table
-                  tableBody.appendChild(newRow);
-              }
-          }
-      }
+      //             // Assuming `tableBody` is the <tbody> element of your table
+      //             tableBody.appendChild(newRow);
+      //         }
+      //     }
+      // }
 
 
     });
