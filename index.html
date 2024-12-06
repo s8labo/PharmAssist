@@ -216,19 +216,6 @@
       })().catch(err => console.error(err));
 
       window.addEventListener('webchatincomingactivity', ({ data }) => {
-        // Check if the incoming activity is a user message
-        // if (data.type === 'message' && data.from.role === 'user') {
-        //   const userResponse = data.text; // Extract the user's message text
-        //   const messageId = data;     // Get the message ID for tracking (optional)
-        //   console.log(`User says: ${JSON.stringify(messageId)}`);
-        // }
-
-        // // Handle bot responses (optional, for context)
-        // if (data.type === 'message' && data.from.role === 'bot') {
-        //   const botMessage = data;
-        //   console.log(`Bot says: ${JSON.stringify(botMessage)}`);
-        // }
-
         console.log(`all data: ${JSON.stringify(data)}`);
       });
 
@@ -297,25 +284,50 @@
       const tableBody = document.querySelector('#userMessages tbody');
 
       // Check if the incoming activity is a user message and contains a value
-      if (data.type === 'message' && data.from.role === 'user' && data.value) {
+      // if (data.type === 'message' && data.from.role === 'user' && data.value) {
+      //   const { grund, name, geschlecht, geburtsdatum, kontakt } = data.value;
+
+      //   // Display only if all required fields are present
+      //   if (grund && name && geschlecht && geburtsdatum && kontakt) {
+      //     // Create a new table row
+      //     const newRow = document.createElement('tr');
+      //     newRow.innerHTML = `
+      //       <td>${grund}</td>
+      //       <td>${name}</td>
+      //       <td>${geschlecht}</td>
+      //       <td>${geburtsdatum}</td>
+      //       <td>${kontakt}</td>
+      //     `;
+
+      //     // Append the new row to the table body
+      //     tableBody.appendChild(newRow);
+      //   }
+      // }
+    // Check if the message is from the user and contains the expected input field
+    if (data.type === 'message' && data.from.role === 'user' && data.attachments && data.attachments[0].content.body[0].id === "user_name") {
+        // Extract the value from the "user_name" Input.Text field in the Adaptive Card
+        const userNameValue = data.attachments[0].content.body[0].value;
+
+        // Assume that other fields are available in data.value, like grund, geschlecht, etc.
         const { grund, name, geschlecht, geburtsdatum, kontakt } = data.value;
 
-        // Display only if all required fields are present
-        if (grund && name && geschlecht && geburtsdatum && kontakt) {
-          // Create a new table row
-          const newRow = document.createElement('tr');
-          newRow.innerHTML = `
-            <td>${grund}</td>
-            <td>${name}</td>
-            <td>${geschlecht}</td>
-            <td>${geburtsdatum}</td>
-            <td>${kontakt}</td>
-          `;
+        // Display only if all required fields are present, including the extracted user_name
+        if (grund && name && geschlecht && geburtsdatum && kontakt && userNameValue) {
+            // Create a new table row
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td>${grund}</td>
+                <td>${userNameValue}</td> <!-- Using the extracted user_name value here -->
+                <td>${geschlecht}</td>
+                <td>${geburtsdatum}</td>
+                <td>${kontakt}</td>
+            `;
 
-          // Append the new row to the table body
-          tableBody.appendChild(newRow);
+            // Assuming `tableBody` is the <tbody> element of your table
+            tableBody.appendChild(newRow);
         }
-      }
+    }
+
     });
 
   </script>
