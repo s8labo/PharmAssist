@@ -303,27 +303,36 @@
       //     tableBody.appendChild(newRow);
       //   }
       // }
-    // Check if the message is from the user and contains the expected input field
-    if (data.type === 'message' && data.from.role === 'user' && data.attachments && data.attachments[0].content.body[0].id === "user_name") {
-        // Extract the value from the "user_name" Input.Text field in the Adaptive Card
-        const userNameValue = data.attachments[0].content.body[0].value;
-        console.log(`all data: ${userNameValue}`);
+      // Check if the message is from the user and contains the expected input field
+      if (data.type === 'message' && data.from.role === 'user' && data.attachments && data.attachments.length > 0) {
+          const attachment = data.attachments[0];
 
-        // Assume that other fields are available in data.value, like grund, geschlecht, etc.
-        const { grund, name, geschlecht, geburtsdatum, kontakt } = data.value;
+          // Ensure the content object exists and has the expected structure
+          if (attachment.content && attachment.content.body && Array.isArray(attachment.content.body) && attachment.content.body[0].id === "user_name") {
+              // Extract the value from the "user_name" Input.Text field in the Adaptive Card
+              const userNameValue = attachment.content.body[0].value;
 
-        // Display only if all required fields are present, including the extracted user_name
-        if (userNameValue) {
-            // Create a new table row
-            const newRow = document.createElement('tr');
-            newRow.innerHTML = `
-                <td>${userNameValue}</td> <!-- Using the extracted user_name value here -->
-            `;
+              // Assume that other fields are available in data.value, like grund, geschlecht, etc.
+              const { grund, name, geschlecht, geburtsdatum, kontakt } = data.value;
 
-            // Assuming `tableBody` is the <tbody> element of your table
-            tableBody.appendChild(newRow);
-        }
-    }
+              // Display only if all required fields are present, including the extracted user_name
+              if (grund && name && geschlecht && geburtsdatum && kontakt && userNameValue) {
+                  // Create a new table row
+                  const newRow = document.createElement('tr');
+                  newRow.innerHTML = `
+                      <td>${grund}</td>
+                      <td>${userNameValue}</td> <!-- Using the extracted user_name value here -->
+                      <td>${geschlecht}</td>
+                      <td>${geburtsdatum}</td>
+                      <td>${kontakt}</td>
+                  `;
+
+                  // Assuming `tableBody` is the <tbody> element of your table
+                  tableBody.appendChild(newRow);
+              }
+          }
+      }
+
 
     });
 
