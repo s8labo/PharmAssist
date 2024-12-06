@@ -307,6 +307,7 @@
     if (data.type === 'message' && data.from.role === 'user' && data.attachments && data.attachments[0].content.body[0].id === "user_name") {
         // Extract the value from the "user_name" Input.Text field in the Adaptive Card
         const userNameValue = data.attachments[0].content.body[0].value;
+        console.log(`all data: ${userNameValue}`);
 
         // Assume that other fields are available in data.value, like grund, geschlecht, etc.
         const { grund, name, geschlecht, geburtsdatum, kontakt } = data.value;
