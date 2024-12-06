@@ -312,15 +312,11 @@
         const { grund, name, geschlecht, geburtsdatum, kontakt } = data.value;
 
         // Display only if all required fields are present, including the extracted user_name
-        if (grund && name && geschlecht && geburtsdatum && kontakt && userNameValue) {
+        if (userNameValue) {
             // Create a new table row
             const newRow = document.createElement('tr');
             newRow.innerHTML = `
-                <td>${grund}</td>
                 <td>${userNameValue}</td> <!-- Using the extracted user_name value here -->
-                <td>${geschlecht}</td>
-                <td>${geburtsdatum}</td>
-                <td>${kontakt}</td>
             `;
 
             // Assuming `tableBody` is the <tbody> element of your table

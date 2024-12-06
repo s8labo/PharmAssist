@@ -189,7 +189,7 @@ th {
 }
 
 .webchat__stacked-layout__attachment-row .webchat__stacked-layout__attachment-row--first {
-    display: none;
+    display: none!important;
 }
 
 @media (max-width: 768px) {
