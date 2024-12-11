@@ -213,9 +213,21 @@
 
         while (true) {
           // Construct dynamic keys for medication data
+          const pznKey = `medikament_pzn${counter}`;
           const nameKey = `medikament_name${counter}`;
           const indicationKey = `medikament_indikation${counter}`;
           const doseKey = `medikament_dosis${counter}`;
+          const foodKey = `medikament_einnahme${counter}`;
+          const prescriptionKey = `medikament_verordnung${counter}`;
+          const alternativeprescKey = `medikament_falsche_einnahme${counter}`;
+          const forgottendoseKey = `medikament_vergessen${counter}`;
+          const forgottendoseprocedureKey = `medikament_vergessen_vorgehensweise${counter}`;
+          const betterKey = `medikament_besserung${counter}`;
+          const worseKey = `medikament_verschlechterung${counter}`;
+          const commentKey = `medikament_probleme${counter}`;
+          const storageKey = `medikament_lagerung${counter}`;
+          const expirationKey = `medikament_ablaufdatum${counter}`;
+
 
           // Check if the current medication exists in the data
           if (!value[nameKey] || !value[indicationKey] || !value[doseKey]) {
@@ -226,9 +238,20 @@
           const newRow = document.createElement('tr');
           newRow.innerHTML = `
             <td>${counter}</td>
+            <td>${value[pznKey]}</td>
             <td>${value[nameKey]}</td>
             <td>${value[indicationKey]}</td>
             <td>${value[doseKey]}</td>
+            <td>${value[foodKey]}</td>
+            <td>${value[prescriptionKey]}</td>
+            <td>${value[alternativeprescKey]}</td>
+            <td>${value[forgottendoseKey]}</td>
+            <td>${value[forgottendoseprocedureKey]}</td>
+            <td>${value[betterKey]}</td>
+            <td>${value[worseKey]}</td>
+            <td>${value[commentKey]}</td>
+            <td>${value[storageKey]}</td>
+            <td>${value[expirationKey]}</td>
           `;
 
           // Append the new row to the medication table body
@@ -246,8 +269,9 @@
 <body>
   <div id="left-panel">
     <h1>Your PharmAssistant</h1>
-    <p>to support medication reviews</p>
+    <p class="unterschrift">to support medication reviews</p>
     <div id="container">The pharm assistant is helping you with your medication review process by gathering the medication you are taking. Just start chatting with the assistant and your information will show on this side of the screen.</div>
+    <h2>Your master data</h2>
     <table id="userMasterData">
       <thead>
         <tr>
@@ -262,13 +286,24 @@
         <!-- Rows will be dynamically added here -->
       </tbody>
     </table>
+    <h2>Your prescribed medication data</h2>
     <table id="userMedicationData">
       <thead>
         <tr>
-          <th>Number</th>
-          <th>Name</th>
+          <th>Medication number</th>
+          <th>PZN number</th>
+          <th>Medication name</th>
           <th>Indication</th>
           <th>Time & Dosis</th>
+          <th>Taken as prescribed?</th>
+          <th>False intake?</th>
+          <th>Forgotten intake?</th>
+          <th>Procedure by false intake</th>
+          <th>Suspension on improvement</th>
+          <th>Suspension on deterioration</th>
+          <th>Problems/Comments</th>
+          <th>Storage</th>
+          <th>Expiration date</th>
         </tr>
       </thead>
       <tbody>

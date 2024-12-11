@@ -13,6 +13,10 @@ h1 {
     margin-bottom: 0px;
 }
 
+.unterschrift {
+    font-size: 16px;
+}
+
 #container {
     border: 1px solid #ccc;
     padding: 10px;
