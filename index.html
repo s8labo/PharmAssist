@@ -206,10 +206,11 @@
         }
       }
 
+      let counter = 1; // Start counter for medication entries
+
       // Check if the incoming activity is a user message and contains a value
       if (data.type === 'message' && data.from.role === 'user' && data.value) {
         const { value } = data;
-        let counter = 1; // Start counter for medication entries
 
         while (true) {
           // Construct dynamic keys for medication data
@@ -258,6 +259,7 @@
           tableBody2.appendChild(newRow);
 
           counter++; // Increment counter for the next medication
+          console.log(counter);
         }
       }
 
