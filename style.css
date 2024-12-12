@@ -6,7 +6,6 @@ body, html {
     color: black;
     display: flex;
     justify-content: space-between; /* Align items to the left and right */
-    overflow-y: auto; /* Prevent scrolling */
 }
 
 h1 {
@@ -85,6 +84,8 @@ h1 {
     flex-direction: column;
     align-items: left;
     margin-left: 10px;
+    overflow-y: auto; 
+
 }
 
 #avatar {
@@ -104,6 +105,8 @@ h1 {
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin-left: auto; /* Ensure it is on the right side */
+    overflow-y: hidden; 
+
 }
 
 #chat {
