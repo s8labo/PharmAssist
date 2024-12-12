@@ -179,6 +179,7 @@
         console.log(`all data: ${JSON.stringify(data)}`);
       });
 
+
     let counter = 1;
 
 
@@ -186,84 +187,119 @@
       const tableBody1 = document.querySelector('#userMasterData tbody');
       const tableBody2 = document.querySelector('#userMedicationData tbody');
 
-      // Check if the incoming activity is a user message and contains a value
-      if (data.type === 'message' && data.from.role === 'user' && data.value) {
-        const { grund, name, geschlecht, geburtsdatum, kontakt } = data.value;
-
-        // Display only if all required fields are present
-        if (grund && name && geschlecht && geburtsdatum && kontakt) {
-          // Create a new table row
-          const newRow = document.createElement('tr');
-          newRow.innerHTML = `
-            <td>${grund}</td>
-            <td>${name}</td>
-            <td>${geschlecht}</td>
-            <td>${geburtsdatum}</td>
-            <td>${kontakt}</td>
-          `;
-
-          // Append the new row to the table body
-          tableBody1.appendChild(newRow);
+      // Function to add an empty row
+      function addEmptyRow(tableBody, columns) {
+        const emptyRow = document.createElement('tr');
+        for (let i = 0; i < columns; i++) {
+          const emptyCell = document.createElement('td');
+          emptyCell.textContent = ''; // Or use a placeholder like 'N/A' or 'Empty'
+          emptyRow.appendChild(emptyCell);
         }
+        tableBody.appendChild(emptyRow);
       }
 
-      // Check if the incoming activity is a user message and contains a value
+      // Function to update a row with data
+      function updateRow(row, data, keys) {
+        const cells = row.children;
+        keys.forEach((key, index) => {
+          cells[index].textContent = data[key] || 'N/A'; // Replace empty with "N/A"
+        });
+      }
+
+      // Add an empty row initially for master data
+      if (tableBody1.children.length === 0) {
+        addEmptyRow(tableBody1, 5); // Master table has 5 columns
+      }
+
+      // Add an empty row initially for medication data
+      if (tableBody2.children.length === 0) {
+        addEmptyRow(tableBody2, 15); // Medication table has 15 columns
+      }
+
       if (data.type === 'message' && data.from.role === 'user' && data.value) {
         const { value } = data;
 
+        // Handle master data
+        const { grund, name, geschlecht, geburtsdatum, kontakt } = value;
+        if (grund || name || geschlecht || geburtsdatum || kontakt) {
+          const firstRow = tableBody1.querySelector('tr');
+          const masterData = { grund, name, geschlecht, geburtsdatum, kontakt };
+
+          if (firstRow && firstRow.children[0].textContent === '') {
+            // Update the empty row with master data
+            updateRow(firstRow, masterData, ['grund', 'name', 'geschlecht', 'geburtsdatum', 'kontakt']);
+          } else {
+            // Add a new row if all fields are present
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+              <td>${grund || 'N/A'}</td>
+              <td>${name || 'N/A'}</td>
+              <td>${geschlecht || 'N/A'}</td>
+              <td>${geburtsdatum || 'N/A'}</td>
+              <td>${kontakt || 'N/A'}</td>
+            `;
+            tableBody1.appendChild(newRow);
+          }
+        }
+
+        // Handle medication data
+        // let counter = 1;
         while (true) {
-          // Construct dynamic keys for medication data
-          const pznKey = `medikament_pzn${counter}`;
           const nameKey = `medikament_name${counter}`;
           const indicationKey = `medikament_indikation${counter}`;
           const doseKey = `medikament_dosis${counter}`;
-          const foodKey = `medikament_einnahme${counter}`;
-          const prescriptionKey = `medikament_verordnung${counter}`;
-          const alternativeprescKey = `medikament_falsche_einnahme${counter}`;
-          const forgottendoseKey = `medikament_vergessen${counter}`;
-          const forgottendoseprocedureKey = `medikament_vergessen_vorgehensweise${counter}`;
-          const betterKey = `medikament_besserung${counter}`;
-          const worseKey = `medikament_verschlechterung${counter}`;
-          const commentKey = `medikament_probleme${counter}`;
-          const storageKey = `medikament_lagerung${counter}`;
-          const expirationKey = `medikament_ablaufdatum${counter}`;
+          const keys = [
+            `medikament_pzn${counter}`, nameKey, indicationKey, doseKey,
+            `medikament_einnahme${counter}`, `medikament_verordnung${counter}`,
+            `medikament_falsche_einnahme${counter}`, `medikament_vergessen${counter}`,
+            `medikament_vergessen_vorgehensweise${counter}`, `medikament_besserung${counter}`,
+            `medikament_verschlechterung${counter}`, `medikament_probleme${counter}`,
+            `medikament_lagerung${counter}`, `medikament_ablaufdatum${counter}`
+          ];
 
-
-          // Check if the current medication exists in the data
-          if (!value[nameKey] || !value[indicationKey] || !value[doseKey]) {
-            console.log(`Breaking loop: Missing data for medication ${counter}`);
-            break; // Exit the loop if any of the fields for the current medication are missing
+          // Stop if required fields for medication are missing
+          if (!value[nameKey] && !value[indicationKey] && !value[doseKey]) {
+            break;
           }
 
-          // Create a new row for the medication data
-          const newRow = document.createElement('tr');
-          newRow.innerHTML = `
-            <td>${counter}</td>
-            <td>${value[pznKey] || ''}</td>
-            <td>${value[nameKey]}</td>
-            <td>${value[indicationKey]}</td>
-            <td>${value[doseKey]}</td>
-            <td>${value[foodKey] || ''}</td>
-            <td>${value[prescriptionKey] || ''}</td>
-            <td>${value[alternativeprescKey] || ''}</td>
-            <td>${value[forgottendoseKey] || ''}</td>
-            <td>${value[forgottendoseprocedureKey] || ''}</td>
-            <td>${value[betterKey] || ''}</td>
-            <td>${value[worseKey] || ''}</td>
-            <td>${value[commentKey] || ''}</td>
-            <td>${value[storageKey] || ''}</td>
-            <td>${value[expirationKey] || ''}</td>
-          `;
+          // Create medication data row
+          const medicationData = keys.reduce((obj, key) => {
+            obj[key] = value[key] || 'N/A';
+            return obj;
+          }, {});
 
-          // Append the new row to the medication table body
-          tableBody2.appendChild(newRow);
+          const emptyRow = tableBody2.querySelector('tr');
+          if (emptyRow && emptyRow.children[0].textContent === '') {
+            // Update the empty row with medication data
+            updateRow(emptyRow, medicationData, keys);
+          } else {
+            // Add a new row with medication data
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+              <td>${counter}</td>
+              <td>${value[`medikament_pzn${counter}`] || 'N/A'}</td>
+              <td>${value[nameKey] || 'N/A'}</td>
+              <td>${value[indicationKey] || 'N/A'}</td>
+              <td>${value[doseKey] || 'N/A'}</td>
+              <td>${value[`medikament_einnahme${counter}`] || 'N/A'}</td>
+              <td>${value[`medikament_verordnung${counter}`] || 'N/A'}</td>
+              <td>${value[`medikament_falsche_einnahme${counter}`] || 'N/A'}</td>
+              <td>${value[`medikament_vergessen${counter}`] || 'N/A'}</td>
+              <td>${value[`medikament_vergessen_vorgehensweise${counter}`] || 'N/A'}</td>
+              <td>${value[`medikament_besserung${counter}`] || 'N/A'}</td>
+              <td>${value[`medikament_verschlechterung${counter}`] || 'N/A'}</td>
+              <td>${value[`medikament_probleme${counter}`] || 'N/A'}</td>
+              <td>${value[`medikament_lagerung${counter}`] || 'N/A'}</td>
+              <td>${value[`medikament_ablaufdatum${counter}`] || 'N/A'}</td>
+            `;
+            tableBody2.appendChild(newRow);
+          }
 
-          counter++; // Increment counter for the next medication
-          console.log(counter);
+          counter++;
         }
       }
-
     });
+
 
   </script>
 </head>
