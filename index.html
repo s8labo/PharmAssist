@@ -187,59 +187,22 @@
       const tableBody1 = document.querySelector('#userMasterData tbody');
       const tableBody2 = document.querySelector('#userMedicationData tbody');
 
-      // Function to add an empty row
-      function addEmptyRow(tableBody, columns) {
-        const emptyRow = document.createElement('tr');
-        for (let i = 0; i < columns; i++) {
-          const emptyCell = document.createElement('td');
-          emptyCell.textContent = ''; // Or use a placeholder like 'N/A' or 'Empty'
-          emptyRow.appendChild(emptyCell);
-        }
-        tableBody.appendChild(emptyRow);
-      }
-
-      // Function to update a row with data
-      function updateRow(row, data, keys) {
-        const cells = row.children;
-        keys.forEach((key, index) => {
-          cells[index].textContent = data[key] || 'N/A'; // Replace empty with "N/A"
-        });
-      }
-
-      // Add an empty row initially for master data
-      if (tableBody1.children.length === 0) {
-        addEmptyRow(tableBody1, 5); // Master table has 5 columns
-      }
-
-      // Add an empty row initially for medication data
-      if (tableBody2.children.length === 0) {
-        addEmptyRow(tableBody2, 15); // Medication table has 15 columns
-      }
-
       if (data.type === 'message' && data.from.role === 'user' && data.value) {
         const { value } = data;
 
         // Handle master data
         const { grund, name, geschlecht, geburtsdatum, kontakt } = value;
-        if (grund || name || geschlecht || geburtsdatum || kontakt) {
-          const firstRow = tableBody1.querySelector('tr');
-          const masterData = { grund, name, geschlecht, geburtsdatum, kontakt };
+        const masterData = [grund, name, geschlecht, geburtsdatum, kontakt];
 
-          if (firstRow && firstRow.children[0].textContent === '') {
-            // Update the empty row with master data
-            updateRow(firstRow, masterData, ['grund', 'name', 'geschlecht', 'geburtsdatum', 'kontakt']);
-          } else {
-            // Add a new row if all fields are present
-            const newRow = document.createElement('tr');
-            newRow.innerHTML = `
-              <td>${grund || 'N/A'}</td>
-              <td>${name || 'N/A'}</td>
-              <td>${geschlecht || 'N/A'}</td>
-              <td>${geburtsdatum || 'N/A'}</td>
-              <td>${kontakt || 'N/A'}</td>
-            `;
-            tableBody1.appendChild(newRow);
-          }
+        // Replace empty row for master data if available
+        const firstRow1 = tableBody1.querySelector('.empty');
+        if (firstRow1) {
+          fillRow(firstRow1, masterData); // Update the first empty row with master data
+        } else {
+          // If no empty row exists, add a new row with master data
+          const newRow = document.createElement('tr');
+          newRow.innerHTML = masterData.map(item => `<td>${item || 'N/A'}</td>`).join('');
+          tableBody1.appendChild(newRow);
         }
 
         // Handle medication data
@@ -265,36 +228,33 @@
             break;
           }
 
-          // Create medication data row
-          const medicationData = keys.reduce((obj, key) => {
-            obj[key] = value[key] || 'N/A';
-            return obj;
-          }, {});
+          // Construct the medication data row
+          const medicationData = [
+            counter,
+            value[pznKey] || '-',
+            value[nameKey],
+            value[indicationKey],
+            value[doseKey],
+            value[foodKey] || '-',
+            value[prescriptionKey] || '-',
+            value[alternativeprescKey] || '-',
+            value[forgottendoseKey] || '-',
+            value[forgottendoseprocedureKey] || '-',
+            value[betterKey] || '-',
+            value[worseKey] || '-',
+            value[commentKey] || '-',
+            value[storageKey] || '-',
+            value[expirationKey] || '-'
+          ];
 
-          const emptyRow = tableBody2.querySelector('tr');
-          if (emptyRow && emptyRow.children[0].textContent === '') {
-            // Update the empty row with medication data
-            updateRow(emptyRow, medicationData, keys);
+          // Replace empty row for medication data if available
+          const firstRow2 = tableBody2.querySelector('.empty');
+          if (firstRow2) {
+            fillRow(firstRow2, medicationData); // Update the first empty row with medication data
           } else {
-            // Add a new row with medication data
+            // If no empty row exists, add a new row with medication data
             const newRow = document.createElement('tr');
-            newRow.innerHTML = `
-              <td>${counter}</td>
-              <td>${value[pznKey] || '-'}</td>
-              <td>${value[nameKey]}</td>
-              <td>${value[indicationKey]}</td>
-              <td>${value[doseKey]}</td>
-              <td>${value[foodKey] || '-'}</td>
-              <td>${value[prescriptionKey] || '-'}</td>
-              <td>${value[alternativeprescKey] || '-'}</td>
-              <td>${value[forgottendoseKey] || '-'}</td>
-              <td>${value[forgottendoseprocedureKey] || '-'}</td>
-              <td>${value[betterKey] || '-'}</td>
-              <td>${value[worseKey] || '-'}</td>
-              <td>${value[commentKey] || '-'}</td>
-              <td>${value[storageKey] || '-'}</td>
-              <td>${value[expirationKey] || '-'}</td>
-            `;
+            newRow.innerHTML = medicationData.map(item => `<td>${item}</td>`).join('');
             tableBody2.appendChild(newRow);
           }
 
@@ -302,6 +262,15 @@
         }
       }
     });
+
+    // Function to fill row with data
+    function fillRow(row, dataArray) {
+      const cells = row.children;
+      dataArray.forEach((value, index) => {
+        cells[index].textContent = value || '-'; // Fill empty cells with the provided value or default
+      });
+    }
+
 
 
   </script>
@@ -324,7 +293,13 @@
         </tr>
       </thead>
       <tbody>
-        <!-- Rows will be dynamically added here -->
+        <tr class="empty">
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
       </tbody>
     </table>
     <h2>Your prescribed medication data</h2>
@@ -348,7 +323,23 @@
         </tr>
       </thead>
       <tbody>
-        <!-- Rows will be dynamically added here -->
+        <tr class="empty">
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
       </tbody>
     </table>
 
