@@ -13,6 +13,10 @@ h1 {
     margin-bottom: 0px;
 }
 
+p {
+    font-size: 16px;
+}
+
 .unterschrift {
     font-size: 20px;
     margin-top: 10px;
@@ -202,6 +206,7 @@ th, td {
   padding: 8px;
   text-align: left;
   padding-bottom: 25px;
+  font-size: 16px;
 }
 th {
   background-color: #f4f4f4;
