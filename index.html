@@ -200,13 +200,8 @@
       // If an empty row is found, fill it and remove the "empty" class
       fillRow(firstRow1, masterData);
       firstRow1.classList.remove('empty');
-    } else {
-      // If no empty row exists, add a new row for master data
-      const newRow = document.createElement('tr');
-      newRow.innerHTML = masterData.map(item => `<td>${item || 'N/A'}</td>`).join('');
-      tableBody1.appendChild(newRow);
-    }
-
+    } 
+    
     // Handle medication data
     // let counter = 1;
     while (true) {
