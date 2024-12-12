@@ -139,7 +139,6 @@
           return next(action);
         });
 
-
         window.WebChat.renderWebChat({
             directLine: window.WebChat.createDirectLine({
                 token: 'AavR0Oh2MoQ.k8agJWGKvkYtM92I0013G-A3eObi4iVxVVGEcZFYLY4'
@@ -180,6 +179,9 @@
         console.log(`all data: ${JSON.stringify(data)}`);
       });
 
+    let counter = 1;
+
+
     window.addEventListener('webchatincomingactivity', ({ data }) => {
       const tableBody1 = document.querySelector('#userMasterData tbody');
       const tableBody2 = document.querySelector('#userMedicationData tbody');
@@ -208,8 +210,6 @@
       // Check if the incoming activity is a user message and contains a value
       if (data.type === 'message' && data.from.role === 'user' && data.value) {
         const { value } = data;
-        let counter = 1;
-
 
         while (true) {
           // Construct dynamic keys for medication data
