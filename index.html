@@ -210,6 +210,8 @@
       if (data.type === 'message' && data.from.role === 'user' && data.value) {
         const { value } = data;
 
+        tableBody2.innerHTML = '';
+
         while (true) {
           // Construct dynamic keys for medication data
           const pznKey = `medikament_pzn${counter}`;
