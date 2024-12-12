@@ -15,6 +15,7 @@ h1 {
 
 .unterschrift {
     font-size: 20px;
+    margin-top: 10px;
 }
 
 #container {
@@ -190,8 +191,11 @@ h1 {
 }
 table {
       width: 100%;
-      border-collapse: collapse;
-    }
+/*      border-collapse: collapse;*/
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+}
 th, td {
   border: 1px solid #ddd;
   padding: 8px;
