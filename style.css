@@ -191,20 +191,20 @@ h1 {
     color: white;
 }
 table {
-      width: 100%;
+/*      width: 100%;*/
 /*      border-collapse: collapse;*/
-    display: block;
-    overflow-x: auto;
+/*    display: block;
+    overflow-x: auto;*/
 /*    white-space: nowrap;*/
 }
 th, td {
-  border: 1px solid #ddd;
+/*  border: 1px solid #ddd;
   padding: 8px;
   text-align: left;
   padding-bottom: 25px;
   font-size: 18px;
   width: 200px;
-  word-wrap: break-word;
+  word-wrap: break-word;*/
 }
 th {
   background-color: #f4f4f4;
