@@ -183,7 +183,6 @@
     window.addEventListener('webchatincomingactivity', ({ data }) => {
       const tableBody1 = document.querySelector('#userMasterData tbody');
       const tableBody2 = document.querySelector('#userMedicationData tbody');
-      let counter = 1;
 
       // Check if the incoming activity is a user message and contains a value
       if (data.type === 'message' && data.from.role === 'user' && data.value) {
@@ -209,8 +208,8 @@
       // Check if the incoming activity is a user message and contains a value
       if (data.type === 'message' && data.from.role === 'user' && data.value) {
         const { value } = data;
+        let counter = 1;
 
-        tableBody2.innerHTML = '';
 
         while (true) {
           // Construct dynamic keys for medication data
@@ -232,6 +231,7 @@
 
           // Check if the current medication exists in the data
           if (!value[nameKey] || !value[indicationKey] || !value[doseKey]) {
+            console.log(`Breaking loop: Missing data for medication ${counter}`);
             break; // Exit the loop if any of the fields for the current medication are missing
           }
 
@@ -239,20 +239,20 @@
           const newRow = document.createElement('tr');
           newRow.innerHTML = `
             <td>${counter}</td>
-            <td>${value[pznKey]}</td>
+            <td>${value[pznKey] || ''}</td>
             <td>${value[nameKey]}</td>
             <td>${value[indicationKey]}</td>
             <td>${value[doseKey]}</td>
-            <td>${value[foodKey]}</td>
-            <td>${value[prescriptionKey]}</td>
-            <td>${value[alternativeprescKey]}</td>
-            <td>${value[forgottendoseKey]}</td>
-            <td>${value[forgottendoseprocedureKey]}</td>
-            <td>${value[betterKey]}</td>
-            <td>${value[worseKey]}</td>
-            <td>${value[commentKey]}</td>
-            <td>${value[storageKey]}</td>
-            <td>${value[expirationKey]}</td>
+            <td>${value[foodKey] || ''}</td>
+            <td>${value[prescriptionKey] || ''}</td>
+            <td>${value[alternativeprescKey] || ''}</td>
+            <td>${value[forgottendoseKey] || ''}</td>
+            <td>${value[forgottendoseprocedureKey] || ''}</td>
+            <td>${value[betterKey] || ''}</td>
+            <td>${value[worseKey] || ''}</td>
+            <td>${value[commentKey] || ''}</td>
+            <td>${value[storageKey] || ''}</td>
+            <td>${value[expirationKey] || ''}</td>
           `;
 
           // Append the new row to the medication table body
