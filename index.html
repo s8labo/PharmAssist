@@ -206,8 +206,6 @@
         }
       }
 
-      let counter = 1; // Start counter for medication entries
-
       // Check if the incoming activity is a user message and contains a value
       if (data.type === 'message' && data.from.role === 'user' && data.value) {
         const { value } = data;
