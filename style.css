@@ -6,7 +6,7 @@ body, html {
     color: black;
     display: flex;
     justify-content: space-between; /* Align items to the left and right */
-    overflow: hidden; /* Prevent scrolling */
+    overflow-y: auto; /* Prevent scrolling */
 }
 
 h1 {
