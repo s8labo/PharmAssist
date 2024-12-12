@@ -354,9 +354,7 @@
     </table>
     <h2>Your prescribed medication data</h2>
     <table id="userMedicationData">
-      <colgroup>
-        <col span="3" width="20%">
-      </colgroup>
+      <thead>
         <tr>
           <th>Medication number</th>
           <th>PZN number</th>
@@ -374,6 +372,8 @@
           <th>Storage</th>
           <th>Expiration date</th>
         </tr>
+      </thead>
+      <tbody>
         <tr class="empty">
           <td></td>
           <td></td>
@@ -391,6 +391,7 @@
           <td></td>
           <td></td>
         </tr>
+      </tbody>
     </table>
     <h2>Your non-prescribed medication data</h2>
     <table id="userOtcMedicationData">
