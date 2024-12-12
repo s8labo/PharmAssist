@@ -204,6 +204,7 @@ th, td {
   padding-bottom: 25px;
   font-size: 18px;
   width: 50px;
+  word-wrap: break-word;
 }
 th {
   background-color: #f4f4f4;
