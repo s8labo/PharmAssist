@@ -195,7 +195,7 @@ table {
 /*      border-collapse: collapse;*/
     display: block;
     overflow-x: auto;
-    white-space: nowrap;
+/*    white-space: nowrap;*/
 }
 th, td {
   border: 1px solid #ddd;
@@ -203,7 +203,7 @@ th, td {
   text-align: left;
   padding-bottom: 25px;
   font-size: 18px;
-  width: 55px;
+  width: 200px;
   word-wrap: break-word;
 }
 th {
