@@ -184,92 +184,96 @@
 
 
     window.addEventListener('webchatincomingactivity', ({ data }) => {
-      const tableBody1 = document.querySelector('#userMasterData tbody');
-      const tableBody2 = document.querySelector('#userMedicationData tbody');
+  const tableBody1 = document.querySelector('#userMasterData tbody');
+  const tableBody2 = document.querySelector('#userMedicationData tbody');
 
-      if (data.type === 'message' && data.from.role === 'user' && data.value) {
-        const { value } = data;
+  if (data.type === 'message' && data.from.role === 'user' && data.value) {
+    const { value } = data;
 
-        // Handle master data
-        const { grund, name, geschlecht, geburtsdatum, kontakt } = value;
-        const masterData = [grund, name, geschlecht, geburtsdatum, kontakt];
+    // Handle master data
+    const { grund, name, geschlecht, geburtsdatum, kontakt } = value;
+    const masterData = [grund, name, geschlecht, geburtsdatum, kontakt];
 
-        // Replace empty row for master data if available
-        const firstRow1 = tableBody1.querySelector('.empty');
-        if (firstRow1) {
-          fillRow(firstRow1, masterData); // Update the first empty row with master data
-        } else {
-          // If no empty row exists, add a new row with master data
-          const newRow = document.createElement('tr');
-          newRow.innerHTML = masterData.map(item => `<td>${item || 'N/A'}</td>`).join('');
-          tableBody1.appendChild(newRow);
-        }
-
-        // Handle medication data
-        // let counter = 1;
-        while (true) {
-          const pznKey = `medikament_pzn${counter}`;
-          const nameKey = `medikament_name${counter}`;
-          const indicationKey = `medikament_indikation${counter}`;
-          const doseKey = `medikament_dosis${counter}`;
-          const foodKey = `medikament_einnahme${counter}`;
-          const prescriptionKey = `medikament_verordnung${counter}`;
-          const alternativeprescKey = `medikament_falsche_einnahme${counter}`;
-          const forgottendoseKey = `medikament_vergessen${counter}`;
-          const forgottendoseprocedureKey = `medikament_vergessen_vorgehensweise${counter}`;
-          const betterKey = `medikament_besserung${counter}`;
-          const worseKey = `medikament_verschlechterung${counter}`;
-          const commentKey = `medikament_probleme${counter}`;
-          const storageKey = `medikament_lagerung${counter}`;
-          const expirationKey = `medikament_ablaufdatum${counter}`;
-
-          // Stop if required fields for medication are missing
-          if (!value[nameKey] && !value[indicationKey] && !value[doseKey]) {
-            break;
-          }
-
-          // Construct the medication data row
-          const medicationData = [
-            counter,
-            value[pznKey] || '-',
-            value[nameKey],
-            value[indicationKey],
-            value[doseKey],
-            value[foodKey] || '-',
-            value[prescriptionKey] || '-',
-            value[alternativeprescKey] || '-',
-            value[forgottendoseKey] || '-',
-            value[forgottendoseprocedureKey] || '-',
-            value[betterKey] || '-',
-            value[worseKey] || '-',
-            value[commentKey] || '-',
-            value[storageKey] || '-',
-            value[expirationKey] || '-'
-          ];
-
-          // Replace empty row for medication data if available
-          const firstRow2 = tableBody2.querySelector('.empty');
-          if (firstRow2) {
-            fillRow(firstRow2, medicationData); // Update the first empty row with medication data
-          } else {
-            // If no empty row exists, add a new row with medication data
-            const newRow = document.createElement('tr');
-            newRow.innerHTML = medicationData.map(item => `<td>${item}</td>`).join('');
-            tableBody2.appendChild(newRow);
-          }
-
-          counter++;
-        }
-      }
-    });
-
-    // Function to fill row with data
-    function fillRow(row, dataArray) {
-      const cells = row.children;
-      dataArray.forEach((value, index) => {
-        cells[index].textContent = value || '-'; // Fill empty cells with the provided value or default
-      });
+    // Check if there's an empty row in the master data table
+    const firstRow1 = tableBody1.querySelector('.empty');
+    if (firstRow1) {
+      // If an empty row is found, fill it and remove the "empty" class
+      fillRow(firstRow1, masterData);
+      firstRow1.classList.remove('empty');
+    } else {
+      // If no empty row exists, add a new row for master data
+      const newRow = document.createElement('tr');
+      newRow.innerHTML = masterData.map(item => `<td>${item || 'N/A'}</td>`).join('');
+      tableBody1.appendChild(newRow);
     }
+
+    // Handle medication data
+    // let counter = 1;
+    while (true) {
+      const pznKey = `medikament_pzn${counter}`;
+      const nameKey = `medikament_name${counter}`;
+      const indicationKey = `medikament_indikation${counter}`;
+      const doseKey = `medikament_dosis${counter}`;
+      const foodKey = `medikament_einnahme${counter}`;
+      const prescriptionKey = `medikament_verordnung${counter}`;
+      const alternativeprescKey = `medikament_falsche_einnahme${counter}`;
+      const forgottendoseKey = `medikament_vergessen${counter}`;
+      const forgottendoseprocedureKey = `medikament_vergessen_vorgehensweise${counter}`;
+      const betterKey = `medikament_besserung${counter}`;
+      const worseKey = `medikament_verschlechterung${counter}`;
+      const commentKey = `medikament_probleme${counter}`;
+      const storageKey = `medikament_lagerung${counter}`;
+      const expirationKey = `medikament_ablaufdatum${counter}`;
+
+      // Stop if required fields for medication are missing
+      if (!value[nameKey] && !value[indicationKey] && !value[doseKey]) {
+        break;
+      }
+
+      // Construct the medication data row
+      const medicationData = [
+        counter,
+        value[pznKey] || '-',
+        value[nameKey],
+        value[indicationKey],
+        value[doseKey],
+        value[foodKey] || '-',
+        value[prescriptionKey] || '-',
+        value[alternativeprescKey] || '-',
+        value[forgottendoseKey] || '-',
+        value[forgottendoseprocedureKey] || '-',
+        value[betterKey] || '-',
+        value[worseKey] || '-',
+        value[commentKey] || '-',
+        value[storageKey] || '-',
+        value[expirationKey] || '-'
+      ];
+
+      // Check if there's an empty row in the medication table
+      const firstRow2 = tableBody2.querySelector('.empty');
+      if (firstRow2) {
+        // If an empty row is found, fill it and remove the "empty" class
+        fillRow(firstRow2, medicationData);
+        firstRow2.classList.remove('empty');
+      } else {
+        // If no empty row exists, add a new row for medication data
+        const newRow = document.createElement('tr');
+        newRow.innerHTML = medicationData.map(item => `<td>${item}</td>`).join('');
+        tableBody2.appendChild(newRow);
+      }
+
+      counter++;
+    }
+  }
+});
+
+// Function to fill row with data
+function fillRow(row, dataArray) {
+  const cells = row.children;
+  dataArray.forEach((value, index) => {
+    cells[index].textContent = value || '-'; // Fill empty cells with the provided value or default
+  });
+}
 
 
 
