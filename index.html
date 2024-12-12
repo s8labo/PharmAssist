@@ -245,17 +245,20 @@
         // Handle medication data
         // let counter = 1;
         while (true) {
+          const pznKey = `medikament_pzn${counter}`;
           const nameKey = `medikament_name${counter}`;
           const indicationKey = `medikament_indikation${counter}`;
           const doseKey = `medikament_dosis${counter}`;
-          const keys = [
-            `medikament_pzn${counter}`, nameKey, indicationKey, doseKey,
-            `medikament_einnahme${counter}`, `medikament_verordnung${counter}`,
-            `medikament_falsche_einnahme${counter}`, `medikament_vergessen${counter}`,
-            `medikament_vergessen_vorgehensweise${counter}`, `medikament_besserung${counter}`,
-            `medikament_verschlechterung${counter}`, `medikament_probleme${counter}`,
-            `medikament_lagerung${counter}`, `medikament_ablaufdatum${counter}`
-          ];
+          const foodKey = `medikament_einnahme${counter}`;
+          const prescriptionKey = `medikament_verordnung${counter}`;
+          const alternativeprescKey = `medikament_falsche_einnahme${counter}`;
+          const forgottendoseKey = `medikament_vergessen${counter}`;
+          const forgottendoseprocedureKey = `medikament_vergessen_vorgehensweise${counter}`;
+          const betterKey = `medikament_besserung${counter}`;
+          const worseKey = `medikament_verschlechterung${counter}`;
+          const commentKey = `medikament_probleme${counter}`;
+          const storageKey = `medikament_lagerung${counter}`;
+          const expirationKey = `medikament_ablaufdatum${counter}`;
 
           // Stop if required fields for medication are missing
           if (!value[nameKey] && !value[indicationKey] && !value[doseKey]) {
@@ -277,20 +280,20 @@
             const newRow = document.createElement('tr');
             newRow.innerHTML = `
               <td>${counter}</td>
-              <td>${value[`medikament_pzn${counter}`] || 'N/A'}</td>
-              <td>${value[nameKey] || 'N/A'}</td>
-              <td>${value[indicationKey] || 'N/A'}</td>
-              <td>${value[doseKey] || 'N/A'}</td>
-              <td>${value[`medikament_einnahme${counter}`] || 'N/A'}</td>
-              <td>${value[`medikament_verordnung${counter}`] || 'N/A'}</td>
-              <td>${value[`medikament_falsche_einnahme${counter}`] || 'N/A'}</td>
-              <td>${value[`medikament_vergessen${counter}`] || 'N/A'}</td>
-              <td>${value[`medikament_vergessen_vorgehensweise${counter}`] || 'N/A'}</td>
-              <td>${value[`medikament_besserung${counter}`] || 'N/A'}</td>
-              <td>${value[`medikament_verschlechterung${counter}`] || 'N/A'}</td>
-              <td>${value[`medikament_probleme${counter}`] || 'N/A'}</td>
-              <td>${value[`medikament_lagerung${counter}`] || 'N/A'}</td>
-              <td>${value[`medikament_ablaufdatum${counter}`] || 'N/A'}</td>
+              <td>${value[pznKey] || '-'}</td>
+              <td>${value[nameKey]}</td>
+              <td>${value[indicationKey]}</td>
+              <td>${value[doseKey]}</td>
+              <td>${value[foodKey] || '-'}</td>
+              <td>${value[prescriptionKey] || '-'}</td>
+              <td>${value[alternativeprescKey] || '-'}</td>
+              <td>${value[forgottendoseKey] || '-'}</td>
+              <td>${value[forgottendoseprocedureKey] || '-'}</td>
+              <td>${value[betterKey] || '-'}</td>
+              <td>${value[worseKey] || '-'}</td>
+              <td>${value[commentKey] || '-'}</td>
+              <td>${value[storageKey] || '-'}</td>
+              <td>${value[expirationKey] || '-'}</td>
             `;
             tableBody2.appendChild(newRow);
           }
