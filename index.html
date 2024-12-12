@@ -261,18 +261,23 @@
           }
 
           counter++;
+        }
 
-          while (true) {
-            const otcpznKey = `otcmedikament_pzn${counter2}`;
-            const otcnameKey = `otcmedikament_name${counter2}`;
-            const otcindicationKey = `otcmedikament_indikation${counter2}`;
-            const otcdoseKey = `otcmedikament_dosis${counter2}`;
-            const otcfoodKey = `otcmedikament_einnahme${counter2}`;
-            const otcbetterKey = `otcmedikament_besserung${counter}`;
-            const otcworseKey = `otcmedikament_verschlechterung${counter2}`;
-            const otccommentKey = `otcmedikament_probleme${counter2}`;
-            const otcstorageKey = `otcmedikament_lagerung${counter2}`;
-            const expirationKey = `otcmedikament_ablaufdatum${counter2}`;
+        while (true) {
+          const otcpznKey = `otcmedikament_pzn${counter2}`;
+          const otcnameKey = `otcmedikament_name${counter2}`;
+          const otcindicationKey = `otcmedikament_indikation${counter2}`;
+          const otcdoseKey = `otcmedikament_dosis${counter2}`;
+          const otcfoodKey = `otcmedikament_einnahme${counter2}`;
+          const otcbetterKey = `otcmedikament_besserung${counter}`;
+          const otcworseKey = `otcmedikament_verschlechterung${counter2}`;
+          const otccommentKey = `otcmedikament_probleme${counter2}`;
+          const otcstorageKey = `otcmedikament_lagerung${counter2}`;
+          const expirationKey = `otcmedikament_ablaufdatum${counter2}`;
+
+          // Stop if required fields for medication are missing
+          if (!value[otcnameKey] && !value[otcindicationKey] && !value[otcdoseKey]) {
+            break;
           }
 
           // Construct the medication data row
