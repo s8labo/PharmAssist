@@ -231,7 +231,7 @@ th {
         background-color: white; /* Chat background */
         color: black; /* Chat text color */
         border-radius: 15px;
-        padding: 20px;
+        padding: 0px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         overflow: hidden; /* Prevents content from overflowing out of the panel */
     }
