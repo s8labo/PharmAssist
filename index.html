@@ -181,11 +181,13 @@
 
 
     let counter = 1;
+    let counter2 = 1;
 
 
     window.addEventListener('webchatincomingactivity', ({ data }) => {
       const tableBody1 = document.querySelector('#userMasterData tbody');
       const tableBody2 = document.querySelector('#userMedicationData tbody');
+      const tableBody3 = document.querySelector('#userOtcMedicationData tbody');
 
       if (data.type === 'message' && data.from.role === 'user' && data.value) {
         const { value } = data;
@@ -201,7 +203,7 @@
           fillRow(firstRow1, masterData);
           firstRow1.classList.remove('empty');
         } 
-        
+
         // Handle medication data
         // let counter = 1;
         while (true) {
@@ -258,6 +260,49 @@
           }
 
           counter++;
+
+          while (true) {
+            const otcpznKey = `otcmedikament_pzn${counter2}`;
+            const otcnameKey = `otcmedikament_name${counter2}`;
+            const otcindicationKey = `otcmedikament_indikation${counter2}`;
+            const otcdoseKey = `otcmedikament_dosis${counter2}`;
+            const otcfoodKey = `otcmedikament_einnahme${counter2}`;
+            const otcbetterKey = `otcmedikament_besserung${counter}`;
+            const otcworseKey = `otcmedikament_verschlechterung${counter2}`;
+            const otccommentKey = `otcmedikament_probleme${counter2}`;
+            const otcstorageKey = `otcmedikament_lagerung${counter2}`;
+            const expirationKey = `otcmedikament_ablaufdatum${counter2}`;
+          }
+
+          // Construct the medication data row
+          const otcmedicationData = [
+            counter2,
+            value[otcpznKey] || '-',
+            value[otcnameKey],
+            value[otcindicationKey],
+            value[otcdoseKey],
+            value[otcfoodKey] || '-',
+            value[otcbetterKey] || '-',
+            value[otcworseKey] || '-',
+            value[otccommentKey] || '-',
+            value[otcstorageKey] || '-',
+            value[otcexpirationKey] || '-'
+          ];
+
+          // Check if there's an empty row in the medication table
+          const firstRow3 = tableBody3.querySelector('.empty');
+          if (firstRow3) {
+            // If an empty row is found, fill it and remove the "empty" class
+            fillRow(firstRow23, otcmedicationData);
+            firstRow3.classList.remove('empty');
+          } else {
+            // If no empty row exists, add a new row for medication data
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = otcmedicationData.map(item => `<td>${item}</td>`).join('');
+            tableBody3.appendChild(newRow);
+          }
+
+          counter2++;
         }
       }
     });
@@ -342,7 +387,39 @@
         </tr>
       </tbody>
     </table>
-
+    <h2>Your non-prescribed medication data</h2>
+    <table id="userOtcMedicationData">
+      <thead>
+        <tr>
+          <th>Medication number</th>
+          <th>PZN number</th>
+          <th>Medication name</th>
+          <th>Indication</th>
+          <th>Time & Dosis</th>
+          <th>Intake with food?</th>
+          <th>Suspension on improvement</th>
+          <th>Suspension on deterioration</th>
+          <th>Problems/Comments</th>
+          <th>Storage</th>
+          <th>Expiration date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="empty">
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 
   <div id="right-panel">
