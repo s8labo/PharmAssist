@@ -195,7 +195,7 @@ table {
 /*      border-collapse: collapse;*/
     display: block;
     overflow-x: auto;
-    white-space: nowrap;
+/*    white-space: nowrap;*/
 }
 th, td {
   border: 1px solid #ddd;
