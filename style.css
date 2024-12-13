@@ -191,31 +191,4 @@ tbody {
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         overflow: hidden; /* Prevents content from overflowing out of the panel */
     }
-
-    #text {
-        font-size: 16px;
-    }
-
-    #controls {
-        /*display: flex !important;*/
-        /*flex-direction: row !important;*/
-        align-items: center !important;
-        /*justify-content: space-between !important;*/
-        margin-bottom: 10px !important;
-        position: absolute !important;
-        bottom: 0 !important;
-        width: 95% !important;
-        padding: 10px !important;
-        /*box-sizing: border-box !important;*/
-        background-color: white !important;
-    }
-
-    #chat {
-        height: auto;
-        width: auto;
-        margin-bottom: auto;  /* Ensure there's no margin at the bottom */
-        padding-bottom: 10%;
-        padding-right: 10%;
-        scroll-behavior: smooth;  /* Ensure smooth scrolling */
-    }
 }
