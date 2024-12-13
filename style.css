@@ -29,7 +29,7 @@ body, html {
 }
 
 #webchat {
-    height: 80vh; /* Adjust the percentage as needed */
+    height: 70%; /* Adjust the percentage as needed */
     width: 100%;
     font-size: 20px;
 }
@@ -40,25 +40,25 @@ body, html {
     flex-direction: column;
     align-items: left;
     margin-left: 10px;
-/*    overflow-y: auto; */
-
+    overflow-y: auto; 
 }
 
 #avatar {
     display: block;
     width: 100%;
-    height: 100%;
+    height: 30%;
     margin-bottom: 0px;
 }
 
 #right-panel {
     width: 40%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     background-color: white; /* Chat background */
     color: black; /* Chat text color */
     border-radius: 15px;
-    padding: 20px;
+    padding: 0px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin-left: auto; /* Ensure it is on the right side */
     overflow-y: hidden; 
@@ -160,6 +160,24 @@ tbody {
 /* Hide arrows by default (JavaScript will toggle visibility) */
 .scroll-arrow.hidden {
     display: none;
+}
+
+#loading {
+  text-align: center;
+  padding: 20px;
+  font-size: 16px;
+  color: #333;
+}
+
+#loading::after {
+  content: "⏳"; /* Spinner icon or other loading animation */
+  font-size: 24px;
+  animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 
