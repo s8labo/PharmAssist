@@ -83,7 +83,7 @@ body, html {
     flex-direction: column;
     align-items: left;
     margin-left: 10px;
-    overflow-y: auto; 
+/*    overflow-y: auto; */
 
 }
 
