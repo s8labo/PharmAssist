@@ -8,6 +8,12 @@ body, html {
     justify-content: space-between; /* Align items to the left and right */
 }
 
+.header {
+  overflow: hidden;
+  background-color: #f1f1f1;
+  padding: 20px 10px;
+}
+
 #container {
     border: 1px solid #ccc;
     padding: 10px;
