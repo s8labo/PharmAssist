@@ -194,7 +194,7 @@ body, html {
     color: white;
 }
 table {
-      width: 100%;
+/*      width: 100%;*/
       border-collapse: collapse;
     display: block;
 /*    overflow-x: auto;*/
@@ -216,54 +216,69 @@ tbody {
   display: table-row-group; /* Default browser behavior */
 }
 
-/* Container styling */
+/* Wrapper for arrows and scrollable content */
+.scroll-wrapper {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+/* Scrollable container */
 .scroll-container {
-    position: relative; /* To position the arrow */
-    max-width: 100%; /* Ensures it doesn't exceed screen width */
+    max-width: 100%; /* Ensures the content fits the screen */
     overflow-x: auto; /* Enables horizontal scrolling */
-    border: 1px solid #ccc; /* Adds a border for clarity */
-    border-radius: 8px; /* Rounded edges for better aesthetics */
-    padding: 10px; /* Space inside the container */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    flex-grow: 1; /* Ensures the container expands to fill space */
+    scroll-behavior: smooth; /* Smooth scrolling effect */
 }
 
 /* Table styling */
 .scroll-container table {
-    width: 150%; /* Ensures the table is wider than the container */
-    border-collapse: collapse; /* Removes extra space between cells */
-    min-width: 600px; /* Prevents the table from shrinking */
+    width: 150%; /* Wider than container to enable scrolling */
+    border-collapse: collapse;
+    min-width: 600px;
 }
 
 .scroll-container th, .scroll-container td {
-    border: 1px solid #ccc; /* Cell borders */
-    padding: 8px; /* Space inside cells */
-    text-align: left; /* Align text to the left */
-    white-space: nowrap; /* Prevents wrapping in cells */
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+    white-space: nowrap;
 }
 
-/* Arrow styling */
+/* Arrows */
 .scroll-arrow {
-    position: absolute; /* Positioned relative to the container */
-    top: 50%; /* Vertically centered */
-    right: 10px; /* Slightly inset from the edge */
-    transform: translateY(-50%); /* Centers arrow vertically */
-    font-size: 24px; /* Adjust size for visibility */
-    color: #007BFF; /* Use a contrasting color (blue) */
-    pointer-events: none; /* Prevent arrow from blocking scrolling */
-    display: none; /* Hidden by default */
+    cursor: pointer; /* Makes it clear the arrows are clickable */
+    font-size: 24px; /* Large, clear size for visibility */
+    color: #007BFF; /* Bright color for visibility */
+    user-select: none; /* Prevents text selection */
+    padding: 5px;
+    background: #f1f1f1; /* Slightly visible background */
+    border-radius: 50%; /* Circular design */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for 3D effect */
+    z-index: 10; /* Ensures it stays on top of content */
 }
 
-/* Optional: Animation for the arrow */
-@keyframes bounce {
-    0%, 100% {
-        transform: translateY(-50%);
-    }
-    50% {
-        transform: translateY(-55%);
-    }
+.scroll-arrow.left-arrow {
+    position: absolute;
+    left: 10px;
 }
 
-.scroll-arrow.bounce {
-    animation: bounce 1.5s infinite; /* Smooth bouncing effect */
+.scroll-arrow.right-arrow {
+    position: absolute;
+    right: 10px;
+}
+
+/* Hide arrows by default (JavaScript will toggle visibility) */
+.scroll-arrow.hidden {
+    display: none;
 }
 
 

@@ -323,20 +323,39 @@
 
     document.addEventListener("DOMContentLoaded", function () {
         const container = document.querySelector(".scroll-container");
-        const arrow = document.querySelector(".scroll-arrow");
+        const leftArrow = document.querySelector(".left-arrow");
+        const rightArrow = document.querySelector(".right-arrow");
 
-        // Function to toggle arrow visibility
+        // Scroll step in pixels
+        const scrollStep = 100;
+
+        // Update arrow visibility based on scroll position
         function updateArrowVisibility() {
-            arrow.style.display = container.scrollWidth > container.clientWidth ? "block" : "none";
+            const scrollLeft = container.scrollLeft;
+            const maxScrollLeft = container.scrollWidth - container.clientWidth;
+
+            leftArrow.classList.toggle("hidden", scrollLeft === 0); // Hide left arrow if at the start
+            rightArrow.classList.toggle("hidden", scrollLeft >= maxScrollLeft); // Hide right arrow if at the end
         }
 
-        // Call function on load and when resizing
-        window.addEventListener("resize", updateArrowVisibility);
-        container.addEventListener("scroll", updateArrowVisibility);
+        // Scroll left on left arrow click
+        leftArrow.addEventListener("click", () => {
+            container.scrollBy({ left: -scrollStep, behavior: "smooth" });
+        });
 
-        // Initial visibility check
+        // Scroll right on right arrow click
+        rightArrow.addEventListener("click", () => {
+            container.scrollBy({ left: scrollStep, behavior: "smooth" });
+        });
+
+        // Attach scroll and resize listeners
+        container.addEventListener("scroll", updateArrowVisibility);
+        window.addEventListener("resize", updateArrowVisibility);
+
+        // Initial check
         updateArrowVisibility();
     });
+
 
 
   </script>
@@ -377,7 +396,8 @@
       </tbody>
     </table>
     <h2>Your prescribed medication data</h2>
-    <div class="scroll-container">
+    <div class="scroll-wrapper">
+    <div class="scroll-arrow left-arrow"><</div>
     <table id="userMedicationData">
       <thead>
         <tr>
@@ -418,7 +438,7 @@
         </tr>
       </tbody>
     </table>
-    <div class="scroll-arrow">></div>
+    <div class="scroll-arrow right-arrow">></div>
     </div>
     <h2>Your non-prescribed medication data</h2>
     <table id="userOtcMedicationData">
