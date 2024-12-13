@@ -107,18 +107,6 @@ body, html {
     box-sizing: border-box;
 }
 
-#speak {
-    width: 100px;
-    font-family: Arial;
-    font-size: 20px;
-    background-color: #FFCD54;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    margin-left: 10px;
-    cursor: pointer;
-}
-
 #loading {
     font-family: Arial;
     font-size: 20px;
@@ -127,29 +115,6 @@ body, html {
     color: grey;
 }
 
-#social-links {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 10px;
-}
-
-#social-links a {
-    text-decoration: none;
-    font-family: Arial;
-    font-size: 15px;
-    color: #555;
-    background-color: #f1f1f1;
-    padding: 10px 15px;
-    border-radius: 10px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s, color 0.3s;
-}
-
-#social-links a:hover {
-    background-color: #FFD51E;
-    color: white;
-}
 table {
 /*      width: 100%;*/
       border-collapse: collapse;
@@ -269,41 +234,8 @@ tbody {
         overflow: hidden; /* Prevents content from overflowing out of the panel */
     }
 
-    #start-button {
-    font-size: 20px;
-    padding: 12px 20px;
-    }
-
-    #splash-title {
-        font-size: 32px;
-    }
-
-    #splash-subtitle {
-        font-size: 14px;
-    }
-
-    /*#right-panel {*/
-    /*    width: 100%;*/
-    /*    margin-top: 20px;*/
-    /*}*/
-
-
-
     #text {
         font-size: 16px;
-    }
-
-    #speak {
-        width: 20% !important;
-        padding: 12px 20px !important;
-        font-size: 18px !important;
-        margin-left: 10px !important;
-        margin-right: 40px !important;
-    }
-
-    #social-links {
-        flex-direction: column;
-        align-items: center;
     }
 
     #controls {
@@ -318,11 +250,6 @@ tbody {
         padding: 10px !important;
         /*box-sizing: border-box !important;*/
         background-color: white !important;
-    }
-
-    #social-links {
-        visibility: hidden;
-        height: 0;
     }
 
     #chat {
