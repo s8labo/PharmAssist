@@ -321,7 +321,22 @@
       });
     }
 
+    document.addEventListener("DOMContentLoaded", function () {
+        const container = document.querySelector(".scroll-container");
+        const arrow = document.querySelector(".scroll-arrow");
 
+        // Check if scrolling is needed
+        function updateArrowVisibility() {
+            arrow.style.display = container.scrollWidth > container.clientWidth ? "block" : "none";
+        }
+
+        // Listen for resize or scroll changes
+        container.addEventListener("scroll", updateArrowVisibility);
+        window.addEventListener("resize", updateArrowVisibility);
+
+        // Initial check
+        updateArrowVisibility();
+    });
 
   </script>
 </head>
@@ -361,6 +376,7 @@
       </tbody>
     </table>
     <h2>Your prescribed medication data</h2>
+    <div class="scroll-container">
     <table id="userMedicationData">
       <thead>
         <tr>
@@ -401,6 +417,18 @@
         </tr>
       </tbody>
     </table>
+    </div>
+    <div class="scroll-arrow" style="
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        font-size: 24px;
+        color: #007BFF;
+        pointer-events: none;
+    ">
+        ➡
+    </div>
     <h2>Your non-prescribed medication data</h2>
     <table id="userOtcMedicationData">
       <thead>
