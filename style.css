@@ -8,10 +8,6 @@ body, html {
     justify-content: space-between; /* Align items to the left and right */
 }
 
-h1 {
-    margin-bottom: 0px;
-}
-
 #container {
     border: 1px solid #ccc;
     padding: 10px;
