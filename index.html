@@ -325,18 +325,19 @@
         const container = document.querySelector(".scroll-container");
         const arrow = document.querySelector(".scroll-arrow");
 
-        // Check if scrolling is needed
+        // Function to toggle arrow visibility
         function updateArrowVisibility() {
             arrow.style.display = container.scrollWidth > container.clientWidth ? "block" : "none";
         }
 
-        // Listen for resize or scroll changes
-        container.addEventListener("scroll", updateArrowVisibility);
+        // Call function on load and when resizing
         window.addEventListener("resize", updateArrowVisibility);
+        container.addEventListener("scroll", updateArrowVisibility);
 
-        // Initial check
+        // Initial visibility check
         updateArrowVisibility();
     });
+
 
   </script>
 </head>
