@@ -9,13 +9,12 @@ body, html {
 }
 
 .header {
-  border: 1px solid #ccc;
+    border: 1px solid #ccc;
     padding: 10px;
     margin-bottom: 10px;
     margin-right: 10px;
     background-color: #f4f4f4;
     border-radius: 15px;
-    font-size: 22px;
 }
 
 #container {
@@ -25,7 +24,6 @@ body, html {
     margin-right: 10px;
     background-color: #f4f4f4;
     border-radius: 15px;
-    font-size: 22px;
 }
 
 #webchat {
@@ -34,7 +32,7 @@ body, html {
     font-size: 20px;
 }
 
-#splash-screen {
+/*#splash-screen {
     position: fixed;
     top: 0;
     left: 0;
@@ -49,7 +47,7 @@ body, html {
     z-index: 1000; /* Ensure it is on top of everything else */
 }
 
-#splash-title {
+/*#splash-title {
     font-size: 48px;
     color: black;
     margin-bottom: 20px;
@@ -76,7 +74,7 @@ body, html {
 
 #start-button:hover {
     background-color: #FFB400;
-}
+}*/
 
 #left-panel {
     width: 60%;
@@ -109,7 +107,7 @@ body, html {
 
 }
 
-#chat {
+/*#chat {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -118,7 +116,7 @@ body, html {
     height: 500px; /* Ensure the chat area has enough height */
 }
 
-.chat-message {
+/*.chat-message {
     margin-bottom: 10px;
     padding: 10px;
     border-radius: 10px;
@@ -161,8 +159,8 @@ body, html {
     border-radius: 10px;
     margin-left: 10px;
     cursor: pointer;
-}
-
+}*/
+*/
 #loading {
     font-family: Arial;
     font-size: 20px;
@@ -171,29 +169,6 @@ body, html {
     color: grey;
 }
 
-#social-links {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin-top: 10px;
-}
-
-#social-links a {
-    text-decoration: none;
-    font-family: Arial;
-    font-size: 15px;
-    color: #555;
-    background-color: #f1f1f1;
-    padding: 10px 15px;
-    border-radius: 10px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s, color 0.3s;
-}
-
-#social-links a:hover {
-    background-color: #FFD51E;
-    color: white;
-}
 table {
       width: 100%;
       border-collapse: collapse;
@@ -246,7 +221,7 @@ tbody {
         overflow: hidden; /* Prevents content from overflowing out of the panel */
     }
 
-    #start-button {
+/*    #start-button {
     font-size: 20px;
     padding: 12px 20px;
     }
@@ -257,7 +232,7 @@ tbody {
 
     #splash-subtitle {
         font-size: 14px;
-    }
+    }*/
 
     /*#right-panel {*/
     /*    width: 100%;*/
@@ -266,7 +241,7 @@ tbody {
 
 
 
-    #text {
+    /*#text {
         font-size: 16px;
     }
 
@@ -281,23 +256,10 @@ tbody {
     #social-links {
         flex-direction: column;
         align-items: center;
-    }
+    }*/
 
-    #controls {
-        /*display: flex !important;*/
-        /*flex-direction: row !important;*/
-        align-items: center !important;
-        /*justify-content: space-between !important;*/
-        margin-bottom: 10px !important;
-        position: absolute !important;
-        bottom: 0 !important;
-        width: 95% !important;
-        padding: 10px !important;
-        /*box-sizing: border-box !important;*/
-        background-color: white !important;
-    }
 
-    #social-links {
+/*    #social-links {
         visibility: hidden;
         height: 0;
     }
@@ -305,9 +267,9 @@ tbody {
     #chat {
         height: auto;
         width: auto;
-        margin-bottom: auto;  /* Ensure there's no margin at the bottom */
+        margin-bottom: auto;  
         padding-bottom: 10%;
         padding-right: 10%;
-        scroll-behavior: smooth;  /* Ensure smooth scrolling */
-    }
+        scroll-behavior: smooth;  
+    }*/
 }
