@@ -322,39 +322,46 @@
     }
 
     document.addEventListener("DOMContentLoaded", function () {
-        const container = document.querySelector(".scroll-container");
-        const leftArrow = document.querySelector(".left-arrow");
-        const rightArrow = document.querySelector(".right-arrow");
+        // Select all scroll containers and their arrows
+        const scrollContainers = document.querySelectorAll(".scroll-container");
 
-        // Scroll step in pixels
-        const scrollStep = 100;
+        scrollContainers.forEach((container) => {
+            const leftArrow = container.parentNode.querySelector(".left-arrow");
+            const rightArrow = container.parentNode.querySelector(".right-arrow");
 
-        // Update arrow visibility based on scroll position
-        function updateArrowVisibility() {
-            const scrollLeft = container.scrollLeft;
-            const maxScrollLeft = container.scrollWidth - container.clientWidth;
+            if (!container || !leftArrow || !rightArrow) {
+                console.error("Elements not found for a scroll container.");
+                return;
+            }
 
-            leftArrow.classList.toggle("hidden", scrollLeft === 0); // Hide left arrow if at the start
-            rightArrow.classList.toggle("hidden", scrollLeft >= maxScrollLeft); // Hide right arrow if at the end
-        }
+            const scrollStep = 100;
 
-        // Scroll left on left arrow click
-        leftArrow.addEventListener("click", () => {
-            container.scrollBy({ left: -scrollStep, behavior: "smooth" });
+            // Update arrow visibility based on scroll position
+            function updateArrowVisibility() {
+                const scrollLeft = container.scrollLeft;
+                const maxScrollLeft = container.scrollWidth - container.clientWidth;
+
+                leftArrow.classList.toggle("hidden", scrollLeft === 0);
+                rightArrow.classList.toggle("hidden", scrollLeft >= maxScrollLeft);
+            }
+
+            // Scroll event listeners for arrows
+            leftArrow.addEventListener("click", () => {
+                container.scrollBy({ left: -scrollStep, behavior: "smooth" });
+            });
+
+            rightArrow.addEventListener("click", () => {
+                container.scrollBy({ left: scrollStep, behavior: "smooth" });
+            });
+
+            container.addEventListener("scroll", updateArrowVisibility);
+            window.addEventListener("resize", updateArrowVisibility);
+
+            // Initialize arrow visibility for each table
+            updateArrowVisibility();
         });
-
-        // Scroll right on right arrow click
-        rightArrow.addEventListener("click", () => {
-            container.scrollBy({ left: scrollStep, behavior: "smooth" });
-        });
-
-        // Attach scroll and resize listeners
-        container.addEventListener("scroll", updateArrowVisibility);
-        window.addEventListener("resize", updateArrowVisibility);
-
-        // Initial check
-        updateArrowVisibility();
     });
+
 
 
 
