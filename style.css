@@ -246,16 +246,17 @@ tbody {
     padding: 8px;
     text-align: left;
     white-space: nowrap;
+    padding-bottom: 25px;
 }
 
 /* Arrows */
 .scroll-arrow {
     cursor: pointer; /* Makes it clear the arrows are clickable */
     font-size: 24px; /* Large, clear size for visibility */
-    color: #007BFF; /* Bright color for visibility */
+    color: #f4f4f4; /* Bright color for visibility */
     user-select: none; /* Prevents text selection */
     padding: 5px;
-    background: #f1f1f1; /* Slightly visible background */
+    background: rgba(0, 0, 0, 0.6); /* Slightly visible background */
     border-radius: 50%; /* Circular design */
     display: flex;
     align-items: center;
