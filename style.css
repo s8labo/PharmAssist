@@ -9,9 +9,13 @@ body, html {
 }
 
 .header {
-  overflow: hidden;
-  background-color: #f1f1f1;
-  padding: 20px 10px;
+  border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    background-color: #f4f4f4;
+    border-radius: 15px;
+    font-size: 22px;
 }
 
 #container {
