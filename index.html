@@ -158,6 +158,7 @@
 
         }, document.getElementById('webchat'));
 
+
         // Event listener for incoming bot activities
         window.addEventListener('webchatincomingactivity', ({ data }) => {
           if (data.type === 'message' && data.from.role === 'bot') {
