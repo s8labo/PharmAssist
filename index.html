@@ -103,16 +103,6 @@
         //   };
         // }
 
-        const styleSet = window.WebChat.createStyleSet({
-            rootHeight: '100%',
-            rootWidth: '100%',
-            backgroundColor: '#f4f4f4'
-        });
-
-        const avatarOptions = {
-            botAvatarInitials: 'PA',
-            userAvatarInitials: 'U'
-        };
         // Function to simulate delay
         const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -140,6 +130,17 @@
           return next(action);
         });
 
+        const styleSet = window.WebChat.createStyleSet({
+            rootHeight: '100%',
+            rootWidth: '100%',
+            backgroundColor: '#f4f4f4'
+        });
+
+        const avatarOptions = {
+            botAvatarInitials: 'PA',
+            userAvatarInitials: 'U'
+        };
+
         window.WebChat.renderWebChat({
             directLine: window.WebChat.createDirectLine({
                 token: 'AavR0Oh2MoQ.k8agJWGKvkYtM92I0013G-A3eObi4iVxVVGEcZFYLY4'
@@ -151,8 +152,8 @@
             enableTelemetry: false,
             styleSet,
             styleOptions: avatarOptions,
+            styleOptions: hideUploadButton: true,
             botName: 'PharmAssistant',
-            hideUploadButton: true,
             sendMessage: sendMessageWithDelay,
 
         }, document.getElementById('webchat'));
