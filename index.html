@@ -362,6 +362,87 @@
         });
     });
 
+// Wait until the DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  // Find the upload button container
+  const uploadButtonContainer = document.querySelector('.webchat__upload-button');
+
+  // Create a new button for webcam capture
+  const webcamButton = document.createElement('button');
+  webcamButton.innerHTML = '📷'; // You can use an icon here
+  webcamButton.className = 'webchat__webcam-button';
+  webcamButton.title = 'Take a Photo';
+
+  // Append the button to the upload button container
+  uploadButtonContainer.appendChild(webcamButton);
+
+  // Add an event listener for the webcam button
+  webcamButton.addEventListener('click', () => {
+    // Start webcam
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(stream => {
+        const video = document.createElement('video');
+        video.srcObject = stream;
+        video.autoplay = true;
+        video.style.width = '100%';
+
+        // Create a modal or overlay to display the video
+        const overlay = document.createElement('div');
+        overlay.style.position = 'fixed';
+        overlay.style.top = '0';
+        overlay.style.left = '0';
+        overlay.style.width = '100vw';
+        overlay.style.height = '100vh';
+        overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+        overlay.style.zIndex = '1000';
+        overlay.style.display = 'flex';
+        overlay.style.justifyContent = 'center';
+        overlay.style.alignItems = 'center';
+        overlay.appendChild(video);
+
+        // Add a capture button
+        const captureButton = document.createElement('button');
+        captureButton.innerText = 'Capture';
+        captureButton.style.position = 'absolute';
+        captureButton.style.bottom = '10%';
+        overlay.appendChild(captureButton);
+
+        // Append the overlay to the body
+        document.body.appendChild(overlay);
+
+        // Handle the capture
+        captureButton.addEventListener('click', () => {
+          const canvas = document.createElement('canvas');
+          canvas.width = video.videoWidth;
+          canvas.height = video.videoHeight;
+          const context = canvas.getContext('2d');
+          context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+          // Stop the webcam stream
+          stream.getTracks().forEach(track => track.stop());
+
+          // Remove the overlay
+          document.body.removeChild(overlay);
+
+          // Convert canvas to a blob and send to bot
+          canvas.toBlob(blob => {
+            const file = new File([blob], 'photo.jpg', { type: 'image/jpeg' });
+
+            // Use Web Chat's file attachment logic to send the file
+            const inputElement = document.querySelector('.webchat__upload-button--file-input');
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(file);
+            inputElement.files = dataTransfer.files;
+
+            // Trigger the change event to upload the file
+            const event = new Event('change', { bubbles: true });
+            inputElement.dispatchEvent(event);
+          });
+        });
+      })
+      .catch(error => console.error('Error accessing webcam:', error));
+  });
+});
 
 
 
