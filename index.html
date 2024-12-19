@@ -379,6 +379,19 @@ document.addEventListener('DOMContentLoaded', () => {
   // Append the button to the upload button container
   uploadButtonContainer.appendChild(webcamButton);
 
+    // Hide the button on mobile devices
+  const hideOnMobile = () => {
+    if (window.innerWidth <= 768) { // Adjust the breakpoint as needed
+      webcamButton.style.display = 'none';
+    } else {
+      webcamButton.style.display = 'block';
+    }
+  };
+
+  // Run the hideOnMobile function on page load and window resize
+  hideOnMobile();
+  window.addEventListener('resize', hideOnMobile);
+
   // Add an event listener for the webcam button
   webcamButton.addEventListener('click', () => {
     // Start webcam
@@ -394,7 +407,7 @@ document.addEventListener('DOMContentLoaded', () => {
         overlay.style.position = 'fixed';
         overlay.style.top = '0';
         overlay.style.left = '0';
-        overlay.style.width = '60px';
+        overlay.style.width = '100vw';
         overlay.style.height = '100vh';
         overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
         overlay.style.zIndex = '1000';
