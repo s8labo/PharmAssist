@@ -181,11 +181,17 @@ tbody {
 }
 
 .webchat__upload-button {
-    width: 68px!important;
+    width: 75px!important;
 }
 
 .webchat__webcam-button {
-    background-color: none;
+    background-color: transparent;
+    border: none;
+    border-left: 1px solid #767676;
+    padding-left: 9px;
+    padding-rigt: 7px;
+    border-right: 1px solid #767676;
+    padding-right: 9px;
 }
 
 
