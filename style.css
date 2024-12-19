@@ -187,10 +187,10 @@ tbody {
 .webchat__webcam-button {
     background-color: transparent;
     border: none;
-    border-left: 1px solid #767676;
+    border-left: 1px solid #ccc;
     padding-left: 9px;
     padding-rigt: 7px;
-    border-right: 1px solid #767676;
+    border-right: 1px solid #ccc;
     padding-right: 9px;
 }
 
