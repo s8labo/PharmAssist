@@ -425,6 +425,10 @@ document.addEventListener('DOMContentLoaded', () => {
         captureButton.style.fontWeight = 'bold';
         captureButton.style.margin = '10px';
         captureButton.style.padding = '15px 25px';
+        captureButton.style.position = 'absolute';
+        captureButton.style.bottom = '20%'; // Position capture button at the bottom
+        captureButton.style.left = '50%';  // Center horizontally
+        captureButton.style.transform = 'translateX(-50%)'; 
         overlay.appendChild(captureButton);
 
         // Add an exit button
@@ -436,6 +440,9 @@ document.addEventListener('DOMContentLoaded', () => {
         exitButton.style.padding = '15px 25px';
         exitButton.style.backgroundColor = '#ff4d4d';
         exitButton.style.color = 'white';
+        exitButton.style.position = 'absolute';
+        exitButton.style.top = '20px'; // Position exit button at the top
+        exitButton.style.right = '20px'; // Align to the right
         overlay.appendChild(exitButton);
 
         // Append the overlay to the body
