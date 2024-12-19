@@ -375,11 +375,12 @@ document.addEventListener('DOMContentLoaded', () => {
   webcamButton.innerHTML = '📷'; // You can use an icon here
   webcamButton.className = 'webchat__webcam-button';
   webcamButton.title = 'Take a Photo';
+  webcamButton.style.fontSize = '30px';
 
   // Append the button to the upload button container
   uploadButtonContainer.appendChild(webcamButton);
 
-    // Hide the button on mobile devices
+  // Hide the button on mobile devices
   const hideOnMobile = () => {
     if (window.innerWidth <= 768) { // Adjust the breakpoint as needed
       webcamButton.style.display = 'none';
@@ -412,6 +413,7 @@ document.addEventListener('DOMContentLoaded', () => {
         overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
         overlay.style.zIndex = '1000';
         overlay.style.display = 'flex';
+        overlay.style.flexDirection = 'column';
         overlay.style.justifyContent = 'center';
         overlay.style.alignItems = 'center';
         overlay.appendChild(video);
@@ -421,11 +423,20 @@ document.addEventListener('DOMContentLoaded', () => {
         captureButton.innerText = 'Capture';
         captureButton.style.fontSize = '20px';
         captureButton.style.fontWeight = 'bold';
-        captureButton.style.position = 'absolute';
-        captureButton.style.bottom = '10%';
-        captureButton.style.padding = '25px';
-        captureButton.style.radius = '5px';
+        captureButton.style.margin = '10px';
+        captureButton.style.padding = '15px 25px';
         overlay.appendChild(captureButton);
+
+        // Add an exit button
+        const exitButton = document.createElement('button');
+        exitButton.innerText = 'Exit';
+        exitButton.style.fontSize = '20px';
+        exitButton.style.fontWeight = 'bold';
+        exitButton.style.margin = '10px';
+        exitButton.style.padding = '15px 25px';
+        exitButton.style.backgroundColor = '#ff4d4d';
+        exitButton.style.color = 'white';
+        overlay.appendChild(exitButton);
 
         // Append the overlay to the body
         document.body.appendChild(overlay);
@@ -459,10 +470,20 @@ document.addEventListener('DOMContentLoaded', () => {
             inputElement.dispatchEvent(event);
           });
         });
+
+        // Handle the exit button
+        exitButton.addEventListener('click', () => {
+          // Stop the webcam stream
+          stream.getTracks().forEach(track => track.stop());
+
+          // Remove the overlay
+          document.body.removeChild(overlay);
+        });
       })
       .catch(error => console.error('Error accessing webcam:', error));
   });
 });
+
 
 
 
