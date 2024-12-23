@@ -41,12 +41,13 @@ body, html {
     border-radius: 10px!important;
 }
 
-#webchat .ac-pushButton, .ac-input .ac-textInput {
+#webchat .ac-pushButton {
     border-radius: 7px!important;
 }
 
 input {
-  font-size: 18px !important; /* Apply your desired font size */
+  font-size: 16px !important; /* Apply your desired font size */
+  border-radius: 7px;
 }
 
 #left-panel {
