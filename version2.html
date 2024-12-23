@@ -190,7 +190,7 @@
 
 
     window.addEventListener('webchatincomingactivity', ({ data }) => {
-      if (data.type === 'message' && data.from.role === 'user' && data.value) {
+      if (data.type === 'message' && data.from.role === 'user' && data.value && !== data.value.date) {
         const { value } = data;
 
         // Populate Master Data
