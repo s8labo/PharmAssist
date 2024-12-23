@@ -189,132 +189,116 @@
 
 
     window.addEventListener('webchatincomingactivity', ({ data }) => {
-      const tableBody1 = document.querySelector('#userMasterData tbody');
-      const tableBody2 = document.querySelector('#userMedicationData tbody');
-      const tableBody3 = document.querySelector('#userOtcMedicationData tbody');
+      const tableContainer1 = document.querySelector('#userMasterDataContainer');
+      const tableContainer2 = document.querySelector('#userMedicationDataContainer');
+      const tableContainer3 = document.querySelector('#userOtcMedicationDataContainer');
 
       if (data.type === 'message' && data.from.role === 'user' && data.value) {
         const { value } = data;
 
-        // Handle master data
-        const { grund, name, geschlecht, geburtsdatum, kontakt } = value;
-        const masterData = [grund, name, geschlecht, geburtsdatum, kontakt];
+        // Master Data Transposition
+        const masterData = {
+          Grund: value.grund || '-',
+          Name: value.name || '-',
+          Geschlecht: value.geschlecht || '-',
+          Geburtsdatum: value.geburtsdatum || '-',
+          Kontakt: value.kontakt || '-',
+        };
+        renderTransposedTable(tableContainer1, masterData);
 
-        // Check if there's an empty row in the master data table
-        const firstRow1 = tableBody1.querySelector('.empty');
-        if (firstRow1) {
-          // If an empty row is found, fill it and remove the "empty" class
-          fillRow(firstRow1, masterData);
-          firstRow1.classList.remove('empty');
-        } 
-
-        // Handle medication data
-        // let counter = 1;
+        // Medication Data Transposition
+        const medicationData = [];
+        let counter = 1;
         while (true) {
-          const pznKey = `medikament_pzn${counter}`;
           const nameKey = `medikament_name${counter}`;
-          const indicationKey = `medikament_indikation${counter}`;
-          const doseKey = `medikament_dosis${counter}`;
-          const foodKey = `medikament_einnahme${counter}`;
-          const prescriptionKey = `medikament_verordnung${counter}`;
-          const alternativeprescKey = `medikament_falsche_einnahme${counter}`;
-          const forgottendoseKey = `medikament_vergessen${counter}`;
-          const forgottendoseprocedureKey = `medikament_vergessen_vorgehensweise${counter}`;
-          const betterKey = `medikament_besserung${counter}`;
-          const worseKey = `medikament_verschlechterung${counter}`;
-          const commentKey = `medikament_probleme${counter}`;
-          const storageKey = `medikament_lagerung${counter}`;
-          const expirationKey = `medikament_ablaufdatum${counter}`;
+          if (!value[nameKey]) break;
 
-          // Stop if required fields for medication are missing
-          if (!value[nameKey] && !value[indicationKey] && !value[doseKey]) {
-            break;
-          }
-
-          // Construct the medication data row
-          const medicationData = [
-            counter,
-            value[pznKey] || '-',
-            value[nameKey],
-            value[indicationKey],
-            value[doseKey],
-            value[foodKey] || '-',
-            value[prescriptionKey] || '-',
-            value[alternativeprescKey] || '-',
-            value[forgottendoseKey] || '-',
-            value[forgottendoseprocedureKey] || '-',
-            value[betterKey] || '-',
-            value[worseKey] || '-',
-            value[commentKey] || '-',
-            value[storageKey] || '-',
-            value[expirationKey] || '-'
-          ];
-
-          // Check if there's an empty row in the medication table
-          const firstRow2 = tableBody2.querySelector('.empty');
-          if (firstRow2) {
-            // If an empty row is found, fill it and remove the "empty" class
-            fillRow(firstRow2, medicationData);
-            firstRow2.classList.remove('empty');
-          } else {
-            // If no empty row exists, add a new row for medication data
-            const newRow = document.createElement('tr');
-            newRow.innerHTML = medicationData.map(item => `<td>${item}</td>`).join('');
-            tableBody2.appendChild(newRow);
-          }
-
+          medicationData.push({
+            "Medication Number": counter,
+            "PZN Number": value[`medikament_pzn${counter}`] || '-',
+            "Medication Name": value[nameKey],
+            "Indication": value[`medikament_indikation${counter}`] || '-',
+            "Time & Dose": value[`medikament_dosis${counter}`] || '-',
+            "Intake with Food": value[`medikament_einnahme${counter}`] || '-',
+            "Taken as Prescribed": value[`medikament_verordnung${counter}`] || '-',
+            "False Intake": value[`medikament_falsche_einnahme${counter}`] || '-',
+            "Forgotten Dose": value[`medikament_vergessen${counter}`] || '-',
+            "Procedure by False Intake": value[`medikament_vergessen_vorgehensweise${counter}`] || '-',
+            "Suspension on Improvement": value[`medikament_besserung${counter}`] || '-',
+            "Suspension on Deterioration": value[`medikament_verschlechterung${counter}`] || '-',
+            "Comments": value[`medikament_probleme${counter}`] || '-',
+            "Storage": value[`medikament_lagerung${counter}`] || '-',
+            "Expiration Date": value[`medikament_ablaufdatum${counter}`] || '-',
+          });
           counter++;
         }
+        renderTransposedTable(tableContainer2, medicationData);
 
+        // OTC Medication Data Transposition
+        const otcMedicationData = [];
+        // let counter2 = 1;
         while (true) {
-          const otcpznKey = `otcmedikament_pzn${counter2}`;
-          const otcnameKey = `otcmedikament_name${counter2}`;
-          const otcindicationKey = `otcmedikament_indikation${counter2}`;
-          const otcdoseKey = `otcmedikament_dosis${counter2}`;
-          const otcfoodKey = `otcmedikament_einnahme${counter2}`;
-          const otcbetterKey = `otcmedikament_besserung${counter}`;
-          const otcworseKey = `otcmedikament_verschlechterung${counter2}`;
-          const otccommentKey = `otcmedikament_probleme${counter2}`;
-          const otcstorageKey = `otcmedikament_lagerung${counter2}`;
-          const otcexpirationKey = `otcmedikament_ablaufdatum${counter2}`;
+          const nameKey = `otcmedikament_name${counter2}`;
+          if (!value[nameKey]) break;
 
-          // Stop if required fields for medication are missing
-          if (!value[otcnameKey] && !value[otcindicationKey] && !value[otcdoseKey]) {
-            break;
-          }
-
-          // Construct the medication data row
-          const otcmedicationData = [
-            counter2,
-            value[otcpznKey] || '-',
-            value[otcnameKey],
-            value[otcindicationKey],
-            value[otcdoseKey],
-            value[otcfoodKey] || '-',
-            value[otcbetterKey] || '-',
-            value[otcworseKey] || '-',
-            value[otccommentKey] || '-',
-            value[otcstorageKey] || '-',
-            value[otcexpirationKey] || '-'
-          ];
-
-          // Check if there's an empty row in the medication table
-          const firstRow3 = tableBody3.querySelector('.empty');
-          if (firstRow3) {
-            // If an empty row is found, fill it and remove the "empty" class
-            fillRow(firstRow23, otcmedicationData);
-            firstRow3.classList.remove('empty');
-          } else {
-            // If no empty row exists, add a new row for medication data
-            const newRow = document.createElement('tr');
-            newRow.innerHTML = otcmedicationData.map(item => `<td>${item}</td>`).join('');
-            tableBody3.appendChild(newRow);
-          }
-
+          otcMedicationData.push({
+            "Medication Number": counter2,
+            "PZN Number": value[`otcmedikament_pzn${counter2}`] || '-',
+            "Medication Name": value[nameKey],
+            "Indication": value[`otcmedikament_indikation${counter2}`] || '-',
+            "Time & Dose": value[`otcmedikament_dosis${counter2}`] || '-',
+            "Intake with Food": value[`otcmedikament_einnahme${counter2}`] || '-',
+            "Suspension on Improvement": value[`otcmedikament_besserung${counter2}`] || '-',
+            "Suspension on Deterioration": value[`otcmedikament_verschlechterung${counter2}`] || '-',
+            "Comments": value[`otcmedikament_probleme${counter2}`] || '-',
+            "Storage": value[`otcmedikament_lagerung${counter2}`] || '-',
+            "Expiration Date": value[`otcmedikament_ablaufdatum${counter2}`] || '-',
+          });
           counter2++;
         }
+        renderTransposedTable(tableContainer3, otcMedicationData);
       }
     });
+
+    // Helper Function to Render Transposed Table
+    function renderTransposedTable(container, data) {
+      const table = document.createElement('table');
+      const tbody = document.createElement('tbody');
+
+      if (Array.isArray(data)) {
+        // Transpose for Array of Objects (e.g., Medication Data)
+        Object.keys(data[0]).forEach(key => {
+          const row = document.createElement('tr');
+          const headerCell = document.createElement('th');
+          headerCell.textContent = key;
+          row.appendChild(headerCell);
+
+          data.forEach(item => {
+            const cell = document.createElement('td');
+            cell.textContent = item[key];
+            row.appendChild(cell);
+          });
+          tbody.appendChild(row);
+        });
+      } else {
+        // Transpose for Single Object (e.g., Master Data)
+        Object.entries(data).forEach(([key, value]) => {
+          const row = document.createElement('tr');
+          const headerCell = document.createElement('th');
+          headerCell.textContent = key;
+          const dataCell = document.createElement('td');
+          dataCell.textContent = value;
+          row.appendChild(headerCell);
+          row.appendChild(dataCell);
+          tbody.appendChild(row);
+        });
+      }
+
+      table.appendChild(tbody);
+      container.innerHTML = ''; // Clear previous content
+      container.appendChild(table);
+    }
+
 
     // Function to fill row with data
     function fillRow(row, dataArray) {
@@ -493,47 +477,13 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-function transposeTable(tableId) {
-  const table = document.getElementById(tableId);
-  const rows = Array.from(table.rows);
-
-  // Create a new table element
-  const newTable = document.createElement('table');
-  newTable.classList.add('transposed-table');
-
-  // Loop through columns to form new rows
-  for (let colIndex = 0; colIndex < rows[0].cells.length; colIndex++) {
-    const newRow = document.createElement('tr');
-
-    rows.forEach((row, rowIndex) => {
-      const cell = row.cells[colIndex];
-      const newCell = document.createElement(rowIndex === 0 ? 'th' : 'td');
-      newCell.textContent = cell.textContent;
-      newRow.appendChild(newCell);
-    });
-
-    newTable.appendChild(newRow);
-  }
-
-  // Replace the original table with the transposed table
-  const container = table.parentElement;
-  container.replaceChild(newTable, table);
-}
-
-// Automatically transpose all specified tables when the page loads
-window.addEventListener('DOMContentLoaded', () => {
-  const tableIds = ['userMasterData', 'userMedicationData', 'userOtcMedicationData'];
-  tableIds.forEach(transposeTable);
-});
-
-
 
   </script>
 </head>
 
 <body>
   <div id="left-panel">
-    <div class="header"><h1>Your PharmAssistant Verison 1</h1></div>
+    <div class="header"><h1>Your PharmAssistant Version 1</h1></div>
     <div id="container"><p>The PharmAssistant is here to simplify your medication review process. It helps you collect and organize the details of the medications you're currently taking.<br>
     💬 How it works: </p>
     <ul>
@@ -548,7 +498,7 @@ window.addEventListener('DOMContentLoaded', () => {
     <div class="scroll-wrapper">
       <div class="scroll-arrow left-arrow"><</div>
         <div class="scroll-container">
-          <table id="userMasterData">
+          <table id="userMasterDataContainer">
             <thead>
               <tr>
                 <th>Grund</th>
@@ -576,7 +526,7 @@ window.addEventListener('DOMContentLoaded', () => {
     <div class="scroll-wrapper">
       <div class="scroll-arrow left-arrow"><</div>
         <div class="scroll-container">
-          <table id="userMedicationData">
+          <table id="userMedicationDataContainer">
             <thead>
               <tr>
                 <th>Medication number</th>
@@ -624,7 +574,7 @@ window.addEventListener('DOMContentLoaded', () => {
     <div class="scroll-wrapper">
       <div class="scroll-arrow left-arrow"><</div>
         <div class="scroll-container">
-          <table id="userOtcMedicationData">
+          <table id="userOtcMedicationDataContainer">
             <thead>
               <tr>
                 <th>Medication number</th>
