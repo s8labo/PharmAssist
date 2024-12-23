@@ -283,11 +283,11 @@
       });
     }
     
-    let rowIndex = 0;
-
     function populateMedicationTable(selector, data) {
       const table = document.querySelector(selector);
       const rows = table.querySelectorAll('tbody tr');  // Get all the rows in the tbody
+
+      let rowIndex = 0;
 
       // For each key-value pair in the data, add a new <td> in the corresponding <tr>
       Object.entries(data).forEach(([key, value]) => {
