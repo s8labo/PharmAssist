@@ -33,6 +33,8 @@ body, html {
     height: 100%; /* Adjust the percentage as needed */
     width: 100%;
     font-size: 20px;
+    border: 1px solid #ccc;
+    font-family: "Times New Roman";
 }
 
 #left-panel {
