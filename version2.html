@@ -160,28 +160,28 @@
 
 
         // Event listener for incoming bot activities
-        window.addEventListener('webchatincomingactivity', ({ data }) => {
-          if (data.type === 'message' && data.from.role === 'bot') {
-            const botMessage = data.text;
-            // const messageID = data;
-            // console.log(`Bot says: ${JSON.stringify(messageID, null, 2)}`);
+        // window.addEventListener('webchatincomingactivity', ({ data }) => {
+        //   if (data.type === 'message' && data.from.role === 'bot') {
+        //     const botMessage = data.text;
+        //     // const messageID = data;
+        //     // console.log(`Bot says: ${JSON.stringify(messageID, null, 2)}`);
 
-            // Make the avatar speak the bot message using TTS
-            if (typeof head !== 'undefined' && head.speakText) {
-              head.speakText(botMessage); // Avatar speaks the bot's message
-            } else {
-              console.error('Avatar head is not initialized.');
-            }
-          }
-        });
+        //     // Make the avatar speak the bot message using TTS
+        //     if (typeof head !== 'undefined' && head.speakText) {
+        //       head.speakText(botMessage); // Avatar speaks the bot's message
+        //     } else {
+        //       console.error('Avatar head is not initialized.');
+        //     }
+        //   }
+        // });
 
         // Focus on Web Chat for better user experience
-        document.querySelector('#webchat > *').focus();
-      })().catch(err => console.error(err));
+      //   document.querySelector('#webchat > *').focus();
+      // })().catch(err => console.error(err));
 
-      window.addEventListener('webchatincomingactivity', ({ data }) => {
-        console.log(`all data: ${JSON.stringify(data)}`);
-      });
+      // window.addEventListener('webchatincomingactivity', ({ data }) => {
+      //   console.log(`all data: ${JSON.stringify(data)}`);
+      // });
 
 
     let counter = 1;
@@ -491,35 +491,41 @@ document.addEventListener('DOMContentLoaded', () => {
     <p>
         Once confirmed, your medication list will appear here for easy reference.
     </p></div>
-    <h2>Your Master Data</h2>
-    <div id="userMasterDataContainer">
-      <table id="userMasterData">
-        <tbody>
-          <tr>
-            <th>Reason</th>
-            <td></td>
-          </tr>
-          <tr>
-            <th>Name</th>
-            <td></td>
-          </tr>
-          <tr>
-            <th>Gender</th>
-            <td></td>
-          </tr>
-          <tr>
-            <th>Birthdate</th>
-            <td></td>
-          </tr>
-          <tr>
-            <th>Contact</th>
-            <td></td>
-          </tr>
-        </tbody>
-      </table>
+    <!-- <h2>Your Master Data</h2> -->
+    <div class="collapsible-container">
+      <div class="collapsible-header">
+        <span>Master Data</span>
+        <span class="toggle-arrow">▼</span>
+      </div>
+      <div id="userMasterDataContainer" class="collapsible-content">
+        <table id="userMasterData">
+          <tbody>
+            <tr>
+              <th>Reason</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Name</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Gender</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Birthdate</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Contact</th>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
     <br>
-    <h2>Your Prescribed Medication Data</h2>
+    <!-- <h2>Your Prescribed Medication Data</h2> -->
     <div class="collapsible-container">
       <div class="collapsible-header">
         <span>Prescribed Medication Data</span>
@@ -593,7 +599,7 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
     </div>
     <br>
-    <h2>Your Non-Prescribed Medication Data</h2>
+    <!-- <h2>Your Non-Prescribed Medication Data</h2> -->
     <div class="collapsible-container">
       <div class="collapsible-header">
         <span>Non-Prescribed Medication Data</span>
