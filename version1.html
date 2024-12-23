@@ -286,10 +286,16 @@
     function populateMedicationTable(selector, data) {
       const table = document.querySelector(selector);
       const rows = table.querySelectorAll('tbody tr');  // Get all the rows in the tbody
+      
+      // Remove the first row if it has mostly empty cells
+      if (rows.length > 0) {
+        const firstRowCells = rows[0].querySelectorAll('td');
+        const emptyCellsCount = Array.from(firstRowCells).filter(cell => cell.textContent.trim() === "").length;
 
-      // Check if the first row is empty and remove it if necessary
-      if (rows.length > 0 && Array.from(rows[0].cells).every(cell => cell.textContent.trim() === "")) {
-        rows[0].remove();  // Remove the first empty row
+        // If more than half of the cells are empty, remove the row
+        if (emptyCellsCount > firstRowCells.length / 2) {
+          rows[0].remove();  // Remove the first row with mostly empty cells
+        }
       }
 
       let rowIndex = 0;
