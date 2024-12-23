@@ -283,7 +283,7 @@
       });
     }
 
-    function populateTransposedTableForMedication(selector, data) {
+    function populateMedicationTable(selector, data) {
       const table = document.querySelector(selector);
       const tbody = table.querySelector('tbody');
 
@@ -293,7 +293,7 @@
       // Iterate through the data and create a table cell for each key-value pair
       Object.entries(data).forEach(([key, value]) => {
         const cell = document.createElement('td');
-        cell.textContent = value || '-';
+        cell.textContent = value || '-';  // Use '-' for empty or undefined values
         newRow.appendChild(cell);
       });
 
