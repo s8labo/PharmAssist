@@ -283,22 +283,19 @@
       });
     }
     
+    let rowIndex = 0;
+
     function populateMedicationTable(selector, data) {
       const table = document.querySelector(selector);
       const rows = table.querySelectorAll('tbody tr');  // Get all the rows in the tbody
-      
-      // Start filling the table with data
-      let rowIndex = 0;
 
-      // For each key-value pair in the data, update the corresponding row's <td>
+      // For each key-value pair in the data, add a new <td> in the corresponding <tr>
       Object.entries(data).forEach(([key, value]) => {
-        // Check if we still have a row at rowIndex
         if (rowIndex < rows.length) {
-          const td = rows[rowIndex].querySelector('td');
-          if (td) {
-            // Append new value to the existing content, or set default if empty
-            td.textContent += (td.textContent ? ` / ${value}` : value);  // Append with a separator if already has content
-          }
+          const tr = rows[rowIndex];  // Get the current row
+          const newTd = document.createElement('td');  // Create a new <td> element
+          newTd.textContent = value;  // Set the value inside the new <td>
+          tr.appendChild(newTd);  // Append the new <td> to the current <tr>
         }
         rowIndex++;  // Move to the next row
       });
