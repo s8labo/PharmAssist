@@ -283,22 +283,23 @@
       });
     }
 
-function populateTransposedTableForMedication(selector, data) {
-  const table = document.querySelector(selector);
-  const tbody = table.querySelector('tbody');
+    function populateTransposedTableForMedication(selector, data) {
+      const table = document.querySelector(selector);
+      const tbody = table.querySelector('tbody');
 
-  // Create a new row for the medication data
-  const newRow = document.createElement('tr');
+      // Create a new row for the medication data
+      const newRow = document.createElement('tr');
 
-  Object.entries(data).forEach(([key, value]) => {
-    const cell = document.createElement('td');
-    cell.textContent = value || '-';
-    newRow.appendChild(cell);
-  });
+      // Iterate through the data and create a table cell for each key-value pair
+      Object.entries(data).forEach(([key, value]) => {
+        const cell = document.createElement('td');
+        cell.textContent = value || '-';
+        newRow.appendChild(cell);
+      });
 
-  // Append the new row to the table body
-  tbody.appendChild(newRow);
-}
+      // Append the new row to the table body
+      tbody.appendChild(newRow);
+    }
 
     // document.addEventListener("DOMContentLoaded", function () {
     //     // Select all scroll containers and their arrows
