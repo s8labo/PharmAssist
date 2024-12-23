@@ -201,8 +201,6 @@
           Contact: value.kontakt,
         });
 
-        openCollapsible("#userMedicationDataContainer");
-        closeOtherCollapsibles("#userMedicationDataContainer");
 
         // Populate Prescribed Medication Data
         // let counter = 1;
@@ -228,12 +226,12 @@
             "Expiration Date": value[`medikament_ablaufdatum${counter}`] || '-',
           };
           populateMedicationTable('#userMedicationData', medicationData);
+          openCollapsible("#userMedicationDataContainer");
+          closeOtherCollapsibles("#userMedicationDataContainer");
           
           counter++;
         }
 
-        openCollapsible("#userOtcMedicationDataContainer");
-        closeOtherCollapsibles("#userOtcMedicationDataContainer");
 
         // Populate OTC Medication Data
         // let counter2 = 1;
@@ -255,6 +253,8 @@
             "Expiration Date": value[`otcmedikament_ablaufdatum${counter2}`] || '-',
           };
           populateMedicationTable('#userOtcMedicationData', otcMedicationData);
+          openCollapsible("#userOtcMedicationDataContainer");
+          closeOtherCollapsibles("#userOtcMedicationDataContainer");
           counter2++;
         }
       }
