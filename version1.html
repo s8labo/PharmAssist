@@ -286,30 +286,20 @@
     function populateMedicationTable(selector, data) {
       const table = document.querySelector(selector);
       const rows = table.querySelectorAll('tbody tr');  // Get all the rows in the tbody
+      
+      // Start filling the table with data
+      let rowIndex = 0;
 
-      let nextRow = rows.length; // Start appending from the last row, i.e., next empty row.
-
-      // Check if there's already data and prepare to add to the next row
+      // For each key-value pair in the data, update the corresponding row's <td>
       Object.entries(data).forEach(([key, value]) => {
-        // We will only add data to the next available row
-        if (nextRow < rows.length) {
-          const td = rows[nextRow].querySelector('td');
+        // Check if we still have a row at rowIndex
+        if (rowIndex < rows.length) {
+          const td = rows[rowIndex].querySelector('td');
           if (td) {
             td.textContent = value || '-';  // Set the value or a default '-' if empty
           }
-        } else {
-          // If no more rows are available, create a new row (this can be modified depending on how you want to handle new rows)
-          const newRow = document.createElement('tr');
-          const newTh = document.createElement('th');
-          newTh.textContent = key;
-          const newTd = document.createElement('td');
-          newTd.textContent = value || '-';
-          newRow.appendChild(newTh);
-          newRow.appendChild(newTd);
-          table.querySelector('tbody').appendChild(newRow);
         }
-
-        nextRow++;  // Move to the next row for the next data entry
+        rowIndex++;  // Move to the next row
       });
     }
 
