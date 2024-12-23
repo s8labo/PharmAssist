@@ -285,20 +285,17 @@
 
     function populateMedicationTable(selector, data) {
       const table = document.querySelector(selector);
-      const tbody = table.querySelector('tbody');
+      const rows = table.querySelectorAll('tbody tr');  // Get all the rows in the tbody
 
-      // Create a new row for the medication data
-      const newRow = document.createElement('tr');
-
-      // Iterate through the data and create a table cell for each key-value pair
-      Object.entries(data).forEach(([key, value]) => {
-        const cell = document.createElement('td');
-        cell.textContent = value || '-';  // Use '-' for empty or undefined values
-        newRow.appendChild(cell);
+      Object.entries(data).forEach(([key, value], index) => {
+        // Make sure the row exists, if not, skip it
+        if (rows[index]) {
+          const td = rows[index].querySelector('td');
+          if (td) {
+            td.textContent = value || '-';  // Set the value or a default '-' if empty
+          }
+        }
       });
-
-      // Append the new row to the table body
-      tbody.appendChild(newRow);
     }
 
     // document.addEventListener("DOMContentLoaded", function () {
