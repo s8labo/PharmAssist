@@ -37,11 +37,12 @@ body, html {
 }
 
 #left-panel {
-    width: 55%;
+    width: 60%;
     display: flex;
     flex-direction: column;
     align-items: left;
-    margin-left: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
     overflow-y: auto; 
 }
 
@@ -56,7 +57,7 @@ body, html {
     width: 40%;
     height: 100%;
     display: flex;
-    flex-direction: column;
+/*    flex-direction: column;*/
     background-color: white; /* Chat background */
     color: black; /* Chat text color */
     border-radius: 15px;
