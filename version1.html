@@ -252,13 +252,31 @@
     });
 
     // Helper Function to Populate Transposed Table
-    function populateTransposedTable(selector, data) {
+    function populateTransposedTable(selector, data, allowDynamicRows = false) {
       const table = document.querySelector(selector);
       const rows = table.querySelectorAll('tr');
 
-      Object.values(data).forEach((value, index) => {
-        const cell = rows[index].querySelector('td');
-        cell.textContent = value;
+      Object.entries(data).forEach(([key, value]) => {
+        let matchingRow = Array.from(rows).find((row) => row.querySelector('th')?.textContent === key);
+
+        if (!matchingRow && allowDynamicRows) {
+          // Create a new row dynamically if not found
+          matchingRow = document.createElement('tr');
+          const headerCell = document.createElement('th');
+          headerCell.textContent = key;
+          const valueCell = document.createElement('td');
+          valueCell.textContent = value || '-';
+
+          matchingRow.appendChild(headerCell);
+          matchingRow.appendChild(valueCell);
+          table.querySelector('tbody').appendChild(matchingRow);
+        } else if (matchingRow) {
+          // Check if the row is already populated
+          const valueCell = matchingRow.querySelector('td');
+          if (!valueCell.textContent || valueCell.textContent === '-') {
+            valueCell.textContent = value || '-'; // Only populate if empty
+          }
+        }
       });
     }
 
