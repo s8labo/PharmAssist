@@ -255,7 +255,7 @@ table {
 }
 
 .collapsible-header.collapsed .toggle-arrow {
-  transform: rotate(-90deg);
+  transform: rotate(-180deg);
 }
 
 .collapsible-content {
