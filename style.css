@@ -45,8 +45,8 @@ body, html {
     border-radius: 7px!important;
 }
 
-.ac-textRun span,  .ac-input .ac-textInput input {
-    font-family: 18px!important;
+input {
+  font-size: 18px !important; /* Apply your desired font size */
 }
 
 #left-panel {
