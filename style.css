@@ -94,6 +94,8 @@ th {
 }
 tbody {
   display: table-row-group; /* Default browser behavior */
+  box-shadow: 0 0 0 1px red;
+  border-radius: 10px;
 }
 tr {
     border-radius: 5px;
