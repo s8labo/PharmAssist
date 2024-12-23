@@ -93,28 +93,47 @@ th {
   background-color: #f4f4f4;
 }*/
 
-table tbody {
-  background-color: white;
-}
+table {
+  border: 1px solid #aaa;
+  border-collapse: separate;
+  overflow: hidden;
+  border-spacing: 0;
+  border-radius: 10px;
+  text-align: center;
+  border: 1px solid #aaa;
 
-table tbody td {
-  display: table-cell
-}
-table tbody tr:first-child td:first-child {
-  border-top-left-radius: 5px;
-}
+  th, td {
+    padding: .6em 3em;
+    vertical-align: middle;
+    border-right: 1px solid #aaa;
+    border-bottom: 1px solid #aaa;
 
-table tbody tr:first-child td:last-child {
-  border-top-right-radius: 5px;
-}
+    &:last-child {
+      border-right: none;
+    }
+  }
 
-table tbody tr:last-child td:first-child {
-  border-bottom-left-radius: 5px;
-}
+  th {
+    background: #ddd;
+  }
 
-table tbody tr:last-child td:last-child {
-  border-bottom-right-radius: 5px;
-}
+  td {
+    background: #fff;
+  }
+
+  thead {
+    th {}
+  }
+
+  tbody {
+    tr {
+      &:last-child {
+        th, td {
+          border-bottom: none;
+        }
+      }
+    }
+  }
 
 /* Wrapper for arrows and scrollable content */
 .scroll-wrapper {
