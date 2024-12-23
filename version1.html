@@ -224,7 +224,7 @@
             "Storage": value[`medikament_lagerung${counter}`] || '-',
             "Expiration Date": value[`medikament_ablaufdatum${counter}`] || '-',
           };
-          populateTransposedTableForMedication('#userMedicationData', medicationData);
+          populateMedicationTable('#userMedicationData', medicationData);
           
           counter++;
         }
@@ -248,7 +248,7 @@
             "Storage": value[`otcmedikament_lagerung${counter2}`] || '-',
             "Expiration Date": value[`otcmedikament_ablaufdatum${counter2}`] || '-',
           };
-          populateTransposedTableForMedication('#userOtcMedicationData', otcMedicationData);
+          populateMedicationTable('#userOtcMedicationData', otcMedicationData);
           
         }
       }
