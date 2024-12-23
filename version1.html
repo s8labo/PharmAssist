@@ -194,15 +194,15 @@
 
         // Populate Master Data
         populateTransposedTable('#userMasterData', {
-          Grund: value.grund || '-',
-          Name: value.name || '-',
-          Geschlecht: value.geschlecht || '-',
-          Geburtsdatum: value.geburtsdatum || '-',
-          Kontakt: value.kontakt || '-',
+          Grund: value.grund,
+          Name: value.name,
+          Geschlecht: value.geschlecht,
+          Geburtsdatum: value.geburtsdatum,
+          Kontakt: value.kontakt,
         });
 
         // Populate Prescribed Medication Data
-        let counter = 1;
+        // let counter = 1;
         while (true) {
           const nameKey = `medikament_name${counter}`;
           if (!value[nameKey]) break;
@@ -228,7 +228,7 @@
         }
 
         // Populate OTC Medication Data
-        let counter2 = 1;
+        // let counter2 = 1;
         while (true) {
           const nameKey = `otcmedikament_name${counter2}`;
           if (!value[nameKey]) break;
@@ -263,46 +263,46 @@
     }
 
 
-    document.addEventListener("DOMContentLoaded", function () {
-        // Select all scroll containers and their arrows
-        const scrollContainers = document.querySelectorAll(".scroll-container");
+    // document.addEventListener("DOMContentLoaded", function () {
+    //     // Select all scroll containers and their arrows
+    //     const scrollContainers = document.querySelectorAll(".scroll-container");
 
-        scrollContainers.forEach((container) => {
-            const leftArrow = container.parentNode.querySelector(".left-arrow");
-            const rightArrow = container.parentNode.querySelector(".right-arrow");
+    //     scrollContainers.forEach((container) => {
+    //         const leftArrow = container.parentNode.querySelector(".left-arrow");
+    //         const rightArrow = container.parentNode.querySelector(".right-arrow");
 
-            if (!container || !leftArrow || !rightArrow) {
-                console.error("Elements not found for a scroll container.");
-                return;
-            }
+    //         if (!container || !leftArrow || !rightArrow) {
+    //             console.error("Elements not found for a scroll container.");
+    //             return;
+    //         }
 
-            const scrollStep = 100;
+    //         const scrollStep = 100;
 
-            // Update arrow visibility based on scroll position
-            function updateArrowVisibility() {
-                const scrollLeft = container.scrollLeft;
-                const maxScrollLeft = container.scrollWidth - container.clientWidth;
+    //         // Update arrow visibility based on scroll position
+    //         function updateArrowVisibility() {
+    //             const scrollLeft = container.scrollLeft;
+    //             const maxScrollLeft = container.scrollWidth - container.clientWidth;
 
-                leftArrow.classList.toggle("hidden", scrollLeft === 0);
-                rightArrow.classList.toggle("hidden", scrollLeft >= maxScrollLeft);
-            }
+    //             leftArrow.classList.toggle("hidden", scrollLeft === 0);
+    //             rightArrow.classList.toggle("hidden", scrollLeft >= maxScrollLeft);
+    //         }
 
-            // Scroll event listeners for arrows
-            leftArrow.addEventListener("click", () => {
-                container.scrollBy({ left: -scrollStep, behavior: "smooth" });
-            });
+    //         // Scroll event listeners for arrows
+    //         leftArrow.addEventListener("click", () => {
+    //             container.scrollBy({ left: -scrollStep, behavior: "smooth" });
+    //         });
 
-            rightArrow.addEventListener("click", () => {
-                container.scrollBy({ left: scrollStep, behavior: "smooth" });
-            });
+    //         rightArrow.addEventListener("click", () => {
+    //             container.scrollBy({ left: scrollStep, behavior: "smooth" });
+    //         });
 
-            container.addEventListener("scroll", updateArrowVisibility);
-            window.addEventListener("resize", updateArrowVisibility);
+    //         container.addEventListener("scroll", updateArrowVisibility);
+    //         window.addEventListener("resize", updateArrowVisibility);
 
-            // Initialize arrow visibility for each table
-            updateArrowVisibility();
-        });
-    });
+    //         // Initialize arrow visibility for each table
+    //         updateArrowVisibility();
+    //     });
+    // });
 
 // Wait until the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
@@ -454,7 +454,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <table id="userMasterData">
         <tbody>
           <tr>
-            <th>Grund</th>
+            <th>Reason</th>
             <td></td>
           </tr>
           <tr>
@@ -462,15 +462,15 @@ document.addEventListener('DOMContentLoaded', () => {
             <td></td>
           </tr>
           <tr>
-            <th>Geschlecht</th>
+            <th>Gender</th>
             <td></td>
           </tr>
           <tr>
-            <th>Geburtsdatum</th>
+            <th>Birthdate</th>
             <td></td>
           </tr>
           <tr>
-            <th>Kontakt</th>
+            <th>Contact</th>
             <td></td>
           </tr>
         </tbody>
