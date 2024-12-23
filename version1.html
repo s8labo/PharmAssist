@@ -282,10 +282,15 @@
         }
       });
     }
-    
+
     function populateMedicationTable(selector, data) {
       const table = document.querySelector(selector);
       const rows = table.querySelectorAll('tbody tr');  // Get all the rows in the tbody
+
+      // Check if the first row is empty and remove it if necessary
+      if (rows.length > 0 && Array.from(rows[0].cells).every(cell => cell.textContent.trim() === "")) {
+        rows[0].remove();  // Remove the first empty row
+      }
 
       let rowIndex = 0;
 
