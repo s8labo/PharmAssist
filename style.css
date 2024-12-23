@@ -13,7 +13,7 @@ body, html {
     padding: 10px;
     margin-bottom: 10px;
     margin-right: 10px;
-    background-color: #f4f4f4;
+    background-color: aliceblue;
     border-radius: 15px;
     font-size: 18px;
 }
@@ -23,7 +23,7 @@ body, html {
     padding: 10px;
     margin-bottom: 10px;
     margin-right: 10px;
-    background-color: #f4f4f4;
+    background-color: aliceblue;
     border-radius: 15px;
     font-size: 20px;
 }
@@ -116,7 +116,7 @@ table {
   }
 
   th {
-    background: #f4f4f4;
+    background: aliceblue;
   }
 
   td {
@@ -240,7 +240,7 @@ table {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #f4f4f4;
+  background: aliceblue;
   padding: 12px;
   cursor: pointer;
   font-weight: bold;
