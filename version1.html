@@ -207,7 +207,7 @@
           const nameKey = `medikament_name${counter}`;
           if (!value[nameKey]) break;
 
-          populateTransposedTable('#userMedicationData', {
+          const medicationData = {
             "Medication Number": counter,
             "PZN Number": value[`medikament_pzn${counter}`] || '-',
             "Medication Name": value[nameKey],
@@ -223,7 +223,9 @@
             "Comments": value[`medikament_probleme${counter}`] || '-',
             "Storage": value[`medikament_lagerung${counter}`] || '-',
             "Expiration Date": value[`medikament_ablaufdatum${counter}`] || '-',
-          });
+          };
+          populateTransposedTableForMedication('#userMedicationData', medicationData);
+          
           counter++;
         }
 
@@ -233,7 +235,7 @@
           const nameKey = `otcmedikament_name${counter2}`;
           if (!value[nameKey]) break;
 
-          populateTransposedTable('#userOtcMedicationData', {
+          const otcMedicationData = {
             "Medication Number": counter2,
             "PZN Number": value[`otcmedikament_pzn${counter2}`] || '-',
             "Medication Name": value[nameKey],
@@ -245,29 +247,58 @@
             "Comments": value[`otcmedikament_probleme${counter2}`] || '-',
             "Storage": value[`otcmedikament_lagerung${counter2}`] || '-',
             "Expiration Date": value[`otcmedikament_ablaufdatum${counter2}`] || '-',
-          });
-          counter2++;
+          };
+          populateTransposedTableForMedication('#userOtcMedicationData', otcMedicationData);
+          
         }
       }
     });
 
-    function populateTransposedTableForMedication(selector, data) {
+    // Helper Function to Populate Transposed Table
+    function populateTransposedTable(selector, data, allowDynamicRows = false) {
       const table = document.querySelector(selector);
-      const tbody = table.querySelector('tbody');
-
-      // Create a new row for the medication data
-      const newRow = document.createElement('tr');
+      const rows = table.querySelectorAll('tr');
 
       Object.entries(data).forEach(([key, value]) => {
-        const cell = document.createElement('td');
-        cell.textContent = value || '-';
-        newRow.appendChild(cell);
-      });
+        let matchingRow = Array.from(rows).find((row) => row.querySelector('th')?.textContent === key);
 
-      // Append the new row to the table body
-      tbody.appendChild(newRow);
+        if (!matchingRow && allowDynamicRows) {
+          // Create a new row dynamically if not found
+          matchingRow = document.createElement('tr');
+          const headerCell = document.createElement('th');
+          headerCell.textContent = key;
+          const valueCell = document.createElement('td');
+          valueCell.textContent = value || '-';
+
+          matchingRow.appendChild(headerCell);
+          matchingRow.appendChild(valueCell);
+          table.querySelector('tbody').appendChild(matchingRow);
+        } else if (matchingRow) {
+          // Check if the row is already populated
+          const valueCell = matchingRow.querySelector('td');
+          if (!valueCell.textContent || valueCell.textContent === '-') {
+            valueCell.textContent = value || '-'; // Only populate if empty
+          }
+        }
+      });
     }
 
+function populateTransposedTableForMedication(selector, data) {
+  const table = document.querySelector(selector);
+  const tbody = table.querySelector('tbody');
+
+  // Create a new row for the medication data
+  const newRow = document.createElement('tr');
+
+  Object.entries(data).forEach(([key, value]) => {
+    const cell = document.createElement('td');
+    cell.textContent = value || '-';
+    newRow.appendChild(cell);
+  });
+
+  // Append the new row to the table body
+  tbody.appendChild(newRow);
+}
 
     // document.addEventListener("DOMContentLoaded", function () {
     //     // Select all scroll containers and their arrows
