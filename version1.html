@@ -202,7 +202,7 @@
         });
 
         // Populate Prescribed Medication Data
-        let counter = 1;
+        // let counter = 1;
         while (true) {
           const nameKey = `medikament_name${counter}`;
           if (!value[nameKey]) break;
@@ -228,7 +228,7 @@
         }
 
         // Populate OTC Medication Data
-        let counter2 = 1;
+        // let counter2 = 1;
         while (true) {
           const nameKey = `otcmedikament_name${counter2}`;
           if (!value[nameKey]) break;
@@ -251,33 +251,21 @@
       }
     });
 
-    // Helper Function to Populate Transposed Table
-    function populateTransposedTable(selector, data, allowDynamicRows = false) {
+    function populateTransposedTableForMedication(selector, data) {
       const table = document.querySelector(selector);
-      const rows = table.querySelectorAll('tr');
+      const tbody = table.querySelector('tbody');
+
+      // Create a new row for the medication data
+      const newRow = document.createElement('tr');
 
       Object.entries(data).forEach(([key, value]) => {
-        let matchingRow = Array.from(rows).find((row) => row.querySelector('th')?.textContent === key);
-
-        if (!matchingRow && allowDynamicRows) {
-          // Create a new row dynamically if not found
-          matchingRow = document.createElement('tr');
-          const headerCell = document.createElement('th');
-          headerCell.textContent = key;
-          const valueCell = document.createElement('td');
-          valueCell.textContent = value || '-';
-
-          matchingRow.appendChild(headerCell);
-          matchingRow.appendChild(valueCell);
-          table.querySelector('tbody').appendChild(matchingRow);
-        } else if (matchingRow) {
-          // Check if the row is already populated
-          const valueCell = matchingRow.querySelector('td');
-          if (!valueCell.textContent || valueCell.textContent === '-') {
-            valueCell.textContent = value || '-'; // Only populate if empty
-          }
-        }
+        const cell = document.createElement('td');
+        cell.textContent = value || '-';
+        newRow.appendChild(cell);
       });
+
+      // Append the new row to the table body
+      tbody.appendChild(newRow);
     }
 
 
