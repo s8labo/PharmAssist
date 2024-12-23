@@ -285,30 +285,30 @@
 
     function populateMedicationTable(selector, data) {
       const table = document.querySelector(selector);
-      const rows = table.querySelectorAll('tbody tr');  // Get all the rows in the tbody
-      
-      // Remove the first row if it has mostly empty cells
+      const rows = table.querySelectorAll('tbody tr');  // Get all rows
+
+      // Check if the first row is completely empty and remove it if necessary
       if (rows.length > 0) {
         const firstRowCells = rows[0].querySelectorAll('td');
         const emptyCellsCount = Array.from(firstRowCells).filter(cell => cell.textContent.trim() === "").length;
 
-        // If more than half of the cells are empty, remove the row
-        if (emptyCellsCount > firstRowCells.length / 2) {
-          rows[0].remove();  // Remove the first row with mostly empty cells
+        // If the first row is mostly empty, remove it
+        if (emptyCellsCount === firstRowCells.length) {
+          rows[0].remove(); // Remove the first row if it has only empty cells
         }
       }
 
+      // Now loop through the rows and populate the data
       let rowIndex = 0;
 
-      // For each key-value pair in the data, add a new <td> in the corresponding <tr>
       Object.entries(data).forEach(([key, value]) => {
         if (rowIndex < rows.length) {
-          const tr = rows[rowIndex];  // Get the current row
-          const newTd = document.createElement('td');  // Create a new <td> element
-          newTd.textContent = value;  // Set the value inside the new <td>
-          tr.appendChild(newTd);  // Append the new <td> to the current <tr>
+          const tr = rows[rowIndex]; // Get the current row
+          const newTd = document.createElement('td'); // Create a new <td> element
+          newTd.textContent = value; // Set the value inside the new <td>
+          tr.appendChild(newTd); // Append the new <td> to the current <tr>
         }
-        rowIndex++;  // Move to the next row
+        rowIndex++; // Move to the next row
       });
     }
 
