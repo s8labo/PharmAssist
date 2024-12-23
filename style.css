@@ -79,6 +79,7 @@ table {
     display: block;
 /*    overflow-x: auto;*/
     white-space: nowrap;
+    border-radius: 5px;
 }
 th, td {
   border: 1px solid #ddd;

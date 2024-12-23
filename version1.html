@@ -232,13 +232,13 @@
         // Populate OTC Medication Data
         // let counter2 = 1;
         while (true) {
-          const nameKey = `otcmedikament_name${counter2}`;
-          if (!value[nameKey]) break;
+          const otcnameKey = `otcmedikament_name${counter2}`;
+          if (!value[otcnameKey]) break;
 
           const otcMedicationData = {
             "Medication Number": counter2,
             "PZN Number": value[`otcmedikament_pzn${counter2}`] || '-',
-            "Medication Name": value[nameKey],
+            "Medication Name": value[otcnameKey],
             "Indication": value[`otcmedikament_indikation${counter2}`] || '-',
             "Time & Dose": value[`otcmedikament_dosis${counter2}`] || '-',
             "Intake with Food": value[`otcmedikament_einnahme${counter2}`] || '-',
@@ -249,7 +249,7 @@
             "Expiration Date": value[`otcmedikament_ablaufdatum${counter2}`] || '-',
           };
           populateMedicationTable('#userOtcMedicationData', otcMedicationData);
-          
+          counter2++;
         }
       }
     });
@@ -282,7 +282,7 @@
         }
       });
     }
-    
+
     function populateMedicationTable(selector, data) {
       const table = document.querySelector(selector);
       const rows = table.querySelectorAll('tbody tr');  // Get all rows
