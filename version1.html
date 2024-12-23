@@ -282,31 +282,27 @@
         }
       });
     }
-
+    
     function populateMedicationTable(selector, data) {
       const table = document.querySelector(selector);
       const rows = table.querySelectorAll('tbody tr');  // Get all rows
 
-      // Check if the first row is completely empty and remove it if necessary
-      if (rows.length > 0) {
-        const firstRowCells = rows[0].querySelectorAll('td');
-        const emptyCellsCount = Array.from(firstRowCells).filter(cell => cell.textContent.trim() === "").length;
-
-        // If the first row is mostly empty, remove it
-        if (emptyCellsCount === firstRowCells.length) {
-          rows[0].remove(); // Remove the first row if it has only empty cells
-        }
-      }
-
-      // Now loop through the rows and populate the data
+      // Loop through each row and replace empty cells with the new data
       let rowIndex = 0;
-
       Object.entries(data).forEach(([key, value]) => {
         if (rowIndex < rows.length) {
           const tr = rows[rowIndex]; // Get the current row
-          const newTd = document.createElement('td'); // Create a new <td> element
-          newTd.textContent = value; // Set the value inside the new <td>
-          tr.appendChild(newTd); // Append the new <td> to the current <tr>
+          const td = tr.querySelector('td');  // Get the first <td> in the row
+
+          // If the <td> is empty, replace it with the new data
+          if (td && td.textContent.trim() === "") {
+            td.textContent = value;
+          } else {
+            // If the <td> already has data, create a new <td> and append it to the row
+            const newTd = document.createElement('td');
+            newTd.textContent = value;
+            tr.appendChild(newTd);
+          }
         }
         rowIndex++; // Move to the next row
       });
