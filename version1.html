@@ -493,6 +493,38 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+function transposeTable(tableId) {
+  const table = document.getElementById(tableId);
+  const rows = Array.from(table.rows);
+
+  // Create a new table element
+  const newTable = document.createElement('table');
+  newTable.classList.add('transposed-table');
+
+  // Loop through columns to form new rows
+  for (let colIndex = 0; colIndex < rows[0].cells.length; colIndex++) {
+    const newRow = document.createElement('tr');
+
+    rows.forEach((row, rowIndex) => {
+      const cell = row.cells[colIndex];
+      const newCell = document.createElement(rowIndex === 0 ? 'th' : 'td');
+      newCell.textContent = cell.textContent;
+      newRow.appendChild(newCell);
+    });
+
+    newTable.appendChild(newRow);
+  }
+
+  // Replace the original table with the transposed table
+  const container = table.parentElement;
+  container.replaceChild(newTable, table);
+}
+
+// Automatically transpose all specified tables when the page loads
+window.addEventListener('DOMContentLoaded', () => {
+  const tableIds = ['userMasterData', 'userMedicationData', 'userOtcMedicationData'];
+  tableIds.forEach(transposeTable);
+});
 
 
 
@@ -501,7 +533,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 <body>
   <div id="left-panel">
-    <div class="header"><h1>Your PharmAssistant</h1></div>
+    <div class="header"><h1>Your PharmAssistant Verison 1</h1></div>
     <div id="container"><p>The PharmAssistant is here to simplify your medication review process. It helps you collect and organize the details of the medications you're currently taking.<br>
     💬 How it works: </p>
     <ul>

@@ -96,6 +96,18 @@ tbody {
   display: table-row-group; /* Default browser behavior */
 }
 
+.transposed-table {
+  border-collapse: collapse;
+  width: 100%; /* Adjust as needed */
+}
+
+.transposed-table th, .transposed-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+  white-space: nowrap;
+}
+
 /* Wrapper for arrows and scrollable content */
 .scroll-wrapper {
     display: flex;
