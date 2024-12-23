@@ -38,8 +38,8 @@ body, html {
     border: 1px solid #ccc;
 }
 
-.webchat__bubble__content, .webchat__suggested-actions__item-box {
-    border-radius: 10px;
+#webchat .webchat__bubble__content, .webchat__suggested-actions__item-box, .ac-input-container, .ac-pushButton {
+    border-radius: 10px!important;
 }
 
 #left-panel {
