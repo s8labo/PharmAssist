@@ -75,12 +75,12 @@ body, html {
 
 table {
 /*      width: 100%;*/
-      border-collapse: collapse;
-    display: block;
+     /* border-collapse: collapse;
+    display: block;*/
 /*    overflow-x: auto;*/
-    white-space: nowrap;
+/*    white-space: nowrap;*/
 }
-th, td {
+/*th, td {
   border: 1px solid #ddd;
   padding: 8px;
   text-align: left;
@@ -91,7 +91,7 @@ th, td {
 }
 th {
   background-color: #f4f4f4;
-}
+}*/
 
 table tbody {
   background-color: white;
