@@ -296,7 +296,8 @@
         if (rowIndex < rows.length) {
           const td = rows[rowIndex].querySelector('td');
           if (td) {
-            td.textContent = value || '-';  // Set the value or a default '-' if empty
+            // Append new value to the existing content, or set default if empty
+            td.textContent += (td.textContent ? ` / ${value}` : value);  // Append with a separator if already has content
           }
         }
         rowIndex++;  // Move to the next row
