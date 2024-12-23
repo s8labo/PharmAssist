@@ -103,7 +103,7 @@ table {
   border: 1px solid #aaa;
 
   th, td {
-    padding: .6em 3em;
+    padding: 8px;
     vertical-align: middle;
     border-right: 1px solid #aaa;
     border-bottom: 1px solid #aaa;
@@ -135,6 +135,7 @@ table {
       }
     }
   }
+}
 
 /* Wrapper for arrows and scrollable content */
 .scroll-wrapper {
