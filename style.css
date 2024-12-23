@@ -99,7 +99,7 @@ table {
   overflow: hidden;
   border-spacing: 0;
   border-radius: 10px;
-  text-align: center;
+  text-align: left;
   border: 1px solid #aaa;
 
   th, td {
@@ -107,6 +107,7 @@ table {
     vertical-align: middle;
     border-right: 1px solid #aaa;
     border-bottom: 1px solid #aaa;
+    font-size: 18px;
 
     &:last-child {
       border-right: none;
@@ -114,7 +115,7 @@ table {
   }
 
   th {
-    background: #ddd;
+    background: #f4f4f4;
   }
 
   td {
