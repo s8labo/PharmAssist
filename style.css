@@ -35,7 +35,6 @@ body, html {
     height: 100%; /* Adjust the percentage as needed */
     width: 100%;
     font-size: 20px;
-    border: 1px solid #ccc;
 }
 
 #webchat .webchat__bubble__content, .webchat__suggested-action {
@@ -79,6 +78,7 @@ body, html {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin-left: auto; /* Ensure it is on the right side */
     overflow-y: hidden; 
+    border: 1px solid #ccc;
 
 }
 
