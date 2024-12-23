@@ -42,12 +42,12 @@ body, html {
     border-radius: 10px!important;
 }
 
-#webchat .ac-pushButton {
+#webchat .ac-pushButton, .ac-input-container {
     border-radius: 7px!important;
 }
 
 #webchat .ac-textRun,  .ac-input .ac-textInput{
-    font-family: 18px;
+    font-family: 18px!important;
 }
 
 #left-panel {
