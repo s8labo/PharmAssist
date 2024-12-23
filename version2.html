@@ -201,6 +201,9 @@
           Contact: value.kontakt,
         });
 
+        openCollapsible("#userMedicationDataContainer");
+        closeOtherCollapsibles("#userMedicationDataContainer");
+
         // Populate Prescribed Medication Data
         // let counter = 1;
         while (true) {
@@ -228,6 +231,9 @@
           
           counter++;
         }
+
+        openCollapsible("#userOtcMedicationDataContainer");
+        closeOtherCollapsibles("#userOtcMedicationDataContainer");
 
         // Populate OTC Medication Data
         // let counter2 = 1;
@@ -308,46 +314,37 @@
       });
     }
 
-    // document.addEventListener("DOMContentLoaded", function () {
-    //     // Select all scroll containers and their arrows
-    //     const scrollContainers = document.querySelectorAll(".scroll-container");
+    document.addEventListener("DOMContentLoaded", () => {
+      // Add click listeners to all collapsible headers
+      document.querySelectorAll(".collapsible-header").forEach((header) => {
+        header.addEventListener("click", () => {
+          const content = header.nextElementSibling;
+          const isOpen = content.classList.contains("open");
+          header.classList.toggle("collapsed", isOpen);
+          content.classList.toggle("open", !isOpen);
+        });
+      });
+    });
 
-    //     scrollContainers.forEach((container) => {
-    //         const leftArrow = container.parentNode.querySelector(".left-arrow");
-    //         const rightArrow = container.parentNode.querySelector(".right-arrow");
+    function openCollapsible(selector) {
+      const container = document.querySelector(selector);
+      const header = container.previousElementSibling;
+      const isOpen = container.classList.contains("open");
 
-    //         if (!container || !leftArrow || !rightArrow) {
-    //             console.error("Elements not found for a scroll container.");
-    //             return;
-    //         }
+      if (!isOpen) {
+        header.classList.remove("collapsed");
+        container.classList.add("open");
+      }
+    }
 
-    //         const scrollStep = 100;
-
-    //         // Update arrow visibility based on scroll position
-    //         function updateArrowVisibility() {
-    //             const scrollLeft = container.scrollLeft;
-    //             const maxScrollLeft = container.scrollWidth - container.clientWidth;
-
-    //             leftArrow.classList.toggle("hidden", scrollLeft === 0);
-    //             rightArrow.classList.toggle("hidden", scrollLeft >= maxScrollLeft);
-    //         }
-
-    //         // Scroll event listeners for arrows
-    //         leftArrow.addEventListener("click", () => {
-    //             container.scrollBy({ left: -scrollStep, behavior: "smooth" });
-    //         });
-
-    //         rightArrow.addEventListener("click", () => {
-    //             container.scrollBy({ left: scrollStep, behavior: "smooth" });
-    //         });
-
-    //         container.addEventListener("scroll", updateArrowVisibility);
-    //         window.addEventListener("resize", updateArrowVisibility);
-
-    //         // Initialize arrow visibility for each table
-    //         updateArrowVisibility();
-    //     });
-    // });
+    function closeOtherCollapsibles(excludeSelector) {
+      document.querySelectorAll(".collapsible-content").forEach((content) => {
+        if (!content.matches(excludeSelector)) {
+          content.classList.remove("open");
+          content.previousElementSibling.classList.add("collapsed");
+        }
+      });
+    }
 
 // Wait until the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
@@ -483,7 +480,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 <body>
   <div id="left-panel">
-    <div class="header"><h1>Your PharmAssistant Version 1</h1></div>
+    <div class="header"><h1>Your PharmAssistant Version 2</h1></div>
     <div id="container"><p>The PharmAssistant is here to simplify your medication review process. It helps you collect and organize the details of the medications you're currently taking.<br>
     💬 How it works: </p>
     <ul>
@@ -523,123 +520,135 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
     <br>
     <h2>Your Prescribed Medication Data</h2>
-    <div id="userMedicationDataContainer">
-      <table id="userMedicationData">
-        <tbody>
-          <tr>
-            <th>Medication Number</th>
-            <td></td>
-          </tr>
-          <tr>
-            <th>PZN Number</th>
-            <td></td>
-          </tr>
-          <tr>
-            <th>Medication Name</th>
-            <td></td>
-          </tr>
-          <tr>
-            <th>Indication</th>
-            <td></td>
-          </tr>
-          <tr>
-            <th>Time & Dose</th>
-            <td></td>
-          </tr>
-          <tr>
-            <th>Intake with Food</th>
-            <td></td>
-          </tr>
-          <tr>
-            <th>Taken as Prescribed</th>
-            <td></td>
-          </tr>
-          <tr>
-            <th>False Intake</th>
-            <td></td>
-          </tr>
-          <tr>
-            <th>Forgotten Dose</th>
-            <td></td>
-          </tr>
-          <tr>
-            <th>Procedure by False Intake</th>
-            <td></td>
-          </tr>
-          <tr>
-            <th>Suspension on Improvement</th>
-            <td></td>
-          </tr>
-          <tr>
-            <th>Suspension on Deterioration</th>
-            <td></td>
-          </tr>
-          <tr>
-            <th>Comments</th>
-            <td></td>
-          </tr>
-          <tr>
-            <th>Storage</th>
-            <td></td>
-          </tr>
-          <tr>
-            <th>Expiration Date</th>
-            <td></td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="collapsible-container">
+      <div class="collapsible-header">
+        <span>Prescribed Medication Data</span>
+        <span class="toggle-arrow">▼</span>
+      </div>
+      <div id="userMedicationDataContainer" class="collapsible-content">
+        <table id="userMedicationData">
+          <tbody>
+            <tr>
+              <th>Medication Number</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>PZN Number</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Medication Name</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Indication</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Time & Dose</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Intake with Food</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Taken as Prescribed</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>False Intake</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Forgotten Dose</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Procedure by False Intake</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Suspension on Improvement</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Suspension on Deterioration</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Comments</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Storage</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Expiration Date</th>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
     <br>
     <h2>Your Non-Prescribed Medication Data</h2>
-    <div id="userOtcMedicationDataContainer">
-      <table id="userOtcMedicationData">
-        <tbody>
-          <tr>
-            <th>Medication Number</th>
-            <td></td>
-          </tr>
-          <tr>
-            <th>PZN Number</th>
-            <td></td>
-          </tr>
-          <tr>
-            <th>Medication Name</th>
-            <td></td>
-          </tr>
-          <tr>
-            <th>Indication</th>
-            <td></td>
-          </tr>
-          <tr>
-            <th>Time & Dose</th>
-            <td></td>
-          </tr>
-          <tr>
-            <th>Intake with Food</th>
-            <td></td>
-          </tr>
-          <tr>
-            <th>Suspension on Improvement</th>
-            <td></td>
-          </tr>
-          <tr>
-            <th>Suspension on Deterioration</th>
-            <td></td>
-          </tr>
-          <tr>
-            <th>Comments</th>
-            <td></td>
-          </tr>
-          <tr>
-            <th>Storage</th>
-            <td></td>
-          </tr>
-          <tr>
-            <th>Expiration Date</th>
-            <td></td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="collapsible-container">
+      <div class="collapsible-header">
+        <span>Non-Prescribed Medication Data</span>
+        <span class="toggle-arrow">▼</span>
+      </div>
+      <div id="userOtcMedicationDataContainer" class="collapsible-content">
+        <table id="userOtcMedicationData">
+          <tbody>
+            <tr>
+              <th>Medication Number</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>PZN Number</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Medication Name</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Indication</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Time & Dose</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Intake with Food</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Suspension on Improvement</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Suspension on Deterioration</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Comments</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Storage</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Expiration Date</th>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 

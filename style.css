@@ -236,6 +236,37 @@ table {
     padding-right: 9px;
 }
 
+.collapsible-container {
+  border: 1px solid #ccc;
+  margin-bottom: 1em;
+}
+
+.collapsible-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f0f0f0;
+  padding: 0.5em;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.collapsible-header .toggle-arrow {
+  transition: transform 0.3s ease;
+}
+
+.collapsible-header.collapsed .toggle-arrow {
+  transform: rotate(-90deg);
+}
+
+.collapsible-content {
+  display: none; /* Initially collapsed */
+  overflow: hidden;
+}
+
+.collapsible-content.open {
+  display: block; /* Expanded state */
+}
 
 @media only screen and (max-width: 768px) {
 
