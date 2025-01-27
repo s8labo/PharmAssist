@@ -145,6 +145,7 @@
             directLine: window.WebChat.createDirectLine({
                 token: 'AavR0Oh2MoQ.k8agJWGKvkYtM92I0013G-A3eObi4iVxVVGEcZFYLY4'
             }),
+            locale:"en_US",
             store,
             sendTyping: true,
             // webSpeechPonyfillFactory,
@@ -189,181 +190,163 @@
 
 
     window.addEventListener('webchatincomingactivity', ({ data }) => {
-      const tableBody1 = document.querySelector('#userMasterData tbody');
-      const tableBody2 = document.querySelector('#userMedicationData tbody');
-      const tableBody3 = document.querySelector('#userOtcMedicationData tbody');
-
-      if (data.type === 'message' && data.from.role === 'user' && data.value) {
+      if (data.type === 'message' && data.from.role === 'user' && data.value && !data.value.date) {
         const { value } = data;
 
-        // Handle master data
-        const { grund, name, geschlecht, geburtsdatum, kontakt } = value;
-        const masterData = [grund, name, geschlecht, geburtsdatum, kontakt];
+        // Populate Master Data
+        populateTransposedTable('#userMasterData', {
+          Reason: value.grund,
+          Name: value.name,
+          Gender: value.geschlecht,
+          Birthdate: value.geburtsdatum,
+          Contact: value.kontakt,
+        });
 
-        // Check if there's an empty row in the master data table
-        const firstRow1 = tableBody1.querySelector('.empty');
-        if (firstRow1) {
-          // If an empty row is found, fill it and remove the "empty" class
-          fillRow(firstRow1, masterData);
-          firstRow1.classList.remove('empty');
-        } 
+        openCollapsible("#userMasterDataContainer");
 
-        // Handle medication data
+        // Populate Prescribed Medication Data
         // let counter = 1;
         while (true) {
-          const pznKey = `medikament_pzn${counter}`;
           const nameKey = `medikament_name${counter}`;
-          const indicationKey = `medikament_indikation${counter}`;
-          const doseKey = `medikament_dosis${counter}`;
-          const foodKey = `medikament_einnahme${counter}`;
-          const prescriptionKey = `medikament_verordnung${counter}`;
-          const alternativeprescKey = `medikament_falsche_einnahme${counter}`;
-          const forgottendoseKey = `medikament_vergessen${counter}`;
-          const forgottendoseprocedureKey = `medikament_vergessen_vorgehensweise${counter}`;
-          const betterKey = `medikament_besserung${counter}`;
-          const worseKey = `medikament_verschlechterung${counter}`;
-          const commentKey = `medikament_probleme${counter}`;
-          const storageKey = `medikament_lagerung${counter}`;
-          const expirationKey = `medikament_ablaufdatum${counter}`;
+          if (!value[nameKey]) break;
 
-          // Stop if required fields for medication are missing
-          if (!value[nameKey] && !value[indicationKey] && !value[doseKey]) {
-            break;
-          }
-
-          // Construct the medication data row
-          const medicationData = [
-            counter,
-            value[pznKey] || '-',
-            value[nameKey],
-            value[indicationKey],
-            value[doseKey],
-            value[foodKey] || '-',
-            value[prescriptionKey] || '-',
-            value[alternativeprescKey] || '-',
-            value[forgottendoseKey] || '-',
-            value[forgottendoseprocedureKey] || '-',
-            value[betterKey] || '-',
-            value[worseKey] || '-',
-            value[commentKey] || '-',
-            value[storageKey] || '-',
-            value[expirationKey] || '-'
-          ];
-
-          // Check if there's an empty row in the medication table
-          const firstRow2 = tableBody2.querySelector('.empty');
-          if (firstRow2) {
-            // If an empty row is found, fill it and remove the "empty" class
-            fillRow(firstRow2, medicationData);
-            firstRow2.classList.remove('empty');
-          } else {
-            // If no empty row exists, add a new row for medication data
-            const newRow = document.createElement('tr');
-            newRow.innerHTML = medicationData.map(item => `<td>${item}</td>`).join('');
-            tableBody2.appendChild(newRow);
-          }
-
+          const medicationData = {
+            "Medication Number": counter,
+            "PZN Number": value[`medikament_pzn${counter}`] || '-',
+            "Medication Name": value[nameKey],
+            "Indication": value[`medikament_indikation${counter}`] || '-',
+            "Time & Dose": value[`medikament_dosis${counter}`] || '-',
+            "Intake with Food": value[`medikament_einnahme${counter}`] || '-',
+            "Taken as Prescribed": value[`medikament_verordnung${counter}`] || '-',
+            "False Intake": value[`medikament_falsche_einnahme${counter}`] || '-',
+            "Forgotten Dose": value[`medikament_vergessen${counter}`] || '-',
+            "Procedure by False Intake": value[`medikament_vergessen_vorgehensweise${counter}`] || '-',
+            "Suspension on Improvement": value[`medikament_besserung${counter}`] || '-',
+            "Suspension on Deterioration": value[`medikament_verschlechterung${counter}`] || '-',
+            "Comments": value[`medikament_probleme${counter}`] || '-',
+            "Storage": value[`medikament_lagerung${counter}`] || '-',
+            "Expiration Date": value[`medikament_ablaufdatum${counter}`] || '-',
+          };
+          populateMedicationTable('#userMedicationData', medicationData);
+          openCollapsible("#userMedicationDataContainer");
+          closeOtherCollapsibles("#userMedicationDataContainer");
+          
           counter++;
         }
 
+
+        // Populate OTC Medication Data
+        // let counter2 = 1;
         while (true) {
-          const otcpznKey = `otcmedikament_pzn${counter2}`;
           const otcnameKey = `otcmedikament_name${counter2}`;
-          const otcindicationKey = `otcmedikament_indikation${counter2}`;
-          const otcdoseKey = `otcmedikament_dosis${counter2}`;
-          const otcfoodKey = `otcmedikament_einnahme${counter2}`;
-          const otcbetterKey = `otcmedikament_besserung${counter}`;
-          const otcworseKey = `otcmedikament_verschlechterung${counter2}`;
-          const otccommentKey = `otcmedikament_probleme${counter2}`;
-          const otcstorageKey = `otcmedikament_lagerung${counter2}`;
-          const otcexpirationKey = `otcmedikament_ablaufdatum${counter2}`;
+          if (!value[otcnameKey]) break;
 
-          // Stop if required fields for medication are missing
-          if (!value[otcnameKey] && !value[otcindicationKey] && !value[otcdoseKey]) {
-            break;
-          }
-
-          // Construct the medication data row
-          const otcmedicationData = [
-            counter2,
-            value[otcpznKey] || '-',
-            value[otcnameKey],
-            value[otcindicationKey],
-            value[otcdoseKey],
-            value[otcfoodKey] || '-',
-            value[otcbetterKey] || '-',
-            value[otcworseKey] || '-',
-            value[otccommentKey] || '-',
-            value[otcstorageKey] || '-',
-            value[otcexpirationKey] || '-'
-          ];
-
-          // Check if there's an empty row in the medication table
-          const firstRow3 = tableBody3.querySelector('.empty');
-          if (firstRow3) {
-            // If an empty row is found, fill it and remove the "empty" class
-            fillRow(firstRow23, otcmedicationData);
-            firstRow3.classList.remove('empty');
-          } else {
-            // If no empty row exists, add a new row for medication data
-            const newRow = document.createElement('tr');
-            newRow.innerHTML = otcmedicationData.map(item => `<td>${item}</td>`).join('');
-            tableBody3.appendChild(newRow);
-          }
-
+          const otcMedicationData = {
+            "Medication Number": counter2,
+            "PZN Number": value[`otcmedikament_pzn${counter2}`] || '-',
+            "Medication Name": value[otcnameKey],
+            "Indication": value[`otcmedikament_indikation${counter2}`] || '-',
+            "Time & Dose": value[`otcmedikament_dosis${counter2}`] || '-',
+            "Intake with Food": value[`otcmedikament_einnahme${counter2}`] || '-',
+            "Suspension on Improvement": value[`otcmedikament_besserung${counter2}`] || '-',
+            "Suspension on Deterioration": value[`otcmedikament_verschlechterung${counter2}`] || '-',
+            "Comments": value[`otcmedikament_probleme${counter2}`] || '-',
+            "Storage": value[`otcmedikament_lagerung${counter2}`] || '-',
+            "Expiration Date": value[`otcmedikament_ablaufdatum${counter2}`] || '-',
+          };
+          populateMedicationTable('#userOtcMedicationData', otcMedicationData);
+          openCollapsible("#userOtcMedicationDataContainer");
+          closeOtherCollapsibles("#userOtcMedicationDataContainer");
           counter2++;
         }
       }
     });
 
-    // Function to fill row with data
-    function fillRow(row, dataArray) {
-      const cells = row.children;
-      dataArray.forEach((value, index) => {
-        cells[index].textContent = value || '-'; // Fill empty cells with the provided value or default
+    // Helper Function to Populate Transposed Table
+    function populateTransposedTable(selector, data, allowDynamicRows = false) {
+      const table = document.querySelector(selector);
+      const rows = table.querySelectorAll('tr');
+
+      Object.entries(data).forEach(([key, value]) => {
+        let matchingRow = Array.from(rows).find((row) => row.querySelector('th')?.textContent === key);
+
+        if (!matchingRow && allowDynamicRows) {
+          // Create a new row dynamically if not found
+          matchingRow = document.createElement('tr');
+          const headerCell = document.createElement('th');
+          headerCell.textContent = key;
+          const valueCell = document.createElement('td');
+          valueCell.textContent = value || '-';
+
+          matchingRow.appendChild(headerCell);
+          matchingRow.appendChild(valueCell);
+          table.querySelector('tbody').appendChild(matchingRow);
+        } else if (matchingRow) {
+          // Check if the row is already populated
+          const valueCell = matchingRow.querySelector('td');
+          if (!valueCell.textContent || valueCell.textContent === '-') {
+            valueCell.textContent = value || '-'; // Only populate if empty
+          }
+        }
       });
     }
 
-    document.addEventListener("DOMContentLoaded", function () {
-        // Select all scroll containers and their arrows
-        const scrollContainers = document.querySelectorAll(".scroll-container");
+    function populateMedicationTable(selector, data) {
+      const table = document.querySelector(selector);
+      const rows = table.querySelectorAll('tbody tr');  // Get all rows
 
-        scrollContainers.forEach((container) => {
-            const leftArrow = container.parentNode.querySelector(".left-arrow");
-            const rightArrow = container.parentNode.querySelector(".right-arrow");
+      // Loop through each row and replace empty cells with the new data
+      let rowIndex = 0;
+      Object.entries(data).forEach(([key, value]) => {
+        if (rowIndex < rows.length) {
+          const tr = rows[rowIndex]; // Get the current row
+          const td = tr.querySelector('td');  // Get the first <td> in the row
 
-            if (!container || !leftArrow || !rightArrow) {
-                console.error("Elements not found for a scroll container.");
-                return;
-            }
+          // If the <td> is empty, replace it with the new data
+          if (td && td.textContent.trim() === "") {
+            td.textContent = value;
+          } else {
+            // If the <td> already has data, create a new <td> and append it to the row
+            const newTd = document.createElement('td');
+            newTd.textContent = value;
+            tr.appendChild(newTd);
+          }
+        }
+        rowIndex++; // Move to the next row
+      });
+    }
 
-            const scrollStep = 100;
-
-            // Update arrow visibility based on scroll position
-            function updateArrowVisibility() {
-                const scrollLeft = container.scrollLeft;
-                const maxScrollLeft = container.scrollWidth - container.clientWidth;
-
-                leftArrow.classList.toggle("hidden", scrollLeft === 0);
-                rightArrow.classList.toggle("hidden", scrollLeft >= maxScrollLeft);
-            }
-
-            // Scroll event listeners for arrows
-            leftArrow.addEventListener("click", () => {
-                container.scrollBy({ left: -scrollStep, behavior: "smooth" });
-            });
-
-            rightArrow.addEventListener("click", () => {
-                container.scrollBy({ left: scrollStep, behavior: "smooth" });
-            });
-
-            container.addEventListener("scroll", updateArrowVisibility);
-            window.addEventListener("resize", updateArrowVisibility);
-
-            // Initialize arrow visibility for each table
-            updateArrowVisibility();
+    document.addEventListener("DOMContentLoaded", () => {
+      // Add click listeners to all collapsible headers
+      document.querySelectorAll(".collapsible-header").forEach((header) => {
+        header.addEventListener("click", () => {
+          const content = header.nextElementSibling;
+          const isOpen = content.classList.contains("open");
+          header.classList.toggle("collapsed", isOpen);
+          content.classList.toggle("open", !isOpen);
         });
+      });
     });
+
+    function openCollapsible(selector) {
+      const container = document.querySelector(selector);
+      const header = container.previousElementSibling;
+      const isOpen = container.classList.contains("open");
+
+      if (!isOpen) {
+        header.classList.remove("collapsed");
+        container.classList.add("open");
+      }
+    }
+
+    function closeOtherCollapsibles(excludeSelector) {
+      document.querySelectorAll(".collapsible-content").forEach((content) => {
+        if (!content.matches(excludeSelector)) {
+          content.classList.remove("open");
+          content.previousElementSibling.classList.add("collapsed");
+        }
+      });
+    }
 
 // Wait until the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
@@ -494,14 +477,12 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-
-
   </script>
 </head>
 
 <body>
   <div id="left-panel">
-    <div class="header"><h1>Your PharmAssistant</h1></div>
+    <div class="header"><h1>Your PharmAssistant Version 2</h1></div>
     <div id="container"><p>The PharmAssistant is here to simplify your medication review process. It helps you collect and organize the details of the medications you're currently taking.<br>
     💬 How it works: </p>
     <ul>
@@ -512,130 +493,170 @@ document.addEventListener('DOMContentLoaded', () => {
     <p>
         Once confirmed, your medication list will appear here for easy reference.
     </p></div>
-    <h2>Your master data</h2>
-    <div class="scroll-wrapper">
-      <div class="scroll-arrow left-arrow"><</div>
-        <div class="scroll-container">
-          <table id="userMasterData">
-            <thead>
-              <tr>
-                <th>Reason</th>
-                <th>Name</th>
-                <th>Gender</th>
-                <th>Birthdate</th>
-                <th>Contact</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="empty">
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      <div class="scroll-arrow right-arrow">></div>
+    <!-- <h2>Your Master Data</h2> -->
+    <div class="collapsible-container">
+      <div class="collapsible-header">
+        <span>Master Data</span>
+        <span class="toggle-arrow">▼</span>
+      </div>
+      <div id="userMasterDataContainer" class="collapsible-content">
+        <table id="userMasterData">
+          <tbody>
+            <tr>
+              <th>Reason</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Name</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Gender</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Birthdate</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Contact</th>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
     <br>
-    <h2>Your prescribed medication data</h2>
-    <div class="scroll-wrapper">
-      <div class="scroll-arrow left-arrow"><</div>
-        <div class="scroll-container">
-          <table id="userMedicationData">
-            <thead>
-              <tr>
-                <th>Medication number</th>
-                <th>PZN number</th>
-                <th>Medication name</th>
-                <th>Indication</th>
-                <th>Time & Dosis</th>
-                <th>Intake with food?</th>
-                <th>Taken as prescribed?</th>
-                <th>False intake?</th>
-                <th>Forgotten intake?</th>
-                <th>Procedure by false intake</th>
-                <th>Suspension on improvement</th>
-                <th>Suspension on deterioration</th>
-                <th>Problems/Comments</th>
-                <th>Storage</th>
-                <th>Expiration date</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="empty">
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      <div class="scroll-arrow right-arrow">></div>
+    <!-- <h2>Your Prescribed Medication Data</h2> -->
+    <div class="collapsible-container">
+      <div class="collapsible-header">
+        <span>Prescribed Medication Data</span>
+        <span class="toggle-arrow">▼</span>
+      </div>
+      <div id="userMedicationDataContainer" class="collapsible-content">
+        <table id="userMedicationData">
+          <tbody>
+            <tr>
+              <th>Medication Number</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>PZN Number</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Medication Name</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Indication</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Time & Dose</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Intake with Food</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Taken as Prescribed</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>False Intake</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Forgotten Dose</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Procedure by False Intake</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Suspension on Improvement</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Suspension on Deterioration</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Comments</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Storage</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Expiration Date</th>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
     <br>
-    <h2>Your non-prescribed medication data</h2>
-    <div class="scroll-wrapper">
-      <div class="scroll-arrow left-arrow"><</div>
-        <div class="scroll-container">
-          <table id="userOtcMedicationData">
-            <thead>
-              <tr>
-                <th>Medication number</th>
-                <th>PZN number</th>
-                <th>Medication name</th>
-                <th>Indication</th>
-                <th>Time & Dosis</th>
-                <th>Intake with food?</th>
-                <th>Suspension on improvement</th>
-                <th>Suspension on deterioration</th>
-                <th>Problems/Comments</th>
-                <th>Storage</th>
-                <th>Expiration date</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="empty">
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      <div class="scroll-arrow right-arrow">></div>
-    </div>
-    <div>
-      <h3>Other Versions</h3>
-      <a href="version1.html">
-        <button>Version 1</button>
-      </a>
-      <a href="version2.html">
-        <button>Version 2</button>
-      </a>
-      <br>
+    <!-- <h2>Your Non-Prescribed Medication Data</h2> -->
+    <div class="collapsible-container">
+      <div class="collapsible-header">
+        <span>Non-Prescribed Medication Data</span>
+        <span class="toggle-arrow">▼</span>
+      </div>
+      <div id="userOtcMedicationDataContainer" class="collapsible-content">
+        <table id="userOtcMedicationData">
+          <tbody>
+            <tr>
+              <th>Medication Number</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>PZN Number</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Medication Name</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Indication</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Time & Dose</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Intake with Food</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Suspension on Improvement</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Suspension on Deterioration</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Comments</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Storage</th>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Expiration Date</th>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 
