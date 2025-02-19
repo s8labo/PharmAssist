@@ -161,20 +161,20 @@
 
 
         // Event listener for incoming bot activities
-        window.addEventListener('webchatincomingactivity', ({ data }) => {
-          if (data.type === 'message' && data.from.role === 'bot') {
-            const botMessage = data.text;
-            // const messageID = data;
-            // console.log(`Bot says: ${JSON.stringify(messageID, null, 2)}`);
+        // window.addEventListener('webchatincomingactivity', ({ data }) => {
+        //   if (data.type === 'message' && data.from.role === 'bot') {
+        //     const botMessage = data.text;
+        //     // const messageID = data;
+        //     // console.log(`Bot says: ${JSON.stringify(messageID, null, 2)}`);
 
-            // Make the avatar speak the bot message using TTS
-            if (typeof head !== 'undefined' && head.speakText) {
-              head.speakText(botMessage); // Avatar speaks the bot's message
-            } else {
-              console.error('Avatar head is not initialized.');
-            }
-          }
-        });
+        //     // Make the avatar speak the bot message using TTS
+        //     if (typeof head !== 'undefined' && head.speakText) {
+        //       head.speakText(botMessage); // Avatar speaks the bot's message
+        //     } else {
+        //       console.error('Avatar head is not initialized.');
+        //     }
+        //   }
+        // });
 
         // Focus on Web Chat for better user experience
         document.querySelector('#webchat > *').focus();
