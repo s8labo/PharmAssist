@@ -193,33 +193,48 @@
       if (data.type === 'message' && data.from.role === 'user' && data.value && !data.value.date) {
         const { value } = data;
 
-        // Populate Master Data
-        populateTransposedTable('#userMasterData', {
-          Name: value.name,
-          Gender: value.geschlecht,
-          Birthdate: value.geburtsdatum,
-          Contact: value.kontakt,
-        });
+        if (value.kontakt){
+          populateTransposedTable('#userMasterData', {
+            Name: value.name,
+            Gender: value.geschlecht,
+            Birthdate: value.geburtsdatum,
+            Contact: value.kontakt,
+          });
 
-        openCollapsible("#userMasterDataContainer");
+          openCollapsible("#userMasterDataContainer");
+        }
 
-        // Populate Health Data
-        populateTransposedTable('#userHealthData', {
-          Reason: value.grund,
-          Concerns: value.problem,
-          Height: value.height,
-          Weight: value.weight,
-          Allergies: value.allergies,
-          Conditions: value.conditions,
-          Renal_Hepatic_Insufficiency: value.renal,
-          Multiple_Doctors: value.doctors,
-          Medication_Plan: value.mediplan,
-          Sufficiently_Informed: value.info,
-          Support: value.support,
-          Food: value.essen
-        });
+        if (value.essen){
+          let healthFields = [
+            { key: "grund", label: "Reason" },
+            { key: "problem", label: "Concerns" },
+            { key: "height", label: "Height" },
+            { key: "weight", label: "Weight" },
+            { key: "allergies", label: "Allergies" },
+            { key: "conditions", label: "Conditions" },
+            { key: "renal", label: "Renal/Hepatic Insufficiency" },
+            { key: "doctors", label: "Multiple Doctors" },
+            { key: "mediplan", label: "Medication Plan" },
+            { key: "info", label: "Sufficiently Informed" },
+            { key: "support", label: "Support" },
+            { key: "essen", label: "Food" }
+          ];
 
-        openCollapsible("#userHealthDataContainer");
+          healthFields.forEach(field => {
+            const valueKey = field.key;
+            if (!value[valueKey]) return;
+
+            const healthData = {
+              [field.label]: value[valueKey] || "-"
+            };
+
+            populateHealthTable('#userHealthData', healthData);
+          });
+
+          openCollapsible("#userHealthDataContainer");
+          closeOtherCollapsibles("#userHealthDataContainer");
+
+        }
 
         // Populate Prescribed Medication Data
         // let counter = 1;
@@ -247,7 +262,6 @@
           
           counter++;
         }
-
 
         // Populate OTC Medication Data
         // let counter2 = 1;
@@ -304,6 +318,33 @@
         }
       });
     }
+
+    function populateHealthTable(selector, data) {
+      const table = document.querySelector(selector);
+      const rows = table.querySelectorAll('tbody tr');
+
+      Object.entries(data).forEach(([label, value]) => {
+        let rowFound = false;
+
+        rows.forEach(row => {
+          const th = row.querySelector('th');
+          const td = row.querySelector('td');
+
+          if (th && th.textContent.trim() === label) {
+            // Update existing row's <td> if it's empty or needs updating
+            if (td && (td.textContent.trim() === "" || td.textContent.trim() === "-")) {
+              td.textContent = value;
+            }
+            rowFound = true;
+          }
+        });
+
+        if (!rowFound) {
+          console.warn(`Row for "${label}" not found in table. Make sure the table structure is correct.`);
+        }
+      });
+    }
+
 
     function populateMedicationTable(selector, data) {
       const table = document.querySelector(selector);
@@ -411,61 +452,67 @@
       </div>
     </div>
     <br>
-    <div id="userHealthDataContainer" class="collapsible-content">
-      <table id="userHealthData">
-        <tbody>
-          <tr>
-            <th>Reason</th>
-            <td id="reason"></td>
-          </tr>
-          <tr>
-            <th>Concerns</th>
-            <td id="concerns"></td>
-          </tr>
-          <tr>
-            <th>Height</th>
-            <td id="height"></td>
-          </tr>
-          <tr>
-            <th>Weight</th>
-            <td id="weight"></td>
-          </tr>
-          <tr>
-            <th>Allergies</th>
-            <td id="allergies"></td>
-          </tr>
-          <tr>
-            <th>Conditions</th>
-            <td id="conditions"></td>
-          </tr>
-          <tr>
-            <th>Renal/Hepatic Insufficiency</th>
-            <td id="renal"></td>
-          </tr>
-          <tr>
-            <th>Multiple Doctors</th>
-            <td id="doctors"></td>
-          </tr>
-          <tr>
-            <th>Medication Plan</th>
-            <td id="mediplan"></td>
-          </tr>
-          <tr>
-            <th>Sufficiently Informed</th>
-            <td id="info"></td>
-          </tr>
-          <tr>
-            <th>Support</th>
-            <td id="support"></td>
-          </tr>
-          <tr>
-            <th>Food</th>
-            <td id="essen"></td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="collapsible-container">
+      <div class="collapsible-header">
+        <span>Health Data</span>
+        <span class="toggle-arrow">▼</span>
+      </div>
+      <div id="userHealthDataContainer" class="collapsible-content">
+        <table id="userHealthData">
+          <tbody>
+            <tr>
+              <th>Reason</th>
+              <td id="reason"></td>
+            </tr>
+            <tr>
+              <th>Concerns</th>
+              <td id="concerns"></td>
+            </tr>
+            <tr>
+              <th>Height</th>
+              <td id="height"></td>
+            </tr>
+            <tr>
+              <th>Weight</th>
+              <td id="weight"></td>
+            </tr>
+            <tr>
+              <th>Allergies</th>
+              <td id="allergies"></td>
+            </tr>
+            <tr>
+              <th>Conditions</th>
+              <td id="conditions"></td>
+            </tr>
+            <tr>
+              <th>Renal or Hepatic Insufficiency</th>
+              <td id="renal"></td>
+            </tr>
+            <tr>
+              <th>Multiple Doctors</th>
+              <td id="doctors"></td>
+            </tr>
+            <tr>
+              <th>Medication Plan</th>
+              <td id="mediplan"></td>
+            </tr>
+            <tr>
+              <th>Sufficiently Informed</th>
+              <td id="info"></td>
+            </tr>
+            <tr>
+              <th>Support</th>
+              <td id="support"></td>
+            </tr>
+            <tr>
+              <th>Food</th>
+              <td id="essen"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <br>
     </div>
-    <br>
     <!-- <h2>Your Prescribed Medication Data</h2> -->
     <div class="collapsible-container">
       <div class="collapsible-header">
@@ -516,7 +563,7 @@
               <td></td>
             </tr>
             <tr>
-              <th>Problems or comments</th>
+              <th>Problems or Comments</th>
               <td></td>
             </tr>
             <tr>
@@ -570,7 +617,7 @@
               <td></td>
             </tr>
             <tr>
-              <th>Problems or comments</th>
+              <th>Problems or Comments</th>
               <td></td>
             </tr>
             <tr>
